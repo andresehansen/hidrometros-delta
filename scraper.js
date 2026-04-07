@@ -1,6 +1,6 @@
 const fs = require('fs');
-const http = require('http');
 
+// Las URLs de AGP (algunas con el puerto 53880)
 const ESTACIONES = [
   { nombre: "Zárate", url: "http://hidrografia.agpse.gob.ar:53880/zarate/index.html", zona: "Delta / Río de la Plata" },
   { nombre: "Las Rosas", url: "http://hidrografia.agpse.gob.ar:53880/LasRosas/index.html", zona: "Delta / Río de la Plata" },
@@ -45,16 +45,28 @@ const ESTACIONES = [
   { nombre: "Carabelitas", url: "http://hidrografia.agpse.gob.ar:53880/ehmail/Carabelitas2.htm", zona: "Brazo Bravo – Guazú" }
 ];
 
-function fetchURL(url) {
-  return new Promise((resolve, reject) => {
-    const req = http.get(url, { timeout: 10000 }, (res) => {
-      let data = '';
-      res.on('data', chunk => data += chunk);
-      res.on('end', () => resolve(data));
+// Función moderna con "disfraz" de navegador
+async function fetchURL(url) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 12000);
+  
+  try {
+    const response = await fetch(url, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": "es-AR,es;q=0.9,en-US;q=0.8,en;q=0.7"
+      },
+      signal: controller.signal
     });
-    req.on('error', reject);
-    req.on('timeout', () => { req.destroy(); reject(new Error('Timeout')); });
-  });
+    
+    clearTimeout(timeoutId);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.text();
+  } catch (error) {
+    clearTimeout(timeoutId);
+    throw error;
+  }
 }
 
 function parsearHTML(html) {
@@ -80,7 +92,7 @@ function parsearHTML(html) {
 
 function obtenerHoraFormateada() {
     const d = new Date();
-    d.setHours(d.getHours() - 3); // Hora Argentina
+    d.setHours(d.getHours() - 3); // Ajuste a Hora Argentina
     let horas = d.getHours();
     const minutos = d.getMinutes().toString().padStart(2, '0');
     const ampm = horas >= 12 ? 'PM' : 'AM';
@@ -92,19 +104,32 @@ function obtenerHoraFormateada() {
 
 async function main() {
   const resultados = [];
+  console.log("Iniciando recolección de alturas...");
+
   for (const est of ESTACIONES) {
     try {
+      console.log(`Buscando: ${est.nombre}...`);
       const html = await fetchURL(est.url);
       const datos = parsearHTML(html);
+      
+      if (datos.altura === null) {
+         console.log(`❌ Sin altura detectada en el código para: ${est.nombre}`);
+      } else {
+         console.log(`✅ Éxito en ${est.nombre}: ${datos.altura}m`);
+      }
+      
       resultados.push({ ...est, ...datos, ok: datos.altura !== null });
     } catch (e) {
+      console.log(`❌ Error de conexión con ${est.nombre}: ${e.message}`);
       resultados.push({ ...est, altura: null, tendencia: "—", fechaHora: null, ok: false });
     }
-    await new Promise(r => setTimeout(r, 600)); // Espera un poquito para no ser bloqueados
+    // Pausa inteligente para no saturar al servidor
+    await new Promise(r => setTimeout(r, 1000)); 
   }
 
   const dataFinal = { actualizadoEn: obtenerHoraFormateada(), estaciones: resultados };
   fs.writeFileSync('datos.json', JSON.stringify(dataFinal, null, 2));
+  console.log("Archivo datos.json guardado correctamente.");
 }
 
 main();
