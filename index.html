@@ -1,4 +1,102 @@
-let estacionesData = [];
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Hidrómetros – Delta Entrerriano</title>
+  <style>
+    /* =============================================
+       RESET Y BASE
+       ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    html, body {
+      width: 100%; height: 100%; overflow: hidden; touch-action: none; 
+      background: #0a1628; color: #f0f4ff; font-family: 'Segoe UI', Arial, sans-serif; -webkit-text-size-adjust: 100%;
+    }
+    #app { display: flex; flex-direction: column; width: 100vw; height: 100vh; height: 100dvh; }
+
+    /* Encabezado */
+    #encabezado { flex: 0 0 auto; background: #0d1f3c; border-bottom: 3px solid #2a5caa; padding: 10px 16px 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    #titulo-app { font-size: clamp(16px, 4vw, 22px); font-weight: 700; color: #7eb8f7; letter-spacing: 0.02em; white-space: nowrap; }
+    #zona-badge { font-size: clamp(11px, 2.8vw, 14px); color: #a0bce8; text-align: right; line-height: 1.3; max-width: 55%; white-space: pre-line; }
+
+    /* Contenido */
+    #contenido { flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px 20px; min-height: 0; }
+    #tarjeta { background: #0d1f3c; border: 3px solid #2a5caa; border-radius: 20px; width: 100%; max-width: 520px; padding: clamp(16px, 5vw, 32px) clamp(16px, 6vw, 40px); text-align: center; display: flex; flex-direction: column; align-items: center; gap: clamp(12px, 3vh, 24px); }
+    #zona-label { font-size: clamp(13px, 3vw, 16px); color: #7eb8f7; background: rgba(42, 92, 170, 0.3); border: 1px solid #2a5caa; border-radius: 100px; padding: 4px 16px; letter-spacing: 0.05em; text-transform: uppercase; }
+    #nombre-estacion { font-size: clamp(30px, 9vw, 58px); font-weight: 900; color: #ffffff; line-height: 1.1; letter-spacing: -0.01em; }
+    #separador { width: 60px; height: 3px; background: #2a5caa; border-radius: 2px; }
+
+    /* Altura */
+    #bloque-altura { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    #etiqueta-altura { font-size: clamp(14px, 3.5vw, 18px); color: #a0bce8; text-transform: uppercase; letter-spacing: 0.1em; }
+    #altura-valor { font-size: clamp(56px, 20vw, 100px); font-weight: 900; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; line-height: 1; transition: color 0.4s ease; }
+    #altura-unidad { font-size: clamp(18px, 4.5vw, 28px); color: #a0bce8; margin-top: -8px; }
+
+    /* Tendencia */
+    #bloque-tendencia { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.05); border-radius: 100px; padding: 10px 28px; border: 1.5px solid rgba(255,255,255,0.12); }
+    #tendencia-icono { font-size: clamp(28px, 8vw, 48px); line-height: 1; }
+    #tendencia-texto { font-size: clamp(20px, 5.5vw, 34px); font-weight: 700; letter-spacing: 0.05em; }
+
+    /* Colores */
+    .color-subiendo  { color: #ff6b6b; }
+    .color-bajando   { color: #51cf66; }
+    .color-estable   { color: #ffd43b; }
+    .color-sin-dato  { color: #868e96; }
+
+    #ultima-actualizacion { font-size: clamp(12px, 2.8vw, 15px); color: #6888aa; margin-top: -8px; }
+
+    /* Paginador */
+    #paginador { flex: 0 0 auto; padding: clamp(10px, 2.5vh, 20px) clamp(12px, 4vw, 24px); display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #0d1f3c; border-top: 3px solid #2a5caa; }
+    .btn-nav { flex: 1; min-height: clamp(64px, 14vh, 96px); font-size: clamp(20px, 5.5vw, 34px); font-weight: 900; border: none; border-radius: 16px; cursor: pointer; transition: transform 0.12s ease, background 0.15s ease; display: flex; align-items: center; justify-content: center; gap: 8px; letter-spacing: 0.03em; user-select: none; }
+    .btn-nav:active { transform: scale(0.94); }
+    #btn-anterior { background: #1a3a6b; color: #7eb8f7; border: 3px solid #2a5caa; }
+    #btn-siguiente { background: #1a4f8a; color: #ffffff; border: 3px solid #4a8fd4; }
+    #contador { flex: 0 0 auto; text-align: center; color: #6888aa; font-size: clamp(13px, 3vw, 18px); line-height: 1.3; min-width: clamp(50px, 12vw, 80px); }
+    #contador-num { font-size: clamp(20px, 5vw, 28px); font-weight: 700; color: #a0bce8; display: block; }
+
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <header id="encabezado">
+    <div id="titulo-app">💧 Hidrómetros AGP</div>
+    <div id="zona-badge">—</div>
+  </header>
+
+  <main id="contenido">
+    <article id="tarjeta">
+      <div id="zona-label">—</div>
+      <h1 id="nombre-estacion">Cargando...</h1>
+      <div id="separador"></div>
+
+      <div id="bloque-altura">
+        <span id="etiqueta-altura">Nivel del río</span>
+        <span id="altura-valor" class="color-sin-dato">—</span>
+        <span id="altura-unidad">metros</span>
+      </div>
+
+      <div id="bloque-tendencia">
+        <span id="tendencia-icono">⏳</span>
+        <span id="tendencia-texto" class="color-sin-dato">Buscando datos</span>
+      </div>
+
+      <p id="ultima-actualizacion">Conectando con el robot...</p>
+    </article>
+  </main>
+
+  <nav id="paginador">
+    <button id="btn-anterior" class="btn-nav" onclick="navegarA(indiceActual - 1)">◀ Anterior</button>
+    <div id="contador">
+      <span id="contador-num">—</span> de <span id="contador-total">—</span>
+    </div>
+    <button id="btn-siguiente" class="btn-nav" onclick="navegarA(indiceActual + 1)">Siguiente ▶</button>
+  </nav>
+</div>
+
+<script>
+  let estacionesData = [];
   let indiceActual = 0;
   let actualizadoEn = "";
 
@@ -13,7 +111,9 @@ let estacionesData = [];
       actualizadoEn = data.actualizadoEn;
       document.getElementById("contador-total").textContent = estacionesData.length;
       mostrarEstacion(estacionesData[indiceActual]);
-    } catch (e) { }
+    } catch (e) { 
+      console.log("Esperando datos del robot...");
+    }
   }
 
   function navegarA(idx) {
@@ -71,3 +171,6 @@ let estacionesData = [];
   // Arranque
   document.getElementById("contador-num").textContent = 1;
   cargarDatos();
+</script>
+</body>
+</html>
