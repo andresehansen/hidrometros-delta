@@ -1,0 +1,73 @@
+let estacionesData = [];
+  let indiceActual = 0;
+  let actualizadoEn = "";
+
+  async function cargarDatos() {
+    try {
+      // Lee el archivo generado por tu robot en GitHub
+      const resp = await fetch('datos.json?t=' + new Date().getTime());
+      if (!resp.ok) return; // Si el archivo todavía no existe, espera.
+      const data = await resp.json();
+      
+      estacionesData = data.estaciones;
+      actualizadoEn = data.actualizadoEn;
+      document.getElementById("contador-total").textContent = estacionesData.length;
+      mostrarEstacion(estacionesData[indiceActual]);
+    } catch (e) { }
+  }
+
+  function navegarA(idx) {
+    if (estacionesData.length === 0) return;
+    indiceActual = ((idx % estacionesData.length) + estacionesData.length) % estacionesData.length;
+    document.getElementById("contador-num").textContent = indiceActual + 1;
+    mostrarEstacion(estacionesData[indiceActual]);
+  }
+
+  function mostrarEstacion(est) {
+    document.getElementById("nombre-estacion").textContent = est.nombre;
+    document.getElementById("zona-label").textContent = est.zona || "—";
+    
+    const elAltura = document.getElementById("altura-valor");
+    const elTendIcono = document.getElementById("tendencia-icono");
+    const elTendTexto = document.getElementById("tendencia-texto");
+    const elHora = document.getElementById("ultima-actualizacion");
+
+    document.getElementById("zona-badge").innerText = `${est.zona}\nActualizado por Robot: ${actualizadoEn}`;
+
+    elAltura.classList.remove("cargando-estacion");
+    
+    if (est.altura !== null && est.altura !== undefined && !isNaN(est.altura)) {
+      elAltura.textContent = est.altura.toFixed(2);
+      elAltura.className = "";
+      if (est.altura >= 4.5) elAltura.classList.add("color-subiendo");
+      else if (est.altura >= 3.0) elAltura.classList.add("color-estable");
+      else elAltura.classList.add("color-bajando");
+    } else {
+      elAltura.textContent = "S/D";
+      elAltura.className = "color-sin-dato";
+    }
+
+    const config = {
+      "SUBIENDO":  { icono: "↑", texto: "Subiendo",  clase: "color-subiendo" },
+      "BAJANDO":   { icono: "↓", texto: "Bajando",   clase: "color-bajando"  },
+      "ESTABLE":   { icono: "→", texto: "Estable",   clase: "color-estable"  },
+      "—":         { icono: "?", texto: "Sin dato",  clase: "color-sin-dato" },
+    };
+    const t = config[est.tendencia] || config["—"];
+    elTendIcono.textContent = t.icono;
+    elTendTexto.textContent = t.texto;
+    elTendTexto.className = t.clase;
+
+    if (est.fechaHoraAGP) {
+      elHora.textContent = `Dato Oficial: ${est.fechaHoraAGP}`;
+    } else {
+      elHora.textContent = `Última lectura: ${actualizadoEn}`;
+    }
+  }
+
+  // Refresca la pantalla silenciosamente cada minuto
+  setInterval(cargarDatos, 60000);
+  
+  // Arranque
+  document.getElementById("contador-num").textContent = 1;
+  cargarDatos();
