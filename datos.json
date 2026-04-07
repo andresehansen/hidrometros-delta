@@ -1,5 +1,5 @@
 {
-  "actualizadoEn": "07/04/2026, 7:56 PM",
+  "actualizadoEn": "07/04/2026, 8:56 PM",
   "estaciones": [
     {
       "nombre": "Zárate",
@@ -222,7 +222,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/Timbues/index.html",
       "zona": "Confluencia – Océano",
       "altura": null,
-      "tendencia": "—",
+      "tendencia": "ESTABLE",
       "fechaHora": null,
       "ok": false
     },
@@ -284,10 +284,10 @@
       "nombre": "Esquina",
       "url": "http://hidrografia.agpse.gob.ar:53880/Esquina/index.html",
       "zona": "Confluencia – Océano",
-      "altura": null,
-      "tendencia": "—",
+      "altura": 30.01,
+      "tendencia": "BAJANDO",
       "fechaHora": null,
-      "ok": false
+      "ok": true
     },
     {
       "nombre": "Reconquista",
