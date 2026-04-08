@@ -1,6 +1,5 @@
 const fs = require('fs');
 
-// Las URLs de AGP (algunas con el puerto 53880)
 const ESTACIONES = [
   { nombre: "Zárate", url: "http://hidrografia.agpse.gob.ar:53880/zarate/index.html", zona: "Delta / Río de la Plata" },
   { nombre: "Las Rosas", url: "http://hidrografia.agpse.gob.ar:53880/LasRosas/index.html", zona: "Delta / Río de la Plata" },
@@ -45,21 +44,14 @@ const ESTACIONES = [
   { nombre: "Carabelitas", url: "http://hidrografia.agpse.gob.ar:53880/ehmail/Carabelitas2.htm", zona: "Brazo Bravo – Guazú" }
 ];
 
-// Función moderna con "disfraz" de navegador
 async function fetchURL(url) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 12000);
-  
   try {
     const response = await fetch(url, {
-      headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-        "Accept-Language": "es-AR,es;q=0.9,en-US;q=0.8,en;q=0.7"
-      },
+      headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/122.0.0.0 Safari/537.36" },
       signal: controller.signal
     });
-    
     clearTimeout(timeoutId);
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     return await response.text();
@@ -70,29 +62,55 @@ async function fetchURL(url) {
 }
 
 function parsearHTML(html) {
-    let altura = null; let tendencia = "ESTABLE"; let fechaHora = null;
-    const alturaPatterns = [
-      /(\d+\.\d{2})\s*m/i, /<b>\s*(\d+[.,]\d{2,3})\s*<\/b>/i,
-      /altura[^>]*>\s*(\d+[.,]\d{2})/i, /nivel[^>]*>\s*(\d+[.,]\d{2})/i,
-      /"valor"\s*[>:]\s*"?(\d+[.,]\d{2,3})"?/i, />\s*(\d+[.,]\d{2,3})\s*</,
-      /(\d{1,2}[.,]\d{2})/ 
-    ];
-    for (const pat of alturaPatterns) {
-      const m = html.match(pat);
-      if (m) { altura = parseFloat(m[1].replace(",", ".")); if (altura > 0 && altura < 15) break; }
+    let altura = null; 
+    let tendencia = "ESTABLE"; 
+    let fechaHora = null;
+
+    // Limpiamos el texto para que sea más fácil de buscar
+    const cleanHtml = html.replace(/\r?\n|\r/g, " ");
+
+    // 1. Buscamos específicamente las palabras "Nivel" o "Altura" seguidas de un número
+    const regexNivel = /(?:nivel|altura|cota|agua)[\s\S]{0,50}?([-]?\d{1,2}[.,]\d{2})/i;
+    // 2. Buscamos un número que esté estrictamente acompañado de la letra "m" (metros)
+    const regexMts = /([-]?\d{1,2}[.,]\d{2})\s*(?:m|mts|metros)/i;
+
+    const patterns = [regexNivel, regexMts];
+
+    for (let p of patterns) {
+        let m = cleanHtml.match(p);
+        if (m) {
+            let val = parseFloat(m[1].replace(',', '.'));
+            // Filtro Anti-Temperatura: Solo aceptamos valores lógicos de río (-2 a 12 metros)
+            if (val > -2 && val < 12) { 
+                altura = val; break; 
+            }
+        }
     }
-    if (/subi[eo]ndo|↑|▲|up|subida/i.test(html)) tendencia = "SUBIENDO";
-    if (/bajando|descend|↓|▼|down|bajada/i.test(html)) tendencia = "BAJANDO";
-    if (/estable|igual|→|►/i.test(html)) tendencia = "ESTABLE";
+
+    // Si las palabras clave fallan, buscamos cualquier número lógico en toda la página
+    if (altura === null) {
+        const todosLosNumeros = [...cleanHtml.matchAll(/([-]?\d{1,2}[.,]\d{2})/g)];
+        for (let numMatch of todosLosNumeros) {
+            let val = parseFloat(numMatch[1].replace(',', '.'));
+            if (val > -2 && val < 12) {
+                altura = val; break;
+            }
+        }
+    }
+
+    if (/subi[eo]ndo|↑|▲|up|subida/i.test(cleanHtml)) tendencia = "SUBIENDO";
+    if (/bajando|descend|↓|▼|down|bajada/i.test(cleanHtml)) tendencia = "BAJANDO";
+    if (/estable|igual|→|►/i.test(cleanHtml)) tendencia = "ESTABLE";
     
-    const fechaMatch = html.match(/(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})[^\d]*(\d{1,2}:\d{2})/);
+    const fechaMatch = cleanHtml.match(/(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})[^\d]*(\d{1,2}:\d{2})/);
     if (fechaMatch) fechaHora = `${fechaMatch[1]} ${fechaMatch[2]}`;
+    
     return { altura, tendencia, fechaHora };
 }
 
 function obtenerHoraFormateada() {
     const d = new Date();
-    d.setHours(d.getHours() - 3); // Ajuste a Hora Argentina
+    d.setHours(d.getHours() - 3);
     let horas = d.getHours();
     const minutos = d.getMinutes().toString().padStart(2, '0');
     const ampm = horas >= 12 ? 'PM' : 'AM';
@@ -102,34 +120,45 @@ function obtenerHoraFormateada() {
     return `${dia}/${mes}/${d.getFullYear()}, ${horas}:${minutos} ${ampm}`;
 }
 
+async function procesarEstacion(est) {
+    // Si la URL principal falla, el robot intentará automáticamente la versión moderna sin puerto
+    let urlSecundaria = est.url.includes(':53880') 
+        ? est.url.replace(':53880', '').replace('http:', 'https:') 
+        : est.url.replace('https:', 'http:').replace('.ar/', '.ar:53880/');
+        
+    try {
+        let html = await fetchURL(est.url);
+        let datos = parsearHTML(html);
+        
+        if (datos.altura === null) {
+            // Intento secundario si la página cargó pero estaba vacía
+            let html2 = await fetchURL(urlSecundaria);
+            let datos2 = parsearHTML(html2);
+            if (datos2.altura !== null) return { ...est, ...datos2, ok: true };
+        }
+        return { ...est, ...datos, ok: datos.altura !== null };
+    } catch(e) {
+        try {
+            // Intento secundario si la red bloqueó la URL primaria (Caso Zárate/Escobar)
+            let html2 = await fetchURL(urlSecundaria);
+            let datos2 = parsearHTML(html2);
+            return { ...est, ...datos2, ok: datos2.altura !== null };
+        } catch(e2) {
+            return { ...est, altura: null, tendencia: "—", fechaHora: null, ok: false };
+        }
+    }
+}
+
 async function main() {
   const resultados = [];
-  console.log("Iniciando recolección de alturas...");
-
   for (const est of ESTACIONES) {
-    try {
-      console.log(`Buscando: ${est.nombre}...`);
-      const html = await fetchURL(est.url);
-      const datos = parsearHTML(html);
-      
-      if (datos.altura === null) {
-         console.log(`❌ Sin altura detectada en el código para: ${est.nombre}`);
-      } else {
-         console.log(`✅ Éxito en ${est.nombre}: ${datos.altura}m`);
-      }
-      
-      resultados.push({ ...est, ...datos, ok: datos.altura !== null });
-    } catch (e) {
-      console.log(`❌ Error de conexión con ${est.nombre}: ${e.message}`);
-      resultados.push({ ...est, altura: null, tendencia: "—", fechaHora: null, ok: false });
-    }
-    // Pausa inteligente para no saturar al servidor
-    await new Promise(r => setTimeout(r, 1000)); 
+    const dataEstacion = await procesarEstacion(est);
+    resultados.push(dataEstacion);
+    await new Promise(r => setTimeout(r, 800)); // Pausa para no saturar al servidor
   }
 
   const dataFinal = { actualizadoEn: obtenerHoraFormateada(), estaciones: resultados };
   fs.writeFileSync('datos.json', JSON.stringify(dataFinal, null, 2));
-  console.log("Archivo datos.json guardado correctamente.");
 }
 
 main();
