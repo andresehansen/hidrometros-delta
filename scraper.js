@@ -61,128 +61,70 @@ async function fetchURL(url) {
   }
 }
 
-function parsearHTML(html) {
-    let altura = null; let tendencia = "ESTABLE"; let fechaHora = null;
-
-    const textoPuro = html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
-    const todosLosNumeros = [...textoPuro.matchAll(/([-]?\d{1,2}[.,]\d{2})/g)];
+// Función maestra para procesar cualquier archivo .dat (altura o viento)
+function procesarCSV(csvText, tipo) {
+    let lineas = csvText.trim().split('\n');
+    if (lineas.length < 4) return null;
     
-    for (let n of todosLosNumeros) {
-        let index = n.index;
-        let contextoPrevio = textoPuro.substring(Math.max(0, index - 45), index).toLowerCase();
-        let contextoPosterior = textoPuro.substring(index, index + 20).toLowerCase();
-        
-        if (contextoPrevio.includes("cero") || contextoPrevio.includes("bater") || 
-            contextoPrevio.includes("temp") || contextoPrevio.includes("predic") ||
-            contextoPrevio.includes("escala") || contextoPrevio.includes("referencia")) {
-            continue; 
-        }
-        
-        let val = parseFloat(n[1].replace(',', '.'));
-        if (val > -3 && val < 12) {
-            if (contextoPrevio.includes("nivel") || contextoPrevio.includes("altura") || contextoPosterior.includes("m")) {
-                altura = val; break;
-            } else if (altura === null) {
-                altura = val; 
+    let cabeceras = (lineas[0] + "," + lineas[1]).toLowerCase().replace(/['"]/g, '').split(',');
+    let idxValor = -1;
+    let idxDir = -1;
+
+    // Autodetectar las columnas correctas según si buscamos agua o viento
+    if (tipo === 'altura') {
+        for (let j = 0; j < cabeceras.length; j++) {
+            if (cabeceras[j].includes("nivel") || cabeceras[j].includes("altura") || cabeceras[j].includes("marea") || cabeceras[j].includes("cota")) {
+                idxValor = j % lineas[1].split(',').length; break;
             }
         }
+        if (idxValor === -1) idxValor = 3; // Columna por defecto en boyas antiguas
+    } else if (tipo === 'viento') {
+        for (let j = 0; j < cabeceras.length; j++) {
+            if (cabeceras[j].includes("velocidad") || cabeceras[j].includes("viento") || cabeceras[j].includes("speed")) {
+                idxValor = j % lineas[1].split(',').length;
+            }
+            if (cabeceras[j].includes("direc") || cabeceras[j].includes("dir")) {
+                idxDir = j % lineas[1].split(',').length;
+            }
+        }
+        if (idxValor === -1) idxValor = 3;
     }
 
-    if (/subi[eo]ndo|↑|▲|up|subida|creci/i.test(textoPuro)) tendencia = "SUBIENDO";
-    if (/bajando|descend|↓|▼|down|bajada|bajan/i.test(textoPuro)) tendencia = "BAJANDO";
-    if (/estable|igual|→|►/i.test(textoPuro)) tendencia = "ESTABLE";
-    
-    let fechaMatch = textoPuro.match(/(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})[^\d]*(\d{1,2}:\d{2})/);
-    if (fechaMatch) fechaHora = `${fechaMatch[1]} ${fechaMatch[2]}`;
-    
-    return { altura, tendencia, fechaHora };
-}
+    let historial = [];
+    let valorActual = null;
+    let dirActual = null;
 
-function obtenerHoraFormateada() {
-    const d = new Date();
-    d.setHours(d.getHours() - 3);
-    let horas = d.getHours();
-    const minutos = d.getMinutes().toString().padStart(2, '0');
-    const ampm = horas >= 12 ? 'PM' : 'AM';
-    horas = horas % 12; horas = horas ? horas : 12; 
-    return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}, ${horas}:${minutos} ${ampm}`;
-}
+    // Leer el archivo de abajo hacia arriba para obtener los datos más recientes
+    for (let i = lineas.length - 1; i > 2 && historial.length < 5; i--) {
+        let col = lineas[i].split(',');
+        if (col.length > idxValor && !col[idxValor].includes("NAN")) {
+            let val = parseFloat(col[idxValor]);
+            
+            // Filtro de cordura
+            let valido = tipo === 'altura' ? (val > -3 && val < 12) : (val >= 0 && val < 200);
+            
+            if (!isNaN(val) && valido) {
+                let fechaRaw = col[0].replace(/['"]/g, '');
+                let horaMatch = fechaRaw.match(/(\d{1,2}:\d{2})/);
+                let hora = horaMatch ? horaMatch[1] : fechaRaw;
 
-async function procesarEstacion(est) {
-    let url2 = est.url.replace(':53880', '').replace('http:', 'https:');
-    let url3 = url2.replace('hidrografia.agpse', 'hidrografia2.agpse'); 
-    let urls = [est.url, url2, url3];
-
-    for (let currentUrl of urls) {
-        try {
-            let html = await fetchURL(currentUrl);
-
-            // MAGIA 0: Seguir redirecciones "Meta Refresh" (Ej: Magdalena)
-            let metaMatch = html.match(/<meta[^>]*url=([^"'>\s]+)/i);
-            if (metaMatch) {
-                let redirUrl = new URL(metaMatch[1], currentUrl).href;
-                html = await fetchURL(redirUrl);
-                currentUrl = redirUrl;
-            }
-
-            // MAGIA 1: Entrar a los Iframes ("Cáscaras vacías")
-            let iframeMatch = html.match(/<iframe[^>]*src=['"]([^'"]*marea\.html)['"]/i);
-            if (iframeMatch) {
-                let iframeUrl = new URL(iframeMatch[1], currentUrl).href;
-                html = await fetchURL(iframeUrl);
-                currentUrl = iframeUrl;
-            }
-
-            // MAGIA 2: Archivos .dat (Ahora busca en CUALQUIER carpeta, ya no lo limita a /histdat/)
-            let datMatch = html.match(/fetch\(\s*['"]([^'"]+\.dat)['"]\s*\)/i);
-            if (datMatch) {
-                let datUrl = new URL(datMatch[1], currentUrl).href;
-                let csvData = await fetchURL(datUrl); 
-
-                let lineas = csvData.trim().split('\n');
-                for (let i = lineas.length - 1; i >= 0; i--) {
-                    let columnas = lineas[i].split(',');
-                    if (columnas.length >= 4 && !columnas[3].includes("NAN")) {
-                        let val = parseFloat(columnas[3]);
-                        if (!isNaN(val) && val > -3 && val < 12) {
-                            let fechaRaw = columnas[0].replace(/['"]/g, '');
-                            let tendencia = "ESTABLE";
-                            if (i > 0) {
-                                let colPrev = lineas[i-1].split(',');
-                                if(colPrev.length >=4 && !colPrev[3].includes("NAN")){
-                                    let valPrev = parseFloat(colPrev[3]);
-                                    if (val > valPrev + 0.02) tendencia = "SUBIENDO";
-                                    else if (val < valPrev - 0.02) tendencia = "BAJANDO";
-                                }
-                            }
-                            return { ...est, altura: val, tendencia: tendencia, fechaHora: fechaRaw, ok: true };
-                        }
+                if (valorActual === null) {
+                    valorActual = val;
+                    if (idxDir !== -1 && col.length > idxDir) {
+                        let dval = parseFloat(col[idxDir]);
+                        dirActual = !isNaN(dval) ? dval : col[idxDir].replace(/['"]/g, '').trim();
                     }
+                } else {
+                    // Guardamos los registros previos para armar la lista
+                    historial.push({ hora: hora, valor: val });
                 }
             }
-
-            // Lectura normal si la página usa texto clásico
-            let datos = parsearHTML(html);
-            if (datos.altura !== null) {
-                return { ...est, ...datos, ok: true };
-            }
-        } catch(e) {
-            // Silencioso, pasa a la siguiente URL del intento
         }
     }
-
-    return { ...est, altura: null, tendencia: "—", fechaHora: null, ok: false };
+    
+    return { valorActual, dirActual, historial };
 }
 
-async function main() {
-  const resultados = [];
-  for (const est of ESTACIONES) {
-    const dataEstacion = await procesarEstacion(est);
-    resultados.push(dataEstacion);
-  }
-
-  const dataFinal = { actualizadoEn: obtenerHoraFormateada(), estaciones: resultados };
-  fs.writeFileSync('datos.json', JSON.stringify(dataFinal, null, 2));
-}
-
-main();
+function parsearHTML(html) {
+    // Respaldo por si es una página sin tablas, solo texto (ej: Paraná)
+    let altura =
