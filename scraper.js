@@ -46,7 +46,7 @@ const ESTACIONES = [
 
 async function fetchURL(url) {
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 12000); // Le damos un poquito más de tiempo
+  const timeoutId = setTimeout(() => controller.abort(), 12000);
   try {
     const response = await fetch(url, {
       headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/122.0.0.0 Safari/537.36" },
@@ -113,32 +113,31 @@ async function procesarEstacion(est) {
     let url3 = url2.replace('hidrografia.agpse', 'hidrografia2.agpse'); 
     let urls = [est.url, url2, url3];
 
-    let htmlEvidencia = ""; // Guardaremos el HTML para el modo detective
-
     for (let currentUrl of urls) {
         try {
             let html = await fetchURL(currentUrl);
-            htmlEvidencia = html; // Guardamos lo que nos respondió por si falla la extracción
 
-            // MAGIA 1: Iframes
-            let iframeMatch = html.match(/<iframe[^>]*src=['"]([^'"]*marea\.html)['"]/i);
-            if (iframeMatch) {
-                let iframeUrl = iframeMatch[1];
-                if (!iframeUrl.startsWith('http')) {
-                    let baseUrl = new URL(currentUrl);
-                    iframeUrl = new URL(iframeUrl, baseUrl).href;
-                }
-                html = await fetchURL(iframeUrl); 
-                htmlEvidencia = html; // Actualizamos la evidencia con el contenido real
+            // MAGIA 0: Seguir redirecciones "Meta Refresh" (Ej: Magdalena)
+            let metaMatch = html.match(/<meta[^>]*url=([^"'>\s]+)/i);
+            if (metaMatch) {
+                let redirUrl = new URL(metaMatch[1], currentUrl).href;
+                html = await fetchURL(redirUrl);
+                currentUrl = redirUrl;
             }
 
-            // MAGIA 2: Archivos .dat
-            let datMatch = html.match(/fetch\(['"](\/histdat\/[^'"]+\.dat)['"]\)/i);
+            // MAGIA 1: Entrar a los Iframes ("Cáscaras vacías")
+            let iframeMatch = html.match(/<iframe[^>]*src=['"]([^'"]*marea\.html)['"]/i);
+            if (iframeMatch) {
+                let iframeUrl = new URL(iframeMatch[1], currentUrl).href;
+                html = await fetchURL(iframeUrl);
+                currentUrl = iframeUrl;
+            }
+
+            // MAGIA 2: Archivos .dat (Ahora busca en CUALQUIER carpeta, ya no lo limita a /histdat/)
+            let datMatch = html.match(/fetch\(\s*['"]([^'"]+\.dat)['"]\s*\)/i);
             if (datMatch) {
-                let datUrl = datMatch[1];
-                let baseUrl = new URL(currentUrl);
-                let fullDatUrl = new URL(datUrl, baseUrl).href;
-                let csvData = await fetchURL(fullDatUrl); 
+                let datUrl = new URL(datMatch[1], currentUrl).href;
+                let csvData = await fetchURL(datUrl); 
 
                 let lineas = csvData.trim().split('\n');
                 for (let i = lineas.length - 1; i >= 0; i--) {
@@ -162,24 +161,14 @@ async function procesarEstacion(est) {
                 }
             }
 
-            // Lectura normal
+            // Lectura normal si la página usa texto clásico
             let datos = parsearHTML(html);
             if (datos.altura !== null) {
                 return { ...est, ...datos, ok: true };
             }
         } catch(e) {
-            // Silencioso, pasa a la siguiente URL
+            // Silencioso, pasa a la siguiente URL del intento
         }
-    }
-
-    // --- MODO FRANCOTIRADOR ACTIVADO ---
-    // Si agotamos las 3 URLs, la página cargó (tenemos htmlEvidencia) pero NO encontramos altura:
-    if (htmlEvidencia !== "") {
-         console.log(`\n=== 🚨 FALLA DETECTADA EN: ${est.nombre} ===`);
-         console.log(`Pudimos entrar, pero no se encontró un número válido.`);
-         // Imprimimos un resumen del código fuente para analizarlo
-         console.log(htmlEvidencia.replace(/\s+/g, ' ').substring(0, 800));
-         console.log(`===========================================\n`);
     }
 
     return { ...est, altura: null, tendencia: "—", fechaHora: null, ok: false };
