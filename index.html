@@ -6,42 +6,22 @@
   <title>Hidrómetros – Delta</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    html, body {
-      width: 100%; height: 100%; overflow: hidden; touch-action: none; 
-      background: #0a1628; color: #f0f4ff; font-family: 'Segoe UI', Arial, sans-serif;
-    }
+    html, body { width: 100%; height: 100%; overflow: hidden; touch-action: none; background: #0a1628; color: #f0f4ff; font-family: 'Segoe UI', Arial, sans-serif; }
     #app { display: flex; flex-direction: column; width: 100vw; height: 100vh; }
 
-    /* CONTROLES SUPERIORES MASIVOS */
     #encabezado { flex: 0 0 auto; background: #0d1f3c; padding: 15px; display: flex; flex-direction: column; gap: 15px; border-bottom: 4px solid #2a5caa; }
-    
-    .btn-masivo { 
-      width: 100%; 
-      padding: 20px; 
-      font-size: clamp(24px, 6vw, 36px); 
-      font-weight: 900; 
-      border: 4px solid #4a8fd4; 
-      border-radius: 15px; 
-      background: #1a4f8a; 
-      color: #ffffff; 
-      cursor: pointer; 
-      transition: transform 0.1s;
-    }
+    .btn-masivo { width: 100%; padding: 20px; font-size: clamp(24px, 6vw, 36px); font-weight: 900; border: 4px solid #4a8fd4; border-radius: 15px; background: #1a4f8a; color: #ffffff; cursor: pointer; transition: transform 0.1s; }
     .btn-masivo:active { transform: scale(0.97); background: #2a5caa; }
 
-    /* Contenido Central */
     #contenido { flex: 1 1 auto; padding: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     #tarjeta { background: #0d1f3c; border: 4px solid #2a5caa; border-radius: 20px; width: 100%; max-width: 700px; padding: 30px 20px; text-align: center; display: flex; flex-direction: column; gap: 20px; }
-    
     #nombre-estacion { font-size: clamp(40px, 9vw, 64px); font-weight: 900; color: #ffffff; margin-bottom: 10px; line-height: 1.1; }
     
-    /* Vistas Actuales */
     .vista-actual { display: flex; flex-direction: column; align-items: center; gap: 15px; }
     .valor-gigante { font-size: clamp(100px, 28vw, 160px); font-weight: 900; line-height: 1; margin: 10px 0; }
     .unidad { font-size: clamp(32px, 8vw, 42px); color: #a0bce8; font-weight: bold; }
     .tendencia { font-size: clamp(34px, 8vw, 46px); font-weight: 900; padding: 15px 30px; border-radius: 50px; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); margin-top: 10px;}
 
-    /* Vistas Históricas (Lista gigante en lugar de gráfico para mantener código web simple y robusto) */
     .vista-historico { width: 100%; text-align: left; }
     .lista-historial { list-style: none; padding: 0; margin: 0; width: 100%; }
     .lista-historial li { font-size: clamp(30px, 7vw, 42px); padding: 20px 10px; border-bottom: 2px solid #2a5caa; display: flex; justify-content: space-between; align-items: center;}
@@ -49,14 +29,9 @@
     .hist-hora { color: #a0bce8; font-weight: bold; }
     .hist-valor { font-weight: 900; color: #ffffff; background: #1a3a6b; padding: 5px 15px; border-radius: 10px;}
 
-    /* Colores */
-    .color-subiendo { color: #ff6b6b; }
-    .color-bajando { color: #51cf66; }
-    .color-estable { color: #ffd43b; }
-    .color-sin-dato { color: #868e96; }
+    .color-subiendo { color: #ff6b6b; } .color-bajando { color: #51cf66; } .color-estable { color: #ffd43b; } .color-sin-dato { color: #868e96; }
     .oculto { display: none !important; }
 
-    /* Navegación Inferior */
     #paginador { flex: 0 0 auto; padding: 15px; display: flex; align-items: center; justify-content: space-between; gap: 15px; background: #0d1f3c; border-top: 4px solid #2a5caa; }
     .btn-nav { flex: 1; padding: 30px 10px; font-size: clamp(28px, 7.5vw, 42px); font-weight: 900; border: none; border-radius: 15px; cursor: pointer; }
     #btn-anterior { background: #1a3a6b; color: #7eb8f7; border: 4px solid #2a5caa; }
@@ -73,18 +48,16 @@
 
   <main id="contenido">
     <article id="tarjeta">
-      <h1 id="nombre-estacion">Cargando...</h1>
+      <h1 id="nombre-estacion">Conectando...</h1>
 
       <div id="panel-altura">
         <div id="altura-actual" class="vista-actual">
           <span class="valor-gigante" id="val-altura">—</span>
           <span class="unidad">metros</span>
-          <span class="tendencia" id="tendencia-altura">Conectando...</span>
+          <span class="tendencia" id="tendencia-altura">Aguarde...</span>
         </div>
         <div id="altura-historial" class="vista-historico oculto">
-          <ul class="lista-historial" id="lista-altura">
-             <li><span class="hist-hora">Aguarde...</span><span class="hist-valor">—</span></li>
-          </ul>
+          <ul class="lista-historial" id="lista-altura"></ul>
         </div>
       </div>
 
@@ -92,15 +65,12 @@
         <div id="viento-actual" class="vista-actual">
           <span class="valor-gigante" id="val-viento">—</span>
           <span class="unidad">km/h</span>
-          <span class="tendencia" id="tendencia-viento">Dirección: —</span>
+          <span class="tendencia" id="tendencia-viento">Aguarde...</span>
         </div>
         <div id="viento-historial" class="vista-historico oculto">
-          <ul class="lista-historial" id="lista-viento">
-             <li><span class="hist-hora">Aguarde...</span><span class="hist-valor">—</span></li>
-          </ul>
+          <ul class="lista-historial" id="lista-viento"></ul>
         </div>
       </div>
-
     </article>
   </main>
 
@@ -113,60 +83,46 @@
 <script>
   let estacionesData = [];
   let indiceActual = 0;
-  let viendoAltura = true; // true = Altura, false = Viento
-  let viendoActual = true; // true = Actual, false = Historial
+  let viendoAltura = true; 
+  let viendoActual = true; 
 
   async function cargarDatos() {
     try {
       const resp = await fetch('datos.json?t=' + new Date().getTime());
-      if (!resp.ok) {
-         document.getElementById('nombre-estacion').textContent = "Esperando al robot...";
-         return;
-      }
+      if (!resp.ok) { document.getElementById('nombre-estacion').textContent = "Esperando robot..."; return; }
       const data = await resp.json();
       if (data && data.estaciones) {
           estacionesData = data.estaciones;
           renderizarPantalla();
       }
-    } catch (e) { 
-      document.getElementById('nombre-estacion').textContent = "Error de red";
-    }
+    } catch (e) { document.getElementById('nombre-estacion').textContent = "Error de red"; }
   }
 
-  // --- LAS NUEVAS FUNCIONES DE UN SOLO TOQUE ---
   function toggleCategoria() {
-    viendoAltura = !viendoAltura; // Invierte el estado
+    viendoAltura = !viendoAltura;
     const btn = document.getElementById('btn-toggle-categoria');
-    
     if (viendoAltura) {
-        btn.innerHTML = "🌊 Mostrando: Altura Río";
-        btn.style.background = "#1a4f8a"; // Azul agua
+        btn.innerHTML = "🌊 Mostrando: Altura Río"; btn.style.background = "#1a4f8a";
         document.getElementById('panel-altura').classList.remove('oculto');
         document.getElementById('panel-viento').classList.add('oculto');
     } else {
-        btn.innerHTML = "💨 Mostrando: Viento";
-        btn.style.background = "#2f4f4f"; // Gris viento
+        btn.innerHTML = "💨 Mostrando: Viento"; btn.style.background = "#2f4f4f";
         document.getElementById('panel-altura').classList.add('oculto');
         document.getElementById('panel-viento').classList.remove('oculto');
     }
   }
 
   function toggleVista() {
-    viendoActual = !viendoActual; // Invierte el estado
+    viendoActual = !viendoActual;
     const btn = document.getElementById('btn-toggle-vista');
-    
     if (viendoActual) {
         btn.innerHTML = "👁️ Vista: Estado Actual";
-        document.getElementById('altura-actual').classList.remove('oculto');
-        document.getElementById('altura-historial').classList.add('oculto');
-        document.getElementById('viento-actual').classList.remove('oculto');
-        document.getElementById('viento-historial').classList.add('oculto');
+        document.getElementById('altura-actual').classList.remove('oculto'); document.getElementById('altura-historial').classList.add('oculto');
+        document.getElementById('viento-actual').classList.remove('oculto'); document.getElementById('viento-historial').classList.add('oculto');
     } else {
         btn.innerHTML = "📜 Vista: Últimas Horas";
-        document.getElementById('altura-actual').classList.add('oculto');
-        document.getElementById('altura-historial').classList.remove('oculto');
-        document.getElementById('viento-actual').classList.add('oculto');
-        document.getElementById('viento-historial').classList.remove('oculto');
+        document.getElementById('altura-actual').classList.add('oculto'); document.getElementById('altura-historial').classList.remove('oculto');
+        document.getElementById('viento-actual').classList.add('oculto'); document.getElementById('viento-historial').classList.remove('oculto');
     }
   }
 
@@ -178,57 +134,45 @@
 
   function renderizarPantalla() {
     if (!estacionesData || estacionesData.length === 0) return;
-    
     try {
         const est = estacionesData[indiceActual];
         document.getElementById('nombre-estacion').textContent = est.nombre;
 
-        // --- RENDER ALTURA ---
+        // RENDER ALTURA
         const valAltura = document.getElementById('val-altura');
         const tendAltura = document.getElementById('tendencia-altura');
-        
         let numAltura = Number(est.altura);
         if (est.altura !== null && !isNaN(numAltura)) {
-          valAltura.textContent = numAltura.toFixed(2);
-          valAltura.className = "valor-gigante";
+          valAltura.textContent = numAltura.toFixed(2); valAltura.className = "valor-gigante";
           if (numAltura >= 4.0) valAltura.classList.add("color-subiendo");
           else if (numAltura >= 2.0) valAltura.classList.add("color-estable");
           else valAltura.classList.add("color-bajando");
         } else {
-          valAltura.textContent = "S/D";
-          valAltura.className = "valor-gigante color-sin-dato";
+          valAltura.textContent = "S/D"; valAltura.className = "valor-gigante color-sin-dato";
         }
-
         const iconos = { "SUBIENDO": "↑ Subiendo", "BAJANDO": "↓ Bajando", "ESTABLE": "→ Estable", "—": "? Sin dato" };
         tendAltura.textContent = iconos[est.tendencia] || iconos["—"];
 
-        // HISTORIAL ALTURA (Lista con diseño de botones para alta legibilidad)
         const listaAlt = document.getElementById('lista-altura');
         listaAlt.innerHTML = "";
         if (est.historialAltura && est.historialAltura.length > 0) {
             est.historialAltura.forEach(h => {
-                let v = Number(h.valor);
-                let displayVal = isNaN(v) ? "—" : v.toFixed(2) + " m";
+                let displayVal = isNaN(Number(h.valor)) ? "—" : Number(h.valor).toFixed(2) + " m";
                 listaAlt.innerHTML += `<li><span class="hist-hora">Hora: ${h.hora}</span><span class="hist-valor">${displayVal}</span></li>`;
             });
-        } else {
-            listaAlt.innerHTML = `<li><span class="hist-hora">Sin historial oficial</span><span class="hist-valor">—</span></li>`;
-        }
+        } else { listaAlt.innerHTML = `<li><span class="hist-hora">Sin historial oficial</span><span class="hist-valor">—</span></li>`; }
 
-        // --- RENDER VIENTO ---
+        // RENDER VIENTO
         const valViento = document.getElementById('val-viento');
         const tendViento = document.getElementById('tendencia-viento');
-        
         let numViento = Number(est.vientoActual);
         if (est.vientoActual !== null && !isNaN(numViento)) {
-            valViento.textContent = numViento.toFixed(1);
-            valViento.className = "valor-gigante";
+            valViento.textContent = numViento.toFixed(1); valViento.className = "valor-gigante";
             let dir = est.vientoDireccion ? est.vientoDireccion : "Var";
             if (!isNaN(Number(dir))) dir = dir + "°";
             tendViento.textContent = "Dirección: " + dir;
         } else {
-            valViento.textContent = "S/D";
-            valViento.className = "valor-gigante color-sin-dato";
+            valViento.textContent = "S/D"; valViento.className = "valor-gigante color-sin-dato";
             tendViento.textContent = "Estación sin sensor de viento";
         }
 
@@ -236,16 +180,11 @@
         listaViento.innerHTML = "";
         if (est.historialViento && est.historialViento.length > 0) {
             est.historialViento.forEach(h => {
-                let v = Number(h.valor);
-                let displayVal = isNaN(v) ? "—" : v.toFixed(1) + " km/h";
+                let displayVal = isNaN(Number(h.valor)) ? "—" : Number(h.valor).toFixed(1) + " km/h";
                 listaViento.innerHTML += `<li><span class="hist-hora">Hora: ${h.hora}</span><span class="hist-valor">${displayVal}</span></li>`;
             });
-        } else {
-            listaViento.innerHTML = `<li><span class="hist-hora">Sin historial oficial</span><span class="hist-valor">—</span></li>`;
-        }
-    } catch(error) {
-        document.getElementById('nombre-estacion').textContent = "Ajustando datos...";
-    }
+        } else { listaViento.innerHTML = `<li><span class="hist-hora">Sin historial oficial</span><span class="hist-valor">—</span></li>`; }
+    } catch(e) {}
   }
 
   setInterval(cargarDatos, 60000); 
