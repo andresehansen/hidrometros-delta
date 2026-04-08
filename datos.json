@@ -1,5 +1,5 @@
 {
-  "actualizadoEn": "08/04/2026, 7:21 AM",
+  "actualizadoEn": "08/04/2026, 8:41 AM",
   "estaciones": [
     {
       "nombre": "Zárate",
@@ -7,17 +7,23 @@
       "zona": "Delta / Río de la Plata",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
       "nombre": "Las Rosas",
       "url": "http://hidrografia.agpse.gob.ar:53880/LasRosas/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 1.42,
-      "tendencia": "ESTABLE",
-      "fechaHora": "2026-04-08 07:10:00",
-      "ok": true
+      "altura": null,
+      "tendencia": "—",
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
+      "ok": false
     },
     {
       "nombre": "Escobar",
@@ -25,16 +31,43 @@
       "zona": "Delta / Río de la Plata",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
       "nombre": "Braga",
       "url": "http://hidrografia.agpse.gob.ar:53880/Braga/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 2.223,
-      "tendencia": "ESTABLE",
-      "fechaHora": "2026-04-08 07:10:00",
+      "altura": 3.763156,
+      "tendencia": "—",
+      "historialAltura": [
+        {
+          "hora": "08:20",
+          "valor": 3.75607
+        },
+        {
+          "hora": "08:10",
+          "valor": 3.752635
+        },
+        {
+          "hora": "08:00",
+          "valor": 3.719427
+        },
+        {
+          "hora": "07:50",
+          "valor": 3.748544
+        },
+        {
+          "hora": "07:40",
+          "valor": 3.732698
+        }
+      ],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": true
     },
     {
@@ -43,17 +76,23 @@
       "zona": "Delta / Río de la Plata",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
       "nombre": "Baradero",
       "url": "http://hidrografia.agpse.gob.ar:53880/Baradero/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 0.686,
-      "tendencia": "ESTABLE",
-      "fechaHora": "2026-04-08 07:00:00",
-      "ok": true
+      "altura": null,
+      "tendencia": "—",
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
+      "ok": false
     },
     {
       "nombre": "Ibicuy",
@@ -61,25 +100,55 @@
       "zona": "Delta / Río de la Plata",
       "altura": -2.45,
       "tendencia": "ESTABLE",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": true
     },
     {
       "nombre": "Brazo Largo",
       "url": "http://hidrografia.agpse.gob.ar:53880/BrazoLargo/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 0.899,
-      "tendencia": "SUBIENDO",
-      "fechaHora": "2026-04-08 07:00:00",
-      "ok": true
+      "altura": null,
+      "tendencia": "—",
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
+      "ok": false
     },
     {
       "nombre": "Desembocadura",
       "url": "http://hidrografia.agpse.gob.ar:53880/Desembocadura/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 1.439535,
-      "tendencia": "ESTABLE",
-      "fechaHora": "2026-04-08 07:00:00",
+      "altura": 2.285679,
+      "tendencia": "SUBIENDO",
+      "historialAltura": [
+        {
+          "hora": "08:00",
+          "valor": 2.259002
+        },
+        {
+          "hora": "07:40",
+          "valor": 2.227699
+        },
+        {
+          "hora": "07:20",
+          "valor": 2.20285
+        },
+        {
+          "hora": "07:00",
+          "valor": 2.179535
+        },
+        {
+          "hora": "06:40",
+          "valor": 2.162376
+        }
+      ],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": true
     },
     {
@@ -88,7 +157,10 @@
       "zona": "Delta / Río de la Plata",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
@@ -97,7 +169,10 @@
       "zona": "Delta / Río de la Plata",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
@@ -106,7 +181,10 @@
       "zona": "Delta / Río de la Plata",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
@@ -115,7 +193,10 @@
       "zona": "Delta / Río de la Plata",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
@@ -124,7 +205,10 @@
       "zona": "Delta / Río de la Plata",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
@@ -133,7 +217,10 @@
       "zona": "Delta / Río de la Plata",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
@@ -142,17 +229,23 @@
       "zona": "Confluencia – Océano",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
       "nombre": "Bifurcación",
       "url": "http://hidrografia.agpse.gob.ar:53880/ehmail/bifurcacion2.htm",
       "zona": "Confluencia – Océano",
-      "altura": 0.58,
-      "tendencia": "ESTABLE",
-      "fechaHora": "2026-04-08 07:00:00",
-      "ok": true
+      "altura": null,
+      "tendencia": "—",
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
+      "ok": false
     },
     {
       "nombre": "Vuelta de Obligado",
@@ -160,7 +253,10 @@
       "zona": "Confluencia – Océano",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
@@ -169,7 +265,10 @@
       "zona": "Confluencia – Océano",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
@@ -178,7 +277,10 @@
       "zona": "Confluencia – Océano",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
@@ -187,7 +289,10 @@
       "zona": "Confluencia – Océano",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
@@ -196,7 +301,10 @@
       "zona": "Confluencia – Océano",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
@@ -205,7 +313,10 @@
       "zona": "Confluencia – Océano",
       "altura": 6.74,
       "tendencia": "ESTABLE",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": true
     },
     {
@@ -214,7 +325,10 @@
       "zona": "Confluencia – Océano",
       "altura": -1.95,
       "tendencia": "ESTABLE",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": true
     },
     {
@@ -223,16 +337,43 @@
       "zona": "Confluencia – Océano",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
       "nombre": "Diamante",
       "url": "http://hidrografia.agpse.gob.ar:53880/Diamante/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 2.576,
-      "tendencia": "ESTABLE",
-      "fechaHora": "2026-04-07 20:00:00",
+      "altura": 11,
+      "tendencia": "SUBIENDO",
+      "historialAltura": [
+        {
+          "hora": "15:00",
+          "valor": 10
+        },
+        {
+          "hora": "14:30",
+          "valor": 9
+        },
+        {
+          "hora": "14:00",
+          "valor": 8
+        },
+        {
+          "hora": "13:30",
+          "valor": 7
+        },
+        {
+          "hora": "13:00",
+          "valor": 6
+        }
+      ],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": true
     },
     {
@@ -241,7 +382,10 @@
       "zona": "Confluencia – Océano",
       "altura": -1.86,
       "tendencia": "ESTABLE",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": true
     },
     {
@@ -250,7 +394,10 @@
       "zona": "Confluencia – Océano",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
@@ -259,17 +406,23 @@
       "zona": "Confluencia – Océano",
       "altura": -0.38,
       "tendencia": "ESTABLE",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": true
     },
     {
       "nombre": "Santa Elena",
       "url": "http://hidrografia.agpse.gob.ar:53880/SantaElena/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 3.022,
-      "tendencia": "ESTABLE",
-      "fechaHora": "2026-04-08 07:00:00",
-      "ok": true
+      "altura": null,
+      "tendencia": "—",
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
+      "ok": false
     },
     {
       "nombre": "La Paz",
@@ -277,16 +430,43 @@
       "zona": "Confluencia – Océano",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
       "nombre": "Esquina",
       "url": "http://hidrografia.agpse.gob.ar:53880/Esquina/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 2.205138,
-      "tendencia": "ESTABLE",
-      "fechaHora": "2026-04-08 07:00:00",
+      "altura": 1.681915,
+      "tendencia": "—",
+      "historialAltura": [
+        {
+          "hora": "07:00",
+          "valor": 1.692138
+        },
+        {
+          "hora": "06:00",
+          "valor": 1.701681
+        },
+        {
+          "hora": "05:00",
+          "valor": 1.709759
+        },
+        {
+          "hora": "04:00",
+          "valor": 1.71836
+        },
+        {
+          "hora": "03:00",
+          "valor": 1.72844
+        }
+      ],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": true
     },
     {
@@ -295,7 +475,10 @@
       "zona": "Confluencia – Océano",
       "altura": 0.4,
       "tendencia": "ESTABLE",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": true
     },
     {
@@ -304,7 +487,10 @@
       "zona": "Confluencia – Océano",
       "altura": 7.56,
       "tendencia": "ESTABLE",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": true
     },
     {
@@ -313,7 +499,10 @@
       "zona": "Confluencia – Océano",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
@@ -322,7 +511,10 @@
       "zona": "Confluencia – Océano",
       "altura": -0.59,
       "tendencia": "ESTABLE",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": true
     },
     {
@@ -331,7 +523,10 @@
       "zona": "Confluencia – Océano",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
@@ -340,7 +535,10 @@
       "zona": "Confluencia – Océano",
       "altura": null,
       "tendencia": "—",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": false
     },
     {
@@ -349,7 +547,10 @@
       "zona": "Confluencia – Océano",
       "altura": -0.14,
       "tendencia": "ESTABLE",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": true
     },
     {
@@ -358,17 +559,23 @@
       "zona": "Confluencia – Océano",
       "altura": 0.64,
       "tendencia": "ESTABLE",
-      "fechaHora": null,
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
       "ok": true
     },
     {
       "nombre": "Carabelitas",
       "url": "http://hidrografia.agpse.gob.ar:53880/ehmail/Carabelitas2.htm",
       "zona": "Brazo Bravo – Guazú",
-      "altura": 1.37,
-      "tendencia": "SUBIENDO",
-      "fechaHora": "2026-04-08 06:40:00",
-      "ok": true
+      "altura": null,
+      "tendencia": "—",
+      "historialAltura": [],
+      "vientoActual": null,
+      "vientoDireccion": null,
+      "historialViento": [],
+      "ok": false
     }
   ]
 }
