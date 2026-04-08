@@ -1,5 +1,5 @@
 {
-  "actualizadoEn": "07/04/2026, 10:37 PM",
+  "actualizadoEn": "07/04/2026, 11:01 PM",
   "estaciones": [
     {
       "nombre": "Zárate",
@@ -14,10 +14,10 @@
       "nombre": "Las Rosas",
       "url": "http://hidrografia.agpse.gob.ar:53880/LasRosas/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": null,
-      "tendencia": "—",
-      "fechaHora": null,
-      "ok": false
+      "altura": 0.521,
+      "tendencia": "SUBIENDO",
+      "fechaHora": "2026-04-07 22:50:00",
+      "ok": true
     },
     {
       "nombre": "Escobar",
@@ -32,28 +32,28 @@
       "nombre": "Braga",
       "url": "http://hidrografia.agpse.gob.ar:53880/Braga/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": -1.14,
-      "tendencia": "ESTABLE",
-      "fechaHora": null,
+      "altura": 1.358,
+      "tendencia": "SUBIENDO",
+      "fechaHora": "2026-04-07 22:50:00",
       "ok": true
     },
     {
       "nombre": "Baliza Mitre",
       "url": "http://hidrografia.agpse.gob.ar:53880/BalizaMitre/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 0.91,
-      "tendencia": "ESTABLE",
+      "altura": null,
+      "tendencia": "—",
       "fechaHora": null,
-      "ok": true
+      "ok": false
     },
     {
       "nombre": "Baradero",
       "url": "http://hidrografia.agpse.gob.ar:53880/Baradero/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": null,
-      "tendencia": "—",
-      "fechaHora": null,
-      "ok": false
+      "altura": -0.098,
+      "tendencia": "ESTABLE",
+      "fechaHora": "2026-04-07 22:40:00",
+      "ok": true
     },
     {
       "nombre": "Ibicuy",
@@ -68,14 +68,23 @@
       "nombre": "Brazo Largo",
       "url": "http://hidrografia.agpse.gob.ar:53880/BrazoLargo/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": -1.6,
+      "altura": 0.204,
       "tendencia": "ESTABLE",
-      "fechaHora": null,
+      "fechaHora": "2026-04-07 22:40:00",
       "ok": true
     },
     {
       "nombre": "Desembocadura",
       "url": "http://hidrografia.agpse.gob.ar:53880/Desembocadura/index.html",
+      "zona": "Delta / Río de la Plata",
+      "altura": 0.6816122,
+      "tendencia": "SUBIENDO",
+      "fechaHora": "2026-04-07 22:40:00",
+      "ok": true
+    },
+    {
+      "nombre": "Bs. As. 1° Espigón",
+      "url": "http://hidrografia2.agpse.gob.ar/buenosaires1erespigon/index.html",
       "zona": "Delta / Río de la Plata",
       "altura": null,
       "tendencia": "—",
@@ -83,31 +92,22 @@
       "ok": false
     },
     {
-      "nombre": "Bs. As. 1° Espigón",
-      "url": "http://hidrografia2.agpse.gob.ar/buenosaires1erespigon/index.html",
-      "zona": "Delta / Río de la Plata",
-      "altura": 0.91,
-      "tendencia": "ESTABLE",
-      "fechaHora": null,
-      "ok": true
-    },
-    {
       "nombre": "Bs. As. Puerto Sur",
       "url": "http://hidrografia.agpse.gob.ar:53880/buenosaires/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 0.91,
-      "tendencia": "ESTABLE",
+      "altura": null,
+      "tendencia": "—",
       "fechaHora": null,
-      "ok": true
+      "ok": false
     },
     {
       "nombre": "La Plata",
       "url": "http://hidrografia.agpse.gob.ar:53880/LaPlata/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 0.91,
-      "tendencia": "ESTABLE",
+      "altura": null,
+      "tendencia": "—",
       "fechaHora": null,
-      "ok": true
+      "ok": false
     },
     {
       "nombre": "Magdalena",
@@ -122,19 +122,19 @@
       "nombre": "Oyarvide",
       "url": "http://hidrografia.agpse.gob.ar:53880/oyarvide/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 0.91,
-      "tendencia": "ESTABLE",
+      "altura": null,
+      "tendencia": "—",
       "fechaHora": null,
-      "ok": true
+      "ok": false
     },
     {
       "nombre": "San Clemente",
       "url": "http://hidrografia.agpse.gob.ar:53880/SanClemente/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 0.91,
-      "tendencia": "ESTABLE",
+      "altura": null,
+      "tendencia": "—",
       "fechaHora": null,
-      "ok": true
+      "ok": false
     },
     {
       "nombre": "San Pedro",
@@ -230,9 +230,9 @@
       "nombre": "Diamante",
       "url": "http://hidrografia.agpse.gob.ar:53880/Diamante/index.html",
       "zona": "Confluencia – Océano",
-      "altura": -1.66,
+      "altura": 2.576,
       "tendencia": "ESTABLE",
-      "fechaHora": null,
+      "fechaHora": "2026-04-07 20:00:00",
       "ok": true
     },
     {
@@ -266,10 +266,10 @@
       "nombre": "Santa Elena",
       "url": "http://hidrografia.agpse.gob.ar:53880/SantaElena/index.html",
       "zona": "Confluencia – Océano",
-      "altura": null,
-      "tendencia": "—",
-      "fechaHora": null,
-      "ok": false
+      "altura": 3.054,
+      "tendencia": "ESTABLE",
+      "fechaHora": "2026-04-07 22:00:00",
+      "ok": true
     },
     {
       "nombre": "La Paz",
@@ -284,9 +284,9 @@
       "nombre": "Esquina",
       "url": "http://hidrografia.agpse.gob.ar:53880/Esquina/index.html",
       "zona": "Confluencia – Océano",
-      "altura": -0.65,
+      "altura": 2.295428,
       "tendencia": "ESTABLE",
-      "fechaHora": null,
+      "fechaHora": "2026-04-07 22:00:00",
       "ok": true
     },
     {
