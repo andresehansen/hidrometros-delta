@@ -46,10 +46,10 @@ const ESTACIONES = [
 
 async function fetchURL(url) {
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 10000);
+  const timeoutId = setTimeout(() => controller.abort(), 8000); 
   try {
     const response = await fetch(url, {
-      headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0" },
+      headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0 Safari/537.36" },
       signal: controller.signal
     });
     clearTimeout(timeoutId);
@@ -61,53 +61,72 @@ async function fetchURL(url) {
   }
 }
 
-// NUEVA FUNCIÓN: Genera la ruta directa al archivo oculto basándose en el nombre de la estación
-function getUrlsSecretas(urlOriginal) {
-    try {
-        let urlObj = new URL(urlOriginal);
-        let hostSeguro = urlObj.hostname;
-        let hostAlterno = hostSeguro.includes('hidrografia2') ? hostSeguro.replace('hidrografia2', 'hidrografia') : hostSeguro.replace('hidrografia', 'hidrografia2');
-        
-        let pathParts = urlObj.pathname.split('/').filter(p => p.length > 0 && !p.includes('.htm'));
-        if (pathParts.length === 0) return [];
-        let name = pathParts[0];
-        let nameCap = name.charAt(0).toUpperCase() + name.slice(1);
-        let nameLower = name.toLowerCase();
+// EL ROBOT ASPIRADORA: Entra a iframes, sigue redirecciones y succiona archivos .dat
+async function explorar(url, visitados = new Set()) {
+    if (visitados.has(url) || visitados.size > 12) return { html: "", csvs: [] };
+    visitados.add(url);
+    let result = { html: "", csvs: [] };
 
-        return [
-            `https://${hostSeguro}/histdat/${nameCap}.dat`,
-            `https://${hostSeguro}/histdat/${nameLower}.dat`,
-            `https://${hostAlterno}/histdat/${nameCap}.dat`,
-            `http://${hostSeguro}:53880/histdat/${nameCap}.dat`
-        ];
-    } catch(e) { return []; }
+    try {
+        let html = await fetchURL(url);
+        result.html += html + " ";
+
+        // 1. Seguir enlaces de redirección (Meta Refresh)
+        let metaMatch = html.match(/<meta[^>]*url=([^"'>\s]+)/i);
+        if (metaMatch) {
+            let redir = await explorar(new URL(metaMatch[1], url).href, visitados);
+            result.html += redir.html; result.csvs.push(...redir.csvs);
+        }
+
+        // 2. Entrar a todos los Iframes ocultos
+        let iframesUrls = [...html.matchAll(/<iframe[^>]+src=['"]([^'"]+)['"]/gi)].map(m => m[1]);
+        for (let src of iframesUrls) {
+            let redir = await explorar(new URL(src, url).href, visitados);
+            result.html += redir.html; result.csvs.push(...redir.csvs);
+        }
+
+        // 3. Succionar cualquier archivo .dat en el código
+        let datFiles = [...html.matchAll(/['"]([^'"]+\.dat)['"]/gi)].map(m => m[1]);
+        for (let src of datFiles) {
+            let datUrl = new URL(src, url).href;
+            if (!visitados.has(datUrl)) {
+                visitados.add(datUrl);
+                try {
+                    let csv = await fetchURL(datUrl);
+                    result.csvs.push(csv);
+                } catch(e){}
+            }
+        }
+        return result;
+    } catch(e) { return result; }
 }
 
+// Analizador estricto anti-datos-falsos
 function procesarCSV(csvText, tipo) {
     let lineas = csvText.trim().split('\n');
     if (lineas.length < 4) return null;
     
-    let cabeceras = (lineas[0] + "," + lineas[1]).toLowerCase().replace(/['"]/g, '').split(',');
+    let cabeceras = (lineas[0] + "," + lineas[1]).toLowerCase().replace(/['"]/g, '').split(',').map(s => s.trim());
     let idxValor = -1, idxDir = -1;
+    let numCols = lineas[lineas.length-1].split(',').length;
 
     if (tipo === 'altura') {
         for (let j = 0; j < cabeceras.length; j++) {
-            if (cabeceras[j].includes("nivel") || cabeceras[j].includes("altura") || cabeceras[j].includes("marea") || cabeceras[j].includes("cota")) {
-                idxValor = j % lineas[1].split(',').length; break;
+            // EXIGE encontrar la palabra para no confundir con temperatura
+            if (cabeceras[j].includes("nivel") || cabeceras[j].includes("altura") || cabeceras[j].includes("marea") || cabeceras[j].includes("cota") || cabeceras[j].includes("rio")) {
+                idxValor = j % numCols; break;
             }
         }
-        if (idxValor === -1) idxValor = 3; 
     } else if (tipo === 'viento') {
         for (let j = 0; j < cabeceras.length; j++) {
-            if (cabeceras[j].includes("velocidad") || cabeceras[j].includes("viento")) idxValor = j % lineas[1].split(',').length;
-            if (cabeceras[j].includes("direc") || cabeceras[j].includes("dir")) idxDir = j % lineas[1].split(',').length;
+            if (cabeceras[j].includes("velocidad") || cabeceras[j].includes("viento") || cabeceras[j].includes("speed")) idxValor = j % numCols;
+            if (cabeceras[j].includes("direc") || cabeceras[j].includes("dir") || cabeceras[j].includes("rumbo")) idxDir = j % numCols;
         }
-        if (idxValor === -1) idxValor = 3;
     }
 
-    let historial = [];
-    let valorActual = null;
-    let dirActual = null;
+    if (idxValor === -1) return null; // Si no encuentra la columna exacta, cancela para no dar un dato falso
+
+    let historial = []; let valorActual = null; let dirActual = null;
 
     for (let i = lineas.length - 1; i > 2 && historial.length < 5; i--) {
         let col = lineas[i].split(',');
@@ -146,7 +165,8 @@ function parsearHTML(html) {
         let contextoPosterior = textoPuro.substring(index, index + 20).toLowerCase();
         
         if (contextoPrevio.includes("cero") || contextoPrevio.includes("bater") || 
-            contextoPrevio.includes("predic") || contextoPrevio.includes("escala")) continue; 
+            contextoPrevio.includes("temp") || contextoPrevio.includes("predic") ||
+            contextoPrevio.includes("escala") || contextoPrevio.includes("referencia")) continue; 
             
         let val = parseFloat(n[1].replace(',', '.'));
         if (val > -3 && val < 12) {
@@ -168,56 +188,53 @@ function obtenerHoraFormateada() {
 }
 
 async function procesarEstacion(est) {
+    let url2 = est.url.replace(':53880', '').replace('http:', 'https:');
+    let url3 = url2.replace('hidrografia.agpse', 'hidrografia2.agpse'); 
+    let urls = [est.url, url2, url3];
+
     let estData = { ...est, altura: null, tendencia: "—", historialAltura: [], vientoActual: null, vientoDireccion: null, historialViento: [], ok: false };
 
-    // --- EL ATAQUE DIRECTO (Estrategia Zárate) ---
-    let urlsSecretas = getUrlsSecretas(est.url);
-    for (let datUrl of urlsSecretas) {
+    for (let currentUrl of urls) {
         try {
-            let csvData = await fetchURL(datUrl);
-            if (csvData && csvData.includes(",")) {
-                let resAltura = procesarCSV(csvData, 'altura');
-                let resViento = procesarCSV(csvData, 'viento');
+            let info = await explorar(currentUrl);
 
-                if (resAltura && resAltura.valorActual !== null) {
-                    estData.altura = resAltura.valorActual;
-                    estData.historialAltura = resAltura.historial;
-                    estData.ok = true;
-                    if (resAltura.historial.length > 0) {
-                        let valPrev = resAltura.historial[0].valor;
-                        if (estData.altura > valPrev + 0.02) estData.tendencia = "SUBIENDO";
-                        else if (estData.altura < valPrev - 0.02) estData.tendencia = "BAJANDO";
+            if (info.html.length > 100 || info.csvs.length > 0) {
+                // Primero: Intentar con la máxima precisión (Archivos CSV encontrados)
+                for (let csv of info.csvs) {
+                    let resAltura = procesarCSV(csv, 'altura');
+                    if (resAltura && resAltura.valorActual !== null && estData.altura === null) {
+                        estData.altura = resAltura.valorActual;
+                        estData.historialAltura = resAltura.historial;
+                        if (resAltura.historial.length > 0) {
+                            let valPrev = resAltura.historial[0].valor;
+                            if (estData.altura > valPrev + 0.02) estData.tendencia = "SUBIENDO";
+                            else if (estData.altura < valPrev - 0.02) estData.tendencia = "BAJANDO";
+                        }
+                    }
+                    let resViento = procesarCSV(csv, 'viento');
+                    if (resViento && resViento.valorActual !== null && estData.vientoActual === null) {
+                        estData.vientoActual = resViento.valorActual;
+                        estData.vientoDireccion = resViento.dirActual;
+                        estData.historialViento = resViento.historial;
                     }
                 }
-                
-                if (resViento && resViento.valorActual !== null) {
-                    estData.vientoActual = resViento.valorActual;
-                    estData.vientoDireccion = resViento.dirActual;
-                    estData.historialViento = resViento.historial;
+
+                // Segundo: Si no hubo CSV de altura (o la tabla no tenía el rótulo "Nivel"), buscar en el HTML crudo
+                if (estData.altura === null) {
+                    let resTexto = parsearHTML(info.html);
+                    if (resTexto.altura !== null) {
+                        estData.altura = resTexto.altura;
+                        estData.tendencia = resTexto.tendencia;
+                    }
                 }
-                
-                if (estData.ok) {
-                    console.log(`✅ ÉXITO DIRECTO en ${est.nombre}`);
+
+                if (estData.altura !== null) {
+                    estData.ok = true;
                     return estData;
                 }
             }
-        } catch(e) { }
+        } catch(e) { } // Intenta la siguiente URL de respaldo
     }
-
-    // --- FALLBACK: Lectura web si no tiene archivo oculto ---
-    try {
-        let html = await fetchURL(est.url);
-        let metaMatch = html.match(/<meta[^>]*url=([^"'>\s]+)/i);
-        if (metaMatch) html = await fetchURL(new URL(metaMatch[1], est.url).href);
-
-        let resTexto = parsearHTML(html);
-        if (resTexto.altura !== null) {
-            estData.altura = resTexto.altura;
-            estData.tendencia = resTexto.tendencia;
-            estData.ok = true;
-        }
-    } catch(e) { }
-
     return estData;
 }
 
