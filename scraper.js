@@ -72,21 +72,16 @@ function parsearHTML(html) {
         let contextoPrevio = textoPuro.substring(Math.max(0, index - 45), index).toLowerCase();
         let contextoPosterior = textoPuro.substring(index, index + 20).toLowerCase();
         
-        if (contextoPrevio.includes("cero") || 
-            contextoPrevio.includes("bater") || 
-            contextoPrevio.includes("temp") || 
-            contextoPrevio.includes("predic") ||
-            contextoPrevio.includes("escala") || 
-            contextoPrevio.includes("referencia")) {
+        if (contextoPrevio.includes("cero") || contextoPrevio.includes("bater") || 
+            contextoPrevio.includes("temp") || contextoPrevio.includes("predic") ||
+            contextoPrevio.includes("escala") || contextoPrevio.includes("referencia")) {
             continue; 
         }
         
         let val = parseFloat(n[1].replace(',', '.'));
-        
         if (val > -3 && val < 12) {
             if (contextoPrevio.includes("nivel") || contextoPrevio.includes("altura") || contextoPosterior.includes("m")) {
-                altura = val;
-                break;
+                altura = val; break;
             } else if (altura === null) {
                 altura = val; 
             }
@@ -121,22 +116,58 @@ async function procesarEstacion(est) {
     for (let currentUrl of urls) {
         try {
             let html = await fetchURL(currentUrl);
-            
-            // --- INICIO MODO DETECTIVE ---
-            if (["Zárate", "Las Rosas", "Brazo Largo", "Bs. As. 1° Espigón"].includes(est.nombre)) {
-                console.log(`\n=== 🕵️‍♂️ HTML CRUDO: ${est.nombre} ===`);
-                console.log(`Respuesta desde: ${currentUrl}`);
-                console.log(html.replace(/\s+/g, ' ').trim());
-                console.log(`===========================================\n`);
-            }
-            // --- FIN MODO DETECTIVE ---
 
+            // MAGIA 1: Si la página es una "Cáscara", busca el enlace oculto "marea.html"
+            let iframeMatch = html.match(/<iframe[^>]*src=['"]([^'"]*marea\.html)['"]/i);
+            if (iframeMatch) {
+                let iframeUrl = iframeMatch[1];
+                if (!iframeUrl.startsWith('http')) {
+                    let baseUrl = new URL(currentUrl);
+                    iframeUrl = new URL(iframeUrl, baseUrl).href;
+                }
+                html = await fetchURL(iframeUrl); // Entra a la página real
+            }
+
+            // MAGIA 2: Si la página es un gráfico que usa el archivo oculto ".dat"
+            let datMatch = html.match(/fetch\(['"](\/histdat\/[^'"]+\.dat)['"]\)/i);
+            if (datMatch) {
+                let datUrl = datMatch[1];
+                let baseUrl = new URL(currentUrl);
+                let fullDatUrl = new URL(datUrl, baseUrl).href;
+                let csvData = await fetchURL(fullDatUrl); // Descarga el archivo CSV
+
+                let lineas = csvData.trim().split('\n');
+                // Busca la última fila válida del archivo (de abajo hacia arriba)
+                for (let i = lineas.length - 1; i >= 0; i--) {
+                    let columnas = lineas[i].split(',');
+                    // Si tiene 4 columnas y no es "NAN" (Sin dato), extrae el dato
+                    if (columnas.length >= 4 && !columnas[3].includes("NAN")) {
+                        let val = parseFloat(columnas[3]);
+                        if (!isNaN(val) && val > -3 && val < 12) {
+                            let fechaRaw = columnas[0].replace(/['"]/g, '');
+                            // Calcula si sube o baja comparando con el registro anterior
+                            let tendencia = "ESTABLE";
+                            if (i > 0) {
+                                let colPrev = lineas[i-1].split(',');
+                                if(colPrev.length >=4 && !colPrev[3].includes("NAN")){
+                                    let valPrev = parseFloat(colPrev[3]);
+                                    if (val > valPrev + 0.02) tendencia = "SUBIENDO";
+                                    else if (val < valPrev - 0.02) tendencia = "BAJANDO";
+                                }
+                            }
+                            return { ...est, altura: val, tendencia: tendencia, fechaHora: fechaRaw, ok: true };
+                        }
+                    }
+                }
+            }
+
+            // Lectura normal si la página no tiene trucos
             let datos = parsearHTML(html);
             if (datos.altura !== null) {
                 return { ...est, ...datos, ok: true };
             }
         } catch(e) {
-            // Silencioso si falla una URL
+            // Silencioso, pasa a la siguiente URL
         }
     }
     return { ...est, altura: null, tendencia: "—", fechaHora: null, ok: false };
