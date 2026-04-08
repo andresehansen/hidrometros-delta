@@ -119,11 +119,18 @@
   async function cargarDatos() {
     try {
       const resp = await fetch('datos.json?t=' + new Date().getTime());
-      if (!resp.ok) return;
+      if (!resp.ok) {
+         document.getElementById('nombre-estacion').textContent = "Esperando al robot...";
+         return;
+      }
       const data = await resp.json();
-      estacionesData = data.estaciones;
-      renderizarPantalla();
-    } catch (e) { }
+      if (data && data.estaciones) {
+          estacionesData = data.estaciones;
+          renderizarPantalla();
+      }
+    } catch (e) { 
+      document.getElementById('nombre-estacion').textContent = "Error de red";
+    }
   }
 
   function cambiarCategoria(cat) {
@@ -148,3 +155,84 @@
 
   function navegarA(direccion) {
     if (estacionesData.length === 0) return;
+    // Lógica matemática segura para navegar en círculos
+    indiceActual = (indiceActual + direccion + estacionesData.length) % estacionesData.length;
+    renderizarPantalla();
+  }
+
+  function renderizarPantalla() {
+    if (!estacionesData || estacionesData.length === 0) return;
+    
+    try {
+        const est = estacionesData[indiceActual];
+        document.getElementById('nombre-estacion').textContent = est.nombre;
+
+        // --- RENDER ALTURA ---
+        const valAltura = document.getElementById('val-altura');
+        const tendAltura = document.getElementById('tendencia-altura');
+        
+        let numAltura = Number(est.altura);
+        if (est.altura !== null && !isNaN(numAltura)) {
+          valAltura.textContent = numAltura.toFixed(2);
+          valAltura.className = "valor-gigante";
+          if (numAltura >= 4.0) valAltura.classList.add("color-subiendo");
+          else if (numAltura >= 2.0) valAltura.classList.add("color-estable");
+          else valAltura.classList.add("color-bajando");
+        } else {
+          valAltura.textContent = "S/D";
+          valAltura.className = "valor-gigante color-sin-dato";
+        }
+
+        const iconos = { "SUBIENDO": "↑ Subiendo", "BAJANDO": "↓ Bajando", "ESTABLE": "→ Estable", "—": "? Sin dato" };
+        tendAltura.textContent = iconos[est.tendencia] || iconos["—"];
+
+        // HISTORIAL ALTURA
+        const listaAlt = document.getElementById('lista-altura');
+        listaAlt.innerHTML = "";
+        if (est.historialAltura && est.historialAltura.length > 0) {
+            est.historialAltura.forEach(h => {
+                let v = Number(h.valor);
+                let displayVal = isNaN(v) ? "—" : v.toFixed(2) + " m";
+                listaAlt.innerHTML += `<li><span class="hist-hora">${h.hora}</span><span class="hist-valor">${displayVal}</span></li>`;
+            });
+        } else {
+            listaAlt.innerHTML = `<li><span class="hist-hora">Sin historial oficial</span><span class="hist-valor">—</span></li>`;
+        }
+
+        // --- RENDER VIENTO ---
+        const valViento = document.getElementById('val-viento');
+        const tendViento = document.getElementById('tendencia-viento');
+        
+        let numViento = Number(est.vientoActual);
+        if (est.vientoActual !== null && !isNaN(numViento)) {
+            valViento.textContent = numViento.toFixed(1);
+            valViento.className = "valor-gigante";
+            let dir = est.vientoDireccion ? est.vientoDireccion : "Var";
+            if (!isNaN(Number(dir))) dir = dir + "°";
+            tendViento.textContent = "Dirección: " + dir;
+        } else {
+            valViento.textContent = "S/D";
+            valViento.className = "valor-gigante color-sin-dato";
+            tendViento.textContent = "Estación sin sensor de viento";
+        }
+
+        // HISTORIAL VIENTO
+        const listaViento = document.getElementById('lista-viento');
+        listaViento.innerHTML = "";
+        if (est.historialViento && est.historialViento.length > 0) {
+            est.historialViento.forEach(h => {
+                let v = Number(h.valor);
+                let displayVal = isNaN(v) ? "—" : v.toFixed(1) + " km/h";
+                listaViento.innerHTML += `<li><span class="hist-hora">${h.hora}</span><span class="hist-valor">${displayVal}</span></li>`;
+            });
+        } else {
+            listaViento.innerHTML = `<li><span class="hist-hora">Sin historial oficial</span><span class="hist-valor">—</span></li>`;
+        }
+    } catch(error) {
+        document.getElementById('nombre-estacion').textContent = "Ajustando datos...";
+    }
+  }
+
+  setInterval(cargarDatos, 60000); 
+  cargarDatos();
+</script>
