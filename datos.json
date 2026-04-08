@@ -1,5 +1,5 @@
 {
-  "actualizadoEn": "08/04/2026, 9:44 AM",
+  "actualizadoEn": "08/04/2026, 12:12 PM",
   "estaciones": [
     {
       "nombre": "Zárate",
@@ -8,28 +8,28 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 1.561,
+      "vientoActual": 1.699,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "08:40",
-          "valor": 1.535
+          "hora": "11:20",
+          "valor": 1.69
         },
         {
-          "hora": "08:20",
-          "valor": 1.505
+          "hora": "11:00",
+          "valor": 1.677
         },
         {
-          "hora": "08:00",
-          "valor": 1.477
+          "hora": "10:40",
+          "valor": 1.663
         },
         {
-          "hora": "07:40",
-          "valor": 1.452
+          "hora": "10:20",
+          "valor": 1.651
         },
         {
-          "hora": "07:20",
-          "valor": 1.427
+          "hora": "10:00",
+          "valor": 1.637
         }
       ],
       "ok": false
@@ -41,28 +41,28 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 1.593,
+      "vientoActual": 1.675,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:00",
-          "valor": 1.582
+          "hora": "11:30",
+          "valor": 1.677
         },
         {
-          "hora": "08:50",
-          "valor": 1.566
+          "hora": "11:20",
+          "valor": 1.676
         },
         {
-          "hora": "08:40",
-          "valor": 1.553
+          "hora": "11:10",
+          "valor": 1.667
         },
         {
-          "hora": "08:30",
-          "valor": 1.536
+          "hora": "11:00",
+          "valor": 1.669
         },
         {
-          "hora": "08:20",
-          "valor": 1.519
+          "hora": "10:50",
+          "valor": 1.665
         }
       ],
       "ok": false
@@ -74,28 +74,28 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 2.124,
+      "vientoActual": 2.14,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:00",
-          "valor": 2.111
+          "hora": "11:20",
+          "valor": 2.167
         },
         {
-          "hora": "08:40",
-          "valor": 2.092
+          "hora": "11:00",
+          "valor": 2.179
         },
         {
-          "hora": "08:20",
-          "valor": 2.068
+          "hora": "10:40",
+          "valor": 2.176
         },
         {
-          "hora": "08:00",
-          "valor": 2.038
+          "hora": "10:20",
+          "valor": 2.167
         },
         {
-          "hora": "07:40",
-          "valor": 2.002
+          "hora": "10:00",
+          "valor": 2.153
         }
       ],
       "ok": false
@@ -104,52 +104,52 @@
       "nombre": "Braga",
       "url": "http://hidrografia.agpse.gob.ar:53880/Braga/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 3.789076,
-      "tendencia": "—",
+      "altura": 3.44992,
+      "tendencia": "BAJANDO",
       "historialAltura": [
         {
-          "hora": "09:10",
-          "valor": 3.784745
+          "hora": "11:40",
+          "valor": 3.483737
         },
         {
-          "hora": "09:00",
-          "valor": 3.780746
+          "hora": "11:30",
+          "valor": 3.523244
         },
         {
-          "hora": "08:50",
-          "valor": 3.775231
+          "hora": "11:20",
+          "valor": 3.567145
         },
         {
-          "hora": "08:40",
-          "valor": 3.767343
+          "hora": "11:10",
+          "valor": 3.613205
         },
         {
-          "hora": "08:30",
-          "valor": 3.763156
+          "hora": "11:00",
+          "valor": 3.64672
         }
       ],
-      "vientoActual": 2.319,
+      "vientoActual": 1.98,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:10",
-          "valor": 2.315
+          "hora": "11:40",
+          "valor": 2.014
         },
         {
-          "hora": "09:00",
-          "valor": 2.311
+          "hora": "11:30",
+          "valor": 2.053
         },
         {
-          "hora": "08:50",
-          "valor": 2.305
+          "hora": "11:20",
+          "valor": 2.097
         },
         {
-          "hora": "08:40",
-          "valor": 2.297
+          "hora": "11:10",
+          "valor": 2.143
         },
         {
-          "hora": "08:30",
-          "valor": 2.293
+          "hora": "11:00",
+          "valor": 2.177
         }
       ],
       "ok": true
@@ -185,28 +185,28 @@
       "altura": -2.45,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 1.003554,
+      "vientoActual": 1.13755,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:00",
-          "valor": 0.9829698
+          "hora": "11:20",
+          "valor": 1.125243
         },
         {
-          "hora": "08:40",
-          "valor": 0.9677659
+          "hora": "11:00",
+          "valor": 1.099235
         },
         {
-          "hora": "08:20",
-          "valor": 0.9564294
+          "hora": "10:40",
+          "valor": 1.081248
         },
         {
-          "hora": "08:00",
-          "valor": 0.9336076
+          "hora": "10:20",
+          "valor": 1.068578
         },
         {
-          "hora": "07:40",
-          "valor": 0.9159431
+          "hora": "10:00",
+          "valor": 1.038255
         }
       ],
       "ok": true
@@ -218,28 +218,28 @@
       "altura": -1.6,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 1.031,
+      "vientoActual": 1.177,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:00",
-          "valor": 1.008
+          "hora": "11:40",
+          "valor": 1.166
         },
         {
-          "hora": "08:40",
-          "valor": 0.987
+          "hora": "11:20",
+          "valor": 1.151
         },
         {
-          "hora": "08:20",
-          "valor": 0.968
+          "hora": "11:00",
+          "valor": 1.137
         },
         {
-          "hora": "08:00",
-          "valor": 0.949
+          "hora": "10:40",
+          "valor": 1.116
         },
         {
-          "hora": "07:40",
-          "valor": 0.932
+          "hora": "10:20",
+          "valor": 1.094
         }
       ],
       "ok": true
@@ -248,52 +248,52 @@
       "nombre": "Desembocadura",
       "url": "http://hidrografia.agpse.gob.ar:53880/Desembocadura/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 2.347341,
-      "tendencia": "SUBIENDO",
+      "altura": 2.375784,
+      "tendencia": "—",
       "historialAltura": [
         {
-          "hora": "09:00",
-          "valor": 2.324631
+          "hora": "11:40",
+          "valor": 2.389858
         },
         {
-          "hora": "08:40",
-          "valor": 2.309688
+          "hora": "11:20",
+          "valor": 2.399544
         },
         {
-          "hora": "08:20",
-          "valor": 2.285679
+          "hora": "11:00",
+          "valor": 2.403399
         },
         {
-          "hora": "08:00",
-          "valor": 2.259002
+          "hora": "10:40",
+          "valor": 2.401568
         },
         {
-          "hora": "07:40",
-          "valor": 2.227699
+          "hora": "10:20",
+          "valor": 2.395753
         }
       ],
-      "vientoActual": 1.607341,
+      "vientoActual": 1.635784,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:00",
-          "valor": 1.584631
+          "hora": "11:40",
+          "valor": 1.649858
         },
         {
-          "hora": "08:40",
-          "valor": 1.569687
+          "hora": "11:20",
+          "valor": 1.659544
         },
         {
-          "hora": "08:20",
-          "valor": 1.545679
+          "hora": "11:00",
+          "valor": 1.663399
         },
         {
-          "hora": "08:00",
-          "valor": 1.519002
+          "hora": "10:40",
+          "valor": 1.661568
         },
         {
-          "hora": "07:40",
-          "valor": 1.487699
+          "hora": "10:20",
+          "valor": 1.655753
         }
       ],
       "ok": true
@@ -338,28 +338,28 @@
           "valor": 6
         }
       ],
-      "vientoActual": 2.553,
+      "vientoActual": 2.073,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:10",
-          "valor": 2.572
+          "hora": "11:50",
+          "valor": 2.068
         },
         {
-          "hora": "09:00",
-          "valor": 2.578
+          "hora": "11:40",
+          "valor": 2.083
         },
         {
-          "hora": "08:50",
-          "valor": 2.595
+          "hora": "11:30",
+          "valor": 2.093
         },
         {
-          "hora": "08:40",
-          "valor": 2.623
+          "hora": "11:20",
+          "valor": 2.111
         },
         {
-          "hora": "08:30",
-          "valor": 2.617
+          "hora": "11:10",
+          "valor": 2.147
         }
       ],
       "ok": true
@@ -392,28 +392,28 @@
           "valor": 6
         }
       ],
-      "vientoActual": 2.293,
+      "vientoActual": 2.005,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:20",
-          "valor": 2.309
+          "hora": "11:40",
+          "valor": 2.044
         },
         {
-          "hora": "09:10",
-          "valor": 2.351
+          "hora": "11:30",
+          "valor": 2.074
         },
         {
-          "hora": "09:00",
-          "valor": 2.384
+          "hora": "11:20",
+          "valor": 2.106
         },
         {
-          "hora": "08:50",
-          "valor": 2.414
+          "hora": "11:10",
+          "valor": 2.145
         },
         {
-          "hora": "08:40",
-          "valor": 2.443
+          "hora": "11:00",
+          "valor": 2.166
         }
       ],
       "ok": true
@@ -512,28 +512,28 @@
           "valor": 6
         }
       ],
-      "vientoActual": 1.123,
+      "vientoActual": 1.378,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:20",
-          "valor": 1.092
+          "hora": "11:40",
+          "valor": 1.359
         },
         {
-          "hora": "09:10",
-          "valor": 1.079
+          "hora": "11:30",
+          "valor": 1.334
         },
         {
-          "hora": "09:00",
-          "valor": 1.07
+          "hora": "11:20",
+          "valor": 1.352
         },
         {
-          "hora": "08:50",
-          "valor": 1.029
+          "hora": "11:10",
+          "valor": 1.319
         },
         {
-          "hora": "08:40",
-          "valor": 1.035
+          "hora": "11:00",
+          "valor": 1.314
         }
       ],
       "ok": true
@@ -590,28 +590,28 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 0.961,
+      "vientoActual": 1.087,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:00",
-          "valor": 0.958
+          "hora": "11:40",
+          "valor": 1.057
         },
         {
-          "hora": "08:40",
-          "valor": 0.933
+          "hora": "11:20",
+          "valor": 1.045
         },
         {
-          "hora": "08:20",
-          "valor": 0.914
+          "hora": "11:00",
+          "valor": 1.028
         },
         {
-          "hora": "08:00",
-          "valor": 0.899
+          "hora": "10:40",
+          "valor": 1.016
         },
         {
-          "hora": "07:40",
-          "valor": 0.895
+          "hora": "10:20",
+          "valor": 1.001
         }
       ],
       "ok": false
@@ -644,28 +644,28 @@
           "valor": 6
         }
       ],
-      "vientoActual": 1.513,
+      "vientoActual": 1.576,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:00",
-          "valor": 1.508
+          "hora": "11:20",
+          "valor": 2.048
         },
         {
-          "hora": "08:40",
-          "valor": 1.971
+          "hora": "11:00",
+          "valor": 1.533
         },
         {
-          "hora": "08:20",
-          "valor": 1.471
+          "hora": "10:40",
+          "valor": 1.539
         },
         {
-          "hora": "08:00",
-          "valor": 1.483
+          "hora": "10:20",
+          "valor": 1.524
         },
         {
-          "hora": "07:40",
-          "valor": 1.513
+          "hora": "10:00",
+          "valor": 1.43
         }
       ],
       "ok": true
@@ -722,28 +722,28 @@
           "valor": -2.825533
         }
       ],
-      "vientoActual": 1.944,
+      "vientoActual": 1.956,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:00",
-          "valor": 1.944
+          "hora": "11:40",
+          "valor": 1.958
         },
         {
-          "hora": "08:40",
-          "valor": 1.941
+          "hora": "11:20",
+          "valor": 1.957
         },
         {
-          "hora": "08:20",
-          "valor": 1.94
+          "hora": "11:00",
+          "valor": 1.953
         },
         {
-          "hora": "08:00",
-          "valor": 1.939
+          "hora": "10:40",
+          "valor": 1.95
         },
         {
-          "hora": "07:40",
-          "valor": 1.938
+          "hora": "10:20",
+          "valor": 1.946
         }
       ],
       "ok": true
@@ -755,28 +755,28 @@
       "altura": 6.74,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 2.274,
+      "vientoActual": 2.284,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:00",
-          "valor": 2.273
+          "hora": "11:40",
+          "valor": 2.283
         },
         {
-          "hora": "08:40",
-          "valor": 2.274
+          "hora": "11:20",
+          "valor": 2.279
         },
         {
-          "hora": "08:20",
-          "valor": 2.273
+          "hora": "11:00",
+          "valor": 2.279
         },
         {
-          "hora": "08:00",
-          "valor": 2.274
+          "hora": "10:40",
+          "valor": 2.279
         },
         {
-          "hora": "07:40",
-          "valor": 2.274
+          "hora": "10:20",
+          "valor": 2.278
         }
       ],
       "ok": true
@@ -866,28 +866,28 @@
           "valor": 6
         }
       ],
-      "vientoActual": 2.134,
+      "vientoActual": 2.129,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:00",
-          "valor": 2.136
+          "hora": "11:30",
+          "valor": 2.13
         },
         {
-          "hora": "07:30",
-          "valor": 2.138
+          "hora": "11:00",
+          "valor": 2.133
         },
         {
-          "hora": "07:00",
-          "valor": 2.139
+          "hora": "10:30",
+          "valor": 2.133
         },
         {
-          "hora": "06:30",
-          "valor": 2.141
+          "hora": "10:00",
+          "valor": 2.133
         },
         {
-          "hora": "06:00",
-          "valor": 2.141
+          "hora": "09:30",
+          "valor": 2.134
         }
       ],
       "ok": true
@@ -900,48 +900,48 @@
       "tendencia": "—",
       "historialAltura": [
         {
+          "hora": "11:00",
+          "valor": 0
+        },
+        {
+          "hora": "10:30",
+          "valor": 0
+        },
+        {
+          "hora": "10:00",
+          "valor": 0
+        },
+        {
+          "hora": "09:30",
+          "valor": 0
+        },
+        {
           "hora": "09:00",
-          "valor": 0
-        },
-        {
-          "hora": "08:30",
-          "valor": 0
-        },
-        {
-          "hora": "08:00",
-          "valor": 0
-        },
-        {
-          "hora": "20:00",
-          "valor": 0
-        },
-        {
-          "hora": "19:30",
           "valor": 0
         }
       ],
-      "vientoActual": 2.409,
+      "vientoActual": 2.412,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:00",
+          "hora": "11:00",
           "valor": 2.41
         },
         {
-          "hora": "08:30",
+          "hora": "10:30",
           "valor": 2.411
         },
         {
-          "hora": "08:00",
-          "valor": 2.686
+          "hora": "10:00",
+          "valor": 2.412
         },
         {
-          "hora": "20:00",
-          "valor": 2.408
+          "hora": "09:30",
+          "valor": 2.409
         },
         {
-          "hora": "19:30",
-          "valor": 2.406
+          "hora": "09:00",
+          "valor": 2.41
         }
       ],
       "ok": true
@@ -953,9 +953,21 @@
       "altura": -0.38,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 2.555735,
+      "vientoActual": 2.53989,
       "vientoDireccion": null,
       "historialViento": [
+        {
+          "hora": "11:00",
+          "valor": 2.544115
+        },
+        {
+          "hora": "10:00",
+          "valor": 2.550685
+        },
+        {
+          "hora": "09:00",
+          "valor": 2.555735
+        },
         {
           "hora": "08:00",
           "valor": 2.558206
@@ -963,18 +975,6 @@
         {
           "hora": "07:00",
           "valor": 2.563882
-        },
-        {
-          "hora": "06:00",
-          "valor": 2.568978
-        },
-        {
-          "hora": "05:00",
-          "valor": 2.572431
-        },
-        {
-          "hora": "04:00",
-          "valor": 2.573321
         }
       ],
       "ok": true
@@ -986,9 +986,17 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 3.011,
+      "vientoActual": 2.993,
       "vientoDireccion": null,
       "historialViento": [
+        {
+          "hora": "10:00",
+          "valor": 3.003
+        },
+        {
+          "hora": "09:00",
+          "valor": 3.011
+        },
         {
           "hora": "08:00",
           "valor": 3.017
@@ -1000,14 +1008,6 @@
         {
           "hora": "06:00",
           "valor": 3.027
-        },
-        {
-          "hora": "05:00",
-          "valor": 3.033
-        },
-        {
-          "hora": "04:00",
-          "valor": 3.038
         }
       ],
       "ok": false
@@ -1019,9 +1019,21 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 2.925,
+      "vientoActual": 2.902,
       "vientoDireccion": null,
       "historialViento": [
+        {
+          "hora": "11:00",
+          "valor": 2.911
+        },
+        {
+          "hora": "10:00",
+          "valor": 2.917
+        },
+        {
+          "hora": "09:00",
+          "valor": 2.925
+        },
         {
           "hora": "08:00",
           "valor": 2.935
@@ -1029,18 +1041,6 @@
         {
           "hora": "07:00",
           "valor": 2.944
-        },
-        {
-          "hora": "06:00",
-          "valor": 2.952
-        },
-        {
-          "hora": "05:00",
-          "valor": 2.955
-        },
-        {
-          "hora": "04:00",
-          "valor": 2.962
         }
       ],
       "ok": false
@@ -1049,9 +1049,17 @@
       "nombre": "Esquina",
       "url": "http://hidrografia.agpse.gob.ar:53880/Esquina/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 1.671493,
+      "altura": 1.646525,
       "tendencia": "—",
       "historialAltura": [
+        {
+          "hora": "10:00",
+          "valor": 1.659775
+        },
+        {
+          "hora": "09:00",
+          "valor": 1.671493
+        },
         {
           "hora": "08:00",
           "valor": 1.681915
@@ -1063,19 +1071,19 @@
         {
           "hora": "06:00",
           "valor": 1.701681
-        },
-        {
-          "hora": "05:00",
-          "valor": 1.709759
-        },
-        {
-          "hora": "04:00",
-          "valor": 1.71836
         }
       ],
-      "vientoActual": 2.184493,
+      "vientoActual": 2.159524,
       "vientoDireccion": null,
       "historialViento": [
+        {
+          "hora": "10:00",
+          "valor": 2.172775
+        },
+        {
+          "hora": "09:00",
+          "valor": 2.184493
+        },
         {
           "hora": "08:00",
           "valor": 2.194915
@@ -1087,14 +1095,6 @@
         {
           "hora": "06:00",
           "valor": 2.214681
-        },
-        {
-          "hora": "05:00",
-          "valor": 2.222759
-        },
-        {
-          "hora": "04:00",
-          "valor": 2.23136
         }
       ],
       "ok": true
@@ -1106,9 +1106,21 @@
       "altura": 0.4,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 2.026,
+      "vientoActual": 2.004,
       "vientoDireccion": null,
       "historialViento": [
+        {
+          "hora": "11:00",
+          "valor": 2.009
+        },
+        {
+          "hora": "10:00",
+          "valor": 2.019
+        },
+        {
+          "hora": "09:00",
+          "valor": 2.026
+        },
         {
           "hora": "08:00",
           "valor": 2.031
@@ -1116,18 +1128,6 @@
         {
           "hora": "07:00",
           "valor": 2.04
-        },
-        {
-          "hora": "06:00",
-          "valor": 2.049
-        },
-        {
-          "hora": "05:00",
-          "valor": 2.059
-        },
-        {
-          "hora": "04:00",
-          "valor": 2.069
         }
       ],
       "ok": true
@@ -1139,9 +1139,21 @@
       "altura": 7.56,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 2.219,
+      "vientoActual": 2.189,
       "vientoDireccion": null,
       "historialViento": [
+        {
+          "hora": "11:00",
+          "valor": 2.199
+        },
+        {
+          "hora": "10:00",
+          "valor": 2.207
+        },
+        {
+          "hora": "09:00",
+          "valor": 2.219
+        },
         {
           "hora": "08:00",
           "valor": 2.229
@@ -1149,18 +1161,6 @@
         {
           "hora": "07:00",
           "valor": 2.239
-        },
-        {
-          "hora": "06:00",
-          "valor": 2.244
-        },
-        {
-          "hora": "05:00",
-          "valor": 2.249
-        },
-        {
-          "hora": "04:00",
-          "valor": 2.257
         }
       ],
       "ok": true
@@ -1172,28 +1172,28 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 2.055,
+      "vientoActual": 2.034,
       "vientoDireccion": null,
       "historialViento": [
         {
-          "hora": "09:00",
-          "valor": 2.057
+          "hora": "11:40",
+          "valor": 2.036
         },
         {
-          "hora": "08:40",
-          "valor": 2.061
+          "hora": "11:20",
+          "valor": 2.035
         },
         {
-          "hora": "08:20",
-          "valor": 2.064
+          "hora": "11:00",
+          "valor": 2.038
         },
         {
-          "hora": "08:00",
-          "valor": 2.068
+          "hora": "10:40",
+          "valor": 2.042
         },
         {
-          "hora": "07:40",
-          "valor": 2.073
+          "hora": "10:20",
+          "valor": 2.045
         }
       ],
       "ok": false
@@ -1205,9 +1205,21 @@
       "altura": -0.59,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 1.863,
+      "vientoActual": 1.859,
       "vientoDireccion": null,
       "historialViento": [
+        {
+          "hora": "11:00",
+          "valor": 1.858
+        },
+        {
+          "hora": "10:00",
+          "valor": 1.861
+        },
+        {
+          "hora": "09:00",
+          "valor": 1.863
+        },
         {
           "hora": "08:00",
           "valor": 1.868
@@ -1215,18 +1227,6 @@
         {
           "hora": "07:00",
           "valor": 1.873
-        },
-        {
-          "hora": "06:00",
-          "valor": 1.88
-        },
-        {
-          "hora": "05:00",
-          "valor": 1.885
-        },
-        {
-          "hora": "04:00",
-          "valor": 1.896
         }
       ],
       "ok": true
@@ -1238,9 +1238,21 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 1.642,
+      "vientoActual": 1.664,
       "vientoDireccion": null,
       "historialViento": [
+        {
+          "hora": "11:00",
+          "valor": 1.655
+        },
+        {
+          "hora": "10:00",
+          "valor": 1.649
+        },
+        {
+          "hora": "09:00",
+          "valor": 1.642
+        },
         {
           "hora": "08:00",
           "valor": 1.639
@@ -1248,18 +1260,6 @@
         {
           "hora": "07:00",
           "valor": 1.636
-        },
-        {
-          "hora": "06:00",
-          "valor": 1.631
-        },
-        {
-          "hora": "05:00",
-          "valor": 1.627
-        },
-        {
-          "hora": "04:00",
-          "valor": 1.623
         }
       ],
       "ok": false
@@ -1304,9 +1304,21 @@
       "altura": -0.14,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 1.811,
+      "vientoActual": 1.858,
       "vientoDireccion": null,
       "historialViento": [
+        {
+          "hora": "11:00",
+          "valor": 1.843
+        },
+        {
+          "hora": "10:00",
+          "valor": 1.828
+        },
+        {
+          "hora": "09:00",
+          "valor": 1.811
+        },
         {
           "hora": "08:00",
           "valor": 1.796
@@ -1314,18 +1326,6 @@
         {
           "hora": "07:00",
           "valor": 1.781
-        },
-        {
-          "hora": "06:00",
-          "valor": 1.766
-        },
-        {
-          "hora": "05:00",
-          "valor": 1.752
-        },
-        {
-          "hora": "04:00",
-          "valor": 1.739
         }
       ],
       "ok": true
