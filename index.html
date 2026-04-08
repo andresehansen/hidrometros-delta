@@ -5,171 +5,213 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Hidrómetros – Delta Entrerriano</title>
   <style>
-    /* =============================================
-       RESET Y BASE
-       ============================================= */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
     html, body {
       width: 100%; height: 100%; overflow: hidden; touch-action: none; 
-      background: #0a1628; color: #f0f4ff; font-family: 'Segoe UI', Arial, sans-serif; -webkit-text-size-adjust: 100%;
+      background: #0a1628; color: #f0f4ff; font-family: 'Segoe UI', Arial, sans-serif;
     }
-    #app { display: flex; flex-direction: column; width: 100vw; height: 100vh; height: 100dvh; }
+    #app { display: flex; flex-direction: column; width: 100vw; height: 100vh; }
 
-    /* Encabezado */
-    #encabezado { flex: 0 0 auto; background: #0d1f3c; border-bottom: 3px solid #2a5caa; padding: 10px 16px 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    #titulo-app { font-size: clamp(16px, 4vw, 22px); font-weight: 700; color: #7eb8f7; letter-spacing: 0.02em; white-space: nowrap; }
-    #zona-badge { font-size: clamp(11px, 2.8vw, 14px); color: #a0bce8; text-align: right; line-height: 1.3; max-width: 55%; white-space: pre-line; }
+    /* Encabezado y Navegación Superior */
+    #encabezado { flex: 0 0 auto; background: #0d1f3c; padding: 10px; display: flex; flex-direction: column; gap: 10px; border-bottom: 3px solid #2a5caa; }
+    
+    .tabs-principales { display: flex; gap: 10px; width: 100%; }
+    .tab-btn { flex: 1; padding: 15px; font-size: clamp(18px, 4vw, 24px); font-weight: bold; border: 2px solid #2a5caa; border-radius: 10px; background: #1a3a6b; color: #a0bce8; cursor: pointer; }
+    .tab-btn.activo { background: #4a8fd4; color: #ffffff; border-color: #7eb8f7; }
 
-    /* Contenido */
-    #contenido { flex: 1 1 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px 20px; min-height: 0; }
-    #tarjeta { background: #0d1f3c; border: 3px solid #2a5caa; border-radius: 20px; width: 100%; max-width: 520px; padding: clamp(16px, 5vw, 32px) clamp(16px, 6vw, 40px); text-align: center; display: flex; flex-direction: column; align-items: center; gap: clamp(12px, 3vh, 24px); }
-    #zona-label { font-size: clamp(13px, 3vw, 16px); color: #7eb8f7; background: rgba(42, 92, 170, 0.3); border: 1px solid #2a5caa; border-radius: 100px; padding: 4px 16px; letter-spacing: 0.05em; text-transform: uppercase; }
-    #nombre-estacion { font-size: clamp(30px, 9vw, 58px); font-weight: 900; color: #ffffff; line-height: 1.1; letter-spacing: -0.01em; }
-    #separador { width: 60px; height: 3px; background: #2a5caa; border-radius: 2px; }
+    .tabs-secundarias { display: flex; gap: 10px; width: 100%; }
+    .sub-tab-btn { flex: 1; padding: 12px; font-size: clamp(16px, 3.5vw, 20px); border: 1px solid #2a5caa; border-radius: 8px; background: transparent; color: #7eb8f7; cursor: pointer; }
+    .sub-tab-btn.activo { background: rgba(74, 143, 212, 0.3); color: #ffffff; font-weight: bold; }
 
-    /* Altura */
-    #bloque-altura { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-    #etiqueta-altura { font-size: clamp(14px, 3.5vw, 18px); color: #a0bce8; text-transform: uppercase; letter-spacing: 0.1em; }
-    #altura-valor { font-size: clamp(56px, 20vw, 100px); font-weight: 900; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; line-height: 1; transition: color 0.4s ease; }
-    #altura-unidad { font-size: clamp(18px, 4.5vw, 28px); color: #a0bce8; margin-top: -8px; }
+    /* Contenido Central */
+    #contenido { flex: 1 1 auto; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    #tarjeta { background: #0d1f3c; border: 3px solid #2a5caa; border-radius: 20px; width: 100%; max-width: 600px; padding: 20px; text-align: center; display: flex; flex-direction: column; gap: 15px; }
+    
+    #nombre-estacion { font-size: clamp(28px, 7vw, 48px); font-weight: 900; color: #ffffff; margin-bottom: 10px; }
+    
+    /* Vistas Actuales */
+    .vista-actual { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .valor-gigante { font-size: clamp(60px, 18vw, 110px); font-weight: 900; line-height: 1; margin: 10px 0; }
+    .unidad { font-size: 24px; color: #a0bce8; }
+    .tendencia { font-size: 28px; font-weight: bold; padding: 8px 20px; border-radius: 50px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
 
-    /* Tendencia */
-    #bloque-tendencia { display: flex; align-items: center; gap: 12px; background: rgba(255,255,255,0.05); border-radius: 100px; padding: 10px 28px; border: 1.5px solid rgba(255,255,255,0.12); }
-    #tendencia-icono { font-size: clamp(28px, 8vw, 48px); line-height: 1; }
-    #tendencia-texto { font-size: clamp(20px, 5.5vw, 34px); font-weight: 700; letter-spacing: 0.05em; }
+    /* Vistas Históricas */
+    .vista-historico { width: 100%; text-align: left; }
+    .lista-historial { list-style: none; padding: 0; margin: 0; width: 100%; }
+    .lista-historial li { font-size: clamp(20px, 5vw, 28px); padding: 12px 10px; border-bottom: 1px solid #2a5caa; display: flex; justify-content: space-between; }
+    .lista-historial li:last-child { border-bottom: none; }
+    .hist-hora { color: #a0bce8; }
+    .hist-valor { font-weight: bold; color: #ffffff; }
 
     /* Colores */
-    .color-subiendo  { color: #ff6b6b; }
-    .color-bajando   { color: #51cf66; }
-    .color-estable   { color: #ffd43b; }
-    .color-sin-dato  { color: #868e96; }
+    .color-subiendo { color: #ff6b6b; }
+    .color-bajando { color: #51cf66; }
+    .color-estable { color: #ffd43b; }
+    .color-sin-dato { color: #868e96; }
+    .oculto { display: none !important; }
 
-    #ultima-actualizacion { font-size: clamp(12px, 2.8vw, 15px); color: #6888aa; margin-top: -8px; }
-
-    /* Paginador */
-    #paginador { flex: 0 0 auto; padding: clamp(10px, 2.5vh, 20px) clamp(12px, 4vw, 24px); display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #0d1f3c; border-top: 3px solid #2a5caa; }
-    .btn-nav { flex: 1; min-height: clamp(64px, 14vh, 96px); font-size: clamp(20px, 5.5vw, 34px); font-weight: 900; border: none; border-radius: 16px; cursor: pointer; transition: transform 0.12s ease, background 0.15s ease; display: flex; align-items: center; justify-content: center; gap: 8px; letter-spacing: 0.03em; user-select: none; }
-    .btn-nav:active { transform: scale(0.94); }
+    /* Navegación Inferior */
+    #paginador { flex: 0 0 auto; padding: 15px; display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #0d1f3c; border-top: 3px solid #2a5caa; }
+    .btn-nav { flex: 1; padding: 25px 10px; font-size: clamp(22px, 6vw, 34px); font-weight: 900; border: none; border-radius: 15px; cursor: pointer; }
     #btn-anterior { background: #1a3a6b; color: #7eb8f7; border: 3px solid #2a5caa; }
     #btn-siguiente { background: #1a4f8a; color: #ffffff; border: 3px solid #4a8fd4; }
-    #contador { flex: 0 0 auto; text-align: center; color: #6888aa; font-size: clamp(13px, 3vw, 18px); line-height: 1.3; min-width: clamp(50px, 12vw, 80px); }
-    #contador-num { font-size: clamp(20px, 5vw, 28px); font-weight: 700; color: #a0bce8; display: block; }
-
   </style>
 </head>
 <body>
 
 <div id="app">
   <header id="encabezado">
-    <div id="titulo-app">💧 Hidrómetros AGP</div>
-    <div id="zona-badge">—</div>
+    <div class="tabs-principales">
+      <button id="tab-altura" class="tab-btn activo" onclick="cambiarCategoria('altura')">🌊 Altura Río</button>
+      <button id="tab-viento" class="tab-btn" onclick="cambiarCategoria('viento')">💨 Viento</button>
+    </div>
+    <div class="tabs-secundarias">
+      <button id="subtab-actual" class="sub-tab-btn activo" onclick="cambiarVista('actual')">Estado Actual</button>
+      <button id="subtab-historial" class="sub-tab-btn" onclick="cambiarVista('historial')">Últimas Horas</button>
+    </div>
   </header>
 
   <main id="contenido">
     <article id="tarjeta">
-      <div id="zona-label">—</div>
       <h1 id="nombre-estacion">Cargando...</h1>
-      <div id="separador"></div>
 
-      <div id="bloque-altura">
-        <span id="etiqueta-altura">Nivel del río</span>
-        <span id="altura-valor" class="color-sin-dato">—</span>
-        <span id="altura-unidad">metros</span>
+      <div id="panel-altura">
+        <div id="altura-actual" class="vista-actual">
+          <span class="valor-gigante" id="val-altura">—</span>
+          <span class="unidad">metros</span>
+          <span class="tendencia" id="tendencia-altura">Buscando...</span>
+        </div>
+        <div id="altura-historial" class="vista-historico oculto">
+          <ul class="lista-historial" id="lista-altura">
+             <li><span class="hist-hora">Sin datos</span><span class="hist-valor">—</span></li>
+          </ul>
+        </div>
       </div>
 
-      <div id="bloque-tendencia">
-        <span id="tendencia-icono">⏳</span>
-        <span id="tendencia-texto" class="color-sin-dato">Buscando datos</span>
+      <div id="panel-viento" class="oculto">
+        <div id="viento-actual" class="vista-actual">
+          <span class="valor-gigante" id="val-viento">—</span>
+          <span class="unidad">km/h</span>
+          <span class="tendencia" id="tendencia-viento">Dirección: —</span>
+        </div>
+        <div id="viento-historial" class="vista-historico oculto">
+          <ul class="lista-historial" id="lista-viento">
+             <li><span class="hist-hora">Sin datos</span><span class="hist-valor">—</span></li>
+          </ul>
+        </div>
       </div>
 
-      <p id="ultima-actualizacion">Conectando con el robot...</p>
     </article>
   </main>
 
   <nav id="paginador">
-    <button id="btn-anterior" class="btn-nav" onclick="navegarA(indiceActual - 1)">◀ Anterior</button>
-    <div id="contador">
-      <span id="contador-num">—</span> de <span id="contador-total">—</span>
-    </div>
-    <button id="btn-siguiente" class="btn-nav" onclick="navegarA(indiceActual + 1)">Siguiente ▶</button>
+    <button id="btn-anterior" class="btn-nav" onclick="navegarA(-1)">◀ Anterior</button>
+    <button id="btn-siguiente" class="btn-nav" onclick="navegarA(1)">Siguiente ▶</button>
   </nav>
 </div>
 
 <script>
   let estacionesData = [];
   let indiceActual = 0;
-  let actualizadoEn = "";
+  let categoriaActual = 'altura';
+  let vistaActual = 'actual';
 
   async function cargarDatos() {
     try {
-      // Lee el archivo generado por tu robot en GitHub
       const resp = await fetch('datos.json?t=' + new Date().getTime());
-      if (!resp.ok) return; // Si el archivo todavía no existe, espera.
+      if (!resp.ok) return;
       const data = await resp.json();
-      
       estacionesData = data.estaciones;
-      actualizadoEn = data.actualizadoEn;
-      document.getElementById("contador-total").textContent = estacionesData.length;
-      mostrarEstacion(estacionesData[indiceActual]);
-    } catch (e) { 
-      console.log("Esperando datos del robot...");
-    }
+      renderizarPantalla();
+    } catch (e) { }
   }
 
-  function navegarA(idx) {
+  function cambiarCategoria(cat) {
+    categoriaActual = cat;
+    document.getElementById('tab-altura').classList.toggle('activo', cat === 'altura');
+    document.getElementById('tab-viento').classList.toggle('activo', cat === 'viento');
+    document.getElementById('panel-altura').classList.toggle('oculto', cat !== 'altura');
+    document.getElementById('panel-viento').classList.toggle('oculto', cat !== 'viento');
+    renderizarPantalla();
+  }
+
+  function cambiarVista(vista) {
+    vistaActual = vista;
+    document.getElementById('subtab-actual').classList.toggle('activo', vista === 'actual');
+    document.getElementById('subtab-historial').classList.toggle('activo', vista === 'historial');
+    document.getElementById('altura-actual').classList.toggle('oculto', vista !== 'actual');
+    document.getElementById('altura-historial').classList.toggle('oculto', vista !== 'historial');
+    document.getElementById('viento-actual').classList.toggle('oculto', vista !== 'actual');
+    document.getElementById('viento-historial').classList.toggle('oculto', vista !== 'historial');
+    renderizarPantalla();
+  }
+
+  function navegarA(direccion) {
     if (estacionesData.length === 0) return;
-    indiceActual = ((idx % estacionesData.length) + estacionesData.length) % estacionesData.length;
-    document.getElementById("contador-num").textContent = indiceActual + 1;
-    mostrarEstacion(estacionesData[indiceActual]);
+    indiceActual = ((indiceActual + direccion % estacionesData.length) + estacionesData.length) % estacionesData.length;
+    renderizarPantalla();
   }
 
-  function mostrarEstacion(est) {
-    document.getElementById("nombre-estacion").textContent = est.nombre;
-    document.getElementById("zona-label").textContent = est.zona || "—";
-    
-    const elAltura = document.getElementById("altura-valor");
-    const elTendIcono = document.getElementById("tendencia-icono");
-    const elTendTexto = document.getElementById("tendencia-texto");
-    const elHora = document.getElementById("ultima-actualizacion");
+  function renderizarPantalla() {
+    if (!estacionesData[indiceActual]) return;
+    const est = estacionesData[indiceActual];
+    document.getElementById('nombre-estacion').textContent = est.nombre;
 
-    document.getElementById("zona-badge").innerText = `${est.zona}\nActualizado por Robot: ${actualizadoEn}`;
-
-    elAltura.classList.remove("cargando-estacion");
+    // --- RENDER ALTURA ---
+    const valAltura = document.getElementById('val-altura');
+    const tendAltura = document.getElementById('tendencia-altura');
     
     if (est.altura !== null && est.altura !== undefined && !isNaN(est.altura)) {
-      elAltura.textContent = est.altura.toFixed(2);
-      elAltura.className = "";
-      if (est.altura >= 4.5) elAltura.classList.add("color-subiendo");
-      else if (est.altura >= 3.0) elAltura.classList.add("color-estable");
-      else elAltura.classList.add("color-bajando");
+      valAltura.textContent = est.altura.toFixed(2);
+      valAltura.className = "valor-gigante";
+      if (est.altura >= 4.0) valAltura.classList.add("color-subiendo");
+      else if (est.altura >= 2.0) valAltura.classList.add("color-estable");
+      else valAltura.classList.add("color-bajando");
     } else {
-      elAltura.textContent = "S/D";
-      elAltura.className = "color-sin-dato";
+      valAltura.textContent = "S/D";
+      valAltura.className = "valor-gigante color-sin-dato";
     }
 
-    const config = {
-      "SUBIENDO":  { icono: "↑", texto: "Subiendo",  clase: "color-subiendo" },
-      "BAJANDO":   { icono: "↓", texto: "Bajando",   clase: "color-bajando"  },
-      "ESTABLE":   { icono: "→", texto: "Estable",   clase: "color-estable"  },
-      "—":         { icono: "?", texto: "Sin dato",  clase: "color-sin-dato" },
-    };
-    const t = config[est.tendencia] || config["—"];
-    elTendIcono.textContent = t.icono;
-    elTendTexto.textContent = t.texto;
-    elTendTexto.className = t.clase;
+    const iconos = { "SUBIENDO": "↑ Subiendo", "BAJANDO": "↓ Bajando", "ESTABLE": "→ Estable", "—": "? Sin dato" };
+    tendAltura.textContent = iconos[est.tendencia] || iconos["—"];
 
-    if (est.fechaHoraAGP) {
-      elHora.textContent = `Dato Oficial: ${est.fechaHoraAGP}`;
+    // RENDER HISTORIAL ALTURA (Preparado para cuando el robot traiga datos)
+    const listaAlt = document.getElementById('lista-altura');
+    listaAlt.innerHTML = "";
+    if (est.historialAltura && est.historialAltura.length > 0) {
+        est.historialAltura.forEach(h => {
+            listaAlt.innerHTML += `<li><span class="hist-hora">${h.hora}</span><span class="hist-valor">${h.valor} m</span></li>`;
+        });
     } else {
-      elHora.textContent = `Última lectura: ${actualizadoEn}`;
+        listaAlt.innerHTML = `<li><span class="hist-hora">Esperando actualización...</span><span class="hist-valor">—</span></li>`;
+    }
+
+    // --- RENDER VIENTO (Preparado para cuando el robot traiga datos) ---
+    const valViento = document.getElementById('val-viento');
+    const tendViento = document.getElementById('tendencia-viento');
+    
+    if (est.vientoActual) {
+        valViento.textContent = est.vientoActual;
+        valViento.className = "valor-gigante";
+        tendViento.textContent = "Dirección: " + (est.vientoDireccion || "N/A");
+    } else {
+        valViento.textContent = "S/D";
+        valViento.className = "valor-gigante color-sin-dato";
+        tendViento.textContent = "Sin datos de viento";
+    }
+
+    const listaViento = document.getElementById('lista-viento');
+    listaViento.innerHTML = "";
+    if (est.historialViento && est.historialViento.length > 0) {
+        est.historialViento.forEach(h => {
+            listaViento.innerHTML += `<li><span class="hist-hora">${h.hora}</span><span class="hist-valor">${h.valor} km/h</span></li>`;
+        });
+    } else {
+        listaViento.innerHTML = `<li><span class="hist-hora">Esperando actualización...</span><span class="hist-valor">—</span></li>`;
     }
   }
 
-  // Refresca la pantalla silenciosamente cada minuto
   setInterval(cargarDatos, 60000);
-  
-  // Arranque
-  document.getElementById("contador-num").textContent = 1;
   cargarDatos();
 </script>
 </body>
