@@ -1,5 +1,5 @@
 {
-  "actualizadoEn": "08/04/2026, 3:05 PM",
+  "actualizadoEn": "08/04/2026, 3:20 PM",
   "estaciones": [
     {
       "nombre": "Zárate",
@@ -122,9 +122,13 @@
       "nombre": "Desembocadura",
       "url": "http://hidrografia.agpse.gob.ar:53880/Desembocadura/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 2.092865,
+      "altura": 2.069187,
       "tendencia": "BAJANDO",
       "historialAltura": [
+        {
+          "hora": "14:40",
+          "valor": 2.092865
+        },
         {
           "hora": "14:20",
           "valor": 2.138634
@@ -140,10 +144,6 @@
         {
           "hora": "13:20",
           "valor": 2.237265
-        },
-        {
-          "hora": "13:00",
-          "valor": 2.274062
         }
       ],
       "vientoActual": null,
@@ -440,9 +440,13 @@
       "nombre": "Esquina",
       "url": "http://hidrografia.agpse.gob.ar:53880/Esquina/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 1.615355,
+      "altura": 1.602713,
       "tendencia": "—",
       "historialAltura": [
+        {
+          "hora": "14:00",
+          "valor": 1.615355
+        },
         {
           "hora": "13:00",
           "valor": 1.627135
@@ -458,10 +462,6 @@
         {
           "hora": "10:00",
           "valor": 1.659775
-        },
-        {
-          "hora": "09:00",
-          "valor": 1.671493
         }
       ],
       "vientoActual": null,
