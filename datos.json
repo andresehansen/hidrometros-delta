@@ -1,5 +1,5 @@
 {
-  "actualizadoEn": "07/04/2026, 11:33 PM",
+  "actualizadoEn": "08/04/2026, 3:12 AM",
   "estaciones": [
     {
       "nombre": "Zárate",
@@ -14,9 +14,9 @@
       "nombre": "Las Rosas",
       "url": "http://hidrografia.agpse.gob.ar:53880/LasRosas/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 0.62,
-      "tendencia": "SUBIENDO",
-      "fechaHora": "2026-04-07 23:10:00",
+      "altura": 1.079,
+      "tendencia": "ESTABLE",
+      "fechaHora": "2026-04-08 02:50:00",
       "ok": true
     },
     {
@@ -32,9 +32,9 @@
       "nombre": "Braga",
       "url": "http://hidrografia.agpse.gob.ar:53880/Braga/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 1.399,
+      "altura": 1.825,
       "tendencia": "SUBIENDO",
-      "fechaHora": "2026-04-07 23:10:00",
+      "fechaHora": "2026-04-08 02:50:00",
       "ok": true
     },
     {
@@ -50,9 +50,9 @@
       "nombre": "Baradero",
       "url": "http://hidrografia.agpse.gob.ar:53880/Baradero/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": -0.052,
+      "altura": 0.374,
       "tendencia": "SUBIENDO",
-      "fechaHora": "2026-04-07 23:20:00",
+      "fechaHora": "2026-04-08 02:40:00",
       "ok": true
     },
     {
@@ -68,18 +68,18 @@
       "nombre": "Brazo Largo",
       "url": "http://hidrografia.agpse.gob.ar:53880/BrazoLargo/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 0.236,
-      "tendencia": "ESTABLE",
-      "fechaHora": "2026-04-07 23:20:00",
+      "altura": 0.623,
+      "tendencia": "SUBIENDO",
+      "fechaHora": "2026-04-08 03:00:00",
       "ok": true
     },
     {
       "nombre": "Desembocadura",
       "url": "http://hidrografia.agpse.gob.ar:53880/Desembocadura/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 0.8011367,
-      "tendencia": "SUBIENDO",
-      "fechaHora": "2026-04-07 23:20:00",
+      "altura": 1.148838,
+      "tendencia": "ESTABLE",
+      "fechaHora": "2026-04-08 03:00:00",
       "ok": true
     },
     {
@@ -149,9 +149,9 @@
       "nombre": "Bifurcación",
       "url": "http://hidrografia.agpse.gob.ar:53880/ehmail/bifurcacion2.htm",
       "zona": "Confluencia – Océano",
-      "altura": 0.03,
-      "tendencia": "BAJANDO",
-      "fechaHora": "2026-04-07 23:00:00",
+      "altura": 0.27,
+      "tendencia": "SUBIENDO",
+      "fechaHora": "2026-04-08 02:40:00",
       "ok": true
     },
     {
@@ -266,9 +266,9 @@
       "nombre": "Santa Elena",
       "url": "http://hidrografia.agpse.gob.ar:53880/SantaElena/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 3.046,
+      "altura": 3.039,
       "tendencia": "ESTABLE",
-      "fechaHora": "2026-04-07 23:00:00",
+      "fechaHora": "2026-04-08 02:00:00",
       "ok": true
     },
     {
@@ -284,9 +284,9 @@
       "nombre": "Esquina",
       "url": "http://hidrografia.agpse.gob.ar:53880/Esquina/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 2.289673,
+      "altura": 2.255008,
       "tendencia": "ESTABLE",
-      "fechaHora": "2026-04-07 23:00:00",
+      "fechaHora": "2026-04-08 02:00:00",
       "ok": true
     },
     {
@@ -365,9 +365,9 @@
       "nombre": "Carabelitas",
       "url": "http://hidrografia.agpse.gob.ar:53880/ehmail/Carabelitas2.htm",
       "zona": "Brazo Bravo – Guazú",
-      "altura": 0.7,
+      "altura": 1.1,
       "tendencia": "SUBIENDO",
-      "fechaHora": "2026-04-07 23:00:00",
+      "fechaHora": "2026-04-08 02:40:00",
       "ok": true
     }
   ]
