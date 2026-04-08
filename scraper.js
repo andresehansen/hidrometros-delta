@@ -46,7 +46,7 @@ const ESTACIONES = [
 
 async function fetchURL(url) {
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 12000);
+  const timeoutId = setTimeout(() => controller.abort(), 10000);
   try {
     const response = await fetch(url, {
       headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/122.0.0.0 Safari/537.36" },
@@ -62,47 +62,50 @@ async function fetchURL(url) {
 }
 
 function parsearHTML(html) {
-    let altura = null; 
-    let tendencia = "ESTABLE"; 
-    let fechaHora = null;
+    let altura = null; let tendencia = "ESTABLE"; let fechaHora = null;
 
-    // Limpiamos el texto para que sea más fácil de buscar
-    const cleanHtml = html.replace(/\r?\n|\r/g, " ");
+    // 1. Convertimos todo a texto puro
+    const textoPuro = html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
 
-    // 1. Buscamos específicamente las palabras "Nivel" o "Altura" seguidas de un número
-    const regexNivel = /(?:nivel|altura|cota|agua)[\s\S]{0,50}?([-]?\d{1,2}[.,]\d{2})/i;
-    // 2. Buscamos un número que esté estrictamente acompañado de la letra "m" (metros)
-    const regexMts = /([-]?\d{1,2}[.,]\d{2})\s*(?:m|mts|metros)/i;
-
-    const patterns = [regexNivel, regexMts];
-
-    for (let p of patterns) {
-        let m = cleanHtml.match(p);
-        if (m) {
-            let val = parseFloat(m[1].replace(',', '.'));
-            // Filtro Anti-Temperatura: Solo aceptamos valores lógicos de río (-2 a 12 metros)
-            if (val > -2 && val < 12) { 
-                altura = val; break; 
-            }
-        }
-    }
-
-    // Si las palabras clave fallan, buscamos cualquier número lógico en toda la página
-    if (altura === null) {
-        const todosLosNumeros = [...cleanHtml.matchAll(/([-]?\d{1,2}[.,]\d{2})/g)];
-        for (let numMatch of todosLosNumeros) {
-            let val = parseFloat(numMatch[1].replace(',', '.'));
-            if (val > -2 && val < 12) {
-                altura = val; break;
-            }
-        }
-    }
-
-    if (/subi[eo]ndo|↑|▲|up|subida/i.test(cleanHtml)) tendencia = "SUBIENDO";
-    if (/bajando|descend|↓|▼|down|bajada/i.test(cleanHtml)) tendencia = "BAJANDO";
-    if (/estable|igual|→|►/i.test(cleanHtml)) tendencia = "ESTABLE";
+    // 2. Extraemos todos los números con formato X.XX
+    const todosLosNumeros = [...textoPuro.matchAll(/([-]?\d{1,2}[.,]\d{2})/g)];
     
-    const fechaMatch = cleanHtml.match(/(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})[^\d]*(\d{1,2}:\d{2})/);
+    for (let n of todosLosNumeros) {
+        let index = n.index;
+        // Revisamos el texto que está justo antes del número (el "contexto")
+        let contextoPrevio = textoPuro.substring(Math.max(0, index - 45), index).toLowerCase();
+        let contextoPosterior = textoPuro.substring(index, index + 20).toLowerCase();
+        
+        // FILTRO QUIRÚRGICO: Ignorar números trampa
+        if (contextoPrevio.includes("cero") || 
+            contextoPrevio.includes("bater") || 
+            contextoPrevio.includes("temp") || 
+            contextoPrevio.includes("predic") ||
+            contextoPrevio.includes("escala") || 
+            contextoPrevio.includes("referencia")) {
+            continue; // Saltar al siguiente número
+        }
+        
+        let val = parseFloat(n[1].replace(',', '.'));
+        
+        // Si el número es realista (-3 a 12 metros) y no fue filtrado, ES LA ALTURA.
+        if (val > -3 && val < 12) {
+            // Priorizamos si explícitamente dice "nivel" o "m"
+            if (contextoPrevio.includes("nivel") || contextoPrevio.includes("altura") || contextoPosterior.includes("m")) {
+                altura = val;
+                break;
+            } else if (altura === null) {
+                // Lo guardamos por las dudas si no encontramos algo mejor
+                altura = val; 
+            }
+        }
+    }
+
+    if (/subi[eo]ndo|↑|▲|up|subida|creci/i.test(textoPuro)) tendencia = "SUBIENDO";
+    if (/bajando|descend|↓|▼|down|bajada|bajan/i.test(textoPuro)) tendencia = "BAJANDO";
+    if (/estable|igual|→|►/i.test(textoPuro)) tendencia = "ESTABLE";
+    
+    let fechaMatch = textoPuro.match(/(\d{1,2}[-\/]\d{1,2}[-\/]\d{2,4})[^\d]*(\d{1,2}:\d{2})/);
     if (fechaMatch) fechaHora = `${fechaMatch[1]} ${fechaMatch[2]}`;
     
     return { altura, tendencia, fechaHora };
@@ -115,38 +118,28 @@ function obtenerHoraFormateada() {
     const minutos = d.getMinutes().toString().padStart(2, '0');
     const ampm = horas >= 12 ? 'PM' : 'AM';
     horas = horas % 12; horas = horas ? horas : 12; 
-    const dia = d.getDate().toString().padStart(2, '0');
-    const mes = (d.getMonth() + 1).toString().padStart(2, '0');
-    return `${dia}/${mes}/${d.getFullYear()}, ${horas}:${minutos} ${ampm}`;
+    return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}, ${horas}:${minutos} ${ampm}`;
 }
 
 async function procesarEstacion(est) {
-    // Si la URL principal falla, el robot intentará automáticamente la versión moderna sin puerto
-    let urlSecundaria = est.url.includes(':53880') 
-        ? est.url.replace(':53880', '').replace('http:', 'https:') 
-        : est.url.replace('https:', 'http:').replace('.ar/', '.ar:53880/');
-        
-    try {
-        let html = await fetchURL(est.url);
-        let datos = parsearHTML(html);
-        
-        if (datos.altura === null) {
-            // Intento secundario si la página cargó pero estaba vacía
-            let html2 = await fetchURL(urlSecundaria);
-            let datos2 = parsearHTML(html2);
-            if (datos2.altura !== null) return { ...est, ...datos2, ok: true };
-        }
-        return { ...est, ...datos, ok: datos.altura !== null };
-    } catch(e) {
+    // Generar enlaces alternativos por si el gobierno apagó el servidor principal
+    let url2 = est.url.replace(':53880', '').replace('http:', 'https:');
+    let url3 = url2.replace('hidrografia.agpse', 'hidrografia2.agpse'); // Muchas se mudaron a hidrografia2
+    let urls = [est.url, url2, url3];
+
+    for (let currentUrl of urls) {
         try {
-            // Intento secundario si la red bloqueó la URL primaria (Caso Zárate/Escobar)
-            let html2 = await fetchURL(urlSecundaria);
-            let datos2 = parsearHTML(html2);
-            return { ...est, ...datos2, ok: datos2.altura !== null };
-        } catch(e2) {
-            return { ...est, altura: null, tendencia: "—", fechaHora: null, ok: false };
+            let html = await fetchURL(currentUrl);
+            let datos = parsearHTML(html);
+            if (datos.altura !== null) {
+                return { ...est, ...datos, ok: true };
+            }
+        } catch(e) {
+            // Falla silenciosa, intenta la siguiente URL de la lista
         }
     }
+    // Si agotó las 3 direcciones y no encontró nada
+    return { ...est, altura: null, tendencia: "—", fechaHora: null, ok: false };
 }
 
 async function main() {
@@ -154,7 +147,6 @@ async function main() {
   for (const est of ESTACIONES) {
     const dataEstacion = await procesarEstacion(est);
     resultados.push(dataEstacion);
-    await new Promise(r => setTimeout(r, 800)); // Pausa para no saturar al servidor
   }
 
   const dataFinal = { actualizadoEn: obtenerHoraFormateada(), estaciones: resultados };
