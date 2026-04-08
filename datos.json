@@ -1,12 +1,12 @@
 {
-  "actualizadoEn": "07/04/2026, 9:29 PM",
+  "actualizadoEn": "07/04/2026, 9:43 PM",
   "estaciones": [
     {
       "nombre": "Zárate",
       "url": "http://hidrografia.agpse.gob.ar:53880/zarate/index.html",
       "zona": "Delta / Río de la Plata",
       "altura": null,
-      "tendencia": "ESTABLE",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -15,7 +15,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/LasRosas/index.html",
       "zona": "Delta / Río de la Plata",
       "altura": null,
-      "tendencia": "BAJANDO",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -24,7 +24,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/escobar/index.html",
       "zona": "Delta / Río de la Plata",
       "altura": null,
-      "tendencia": "ESTABLE",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -33,7 +33,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/Braga/index.html",
       "zona": "Delta / Río de la Plata",
       "altura": -1.14,
-      "tendencia": "BAJANDO",
+      "tendencia": "ESTABLE",
       "fechaHora": null,
       "ok": true
     },
@@ -51,7 +51,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/Baradero/index.html",
       "zona": "Delta / Río de la Plata",
       "altura": null,
-      "tendencia": "BAJANDO",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -59,17 +59,17 @@
       "nombre": "Ibicuy",
       "url": "http://hidrografia2.agpse.gob.ar/Ibicuy/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": null,
-      "tendencia": "—",
+      "altura": -2.45,
+      "tendencia": "ESTABLE",
       "fechaHora": null,
-      "ok": false
+      "ok": true
     },
     {
       "nombre": "Brazo Largo",
       "url": "http://hidrografia.agpse.gob.ar:53880/BrazoLargo/index.html",
       "zona": "Delta / Río de la Plata",
       "altura": -1.6,
-      "tendencia": "BAJANDO",
+      "tendencia": "ESTABLE",
       "fechaHora": null,
       "ok": true
     },
@@ -78,7 +78,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/Desembocadura/index.html",
       "zona": "Delta / Río de la Plata",
       "altura": null,
-      "tendencia": "ESTABLE",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -141,7 +141,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/SanPedro/index.html",
       "zona": "Confluencia – Océano",
       "altura": null,
-      "tendencia": "ESTABLE",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -150,7 +150,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/ehmail/bifurcacion2.htm",
       "zona": "Confluencia – Océano",
       "altura": null,
-      "tendencia": "BAJANDO",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -159,7 +159,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/vueltaobligado/index.html",
       "zona": "Confluencia – Océano",
       "altura": null,
-      "tendencia": "ESTABLE",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -195,7 +195,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/arroyoseco/index.html",
       "zona": "Confluencia – Océano",
       "altura": null,
-      "tendencia": "ESTABLE",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -204,7 +204,7 @@
       "url": "http://hidrografia2.agpse.gob.ar/Rosario/index.html",
       "zona": "Confluencia – Océano",
       "altura": 6.74,
-      "tendencia": "BAJANDO",
+      "tendencia": "ESTABLE",
       "fechaHora": null,
       "ok": true
     },
@@ -213,7 +213,7 @@
       "url": "http://hidrografia2.agpse.gob.ar/SanLorenzo/index.html",
       "zona": "Confluencia – Océano",
       "altura": -1.95,
-      "tendencia": "BAJANDO",
+      "tendencia": "ESTABLE",
       "fechaHora": null,
       "ok": true
     },
@@ -222,7 +222,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/Timbues/index.html",
       "zona": "Confluencia – Océano",
       "altura": null,
-      "tendencia": "ESTABLE",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -231,7 +231,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/Diamante/index.html",
       "zona": "Confluencia – Océano",
       "altura": -1.66,
-      "tendencia": "BAJANDO",
+      "tendencia": "ESTABLE",
       "fechaHora": null,
       "ok": true
     },
@@ -240,7 +240,7 @@
       "url": "http://hidrografia2.agpse.gob.ar/Parana/index.html",
       "zona": "Confluencia – Océano",
       "altura": -1.86,
-      "tendencia": "BAJANDO",
+      "tendencia": "ESTABLE",
       "fechaHora": null,
       "ok": true
     },
@@ -249,7 +249,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/SantaFe/index.html",
       "zona": "Confluencia – Océano",
       "altura": null,
-      "tendencia": "ESTABLE",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -258,7 +258,7 @@
       "url": "http://hidrografia2.agpse.gob.ar/Hernandarias/index.html",
       "zona": "Confluencia – Océano",
       "altura": -0.38,
-      "tendencia": "BAJANDO",
+      "tendencia": "ESTABLE",
       "fechaHora": null,
       "ok": true
     },
@@ -267,7 +267,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/SantaElena/index.html",
       "zona": "Confluencia – Océano",
       "altura": null,
-      "tendencia": "BAJANDO",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -285,7 +285,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/Esquina/index.html",
       "zona": "Confluencia – Océano",
       "altura": -0.65,
-      "tendencia": "BAJANDO",
+      "tendencia": "ESTABLE",
       "fechaHora": null,
       "ok": true
     },
@@ -293,17 +293,17 @@
       "nombre": "Reconquista",
       "url": "http://hidrografia2.agpse.gob.ar/Reconquista/index.html",
       "zona": "Confluencia – Océano",
-      "altura": null,
-      "tendencia": "—",
+      "altura": 0.4,
+      "tendencia": "ESTABLE",
       "fechaHora": null,
-      "ok": false
+      "ok": true
     },
     {
       "nombre": "Goya",
       "url": "http://hidrografia2.agpse.gob.ar/Goya/index.html",
       "zona": "Confluencia – Océano",
       "altura": 7.56,
-      "tendencia": "BAJANDO",
+      "tendencia": "ESTABLE",
       "fechaHora": null,
       "ok": true
     },
@@ -321,7 +321,7 @@
       "url": "http://hidrografia2.agpse.gob.ar/BellaVista/index.html",
       "zona": "Confluencia – Océano",
       "altura": -0.59,
-      "tendencia": "BAJANDO",
+      "tendencia": "ESTABLE",
       "fechaHora": null,
       "ok": true
     },
@@ -348,7 +348,7 @@
       "url": "http://hidrografia2.agpse.gob.ar/Corrientes/index.html",
       "zona": "Confluencia – Océano",
       "altura": -0.14,
-      "tendencia": "BAJANDO",
+      "tendencia": "ESTABLE",
       "fechaHora": null,
       "ok": true
     },
@@ -357,7 +357,7 @@
       "url": "http://hidrografia2.agpse.gob.ar/PasodelaPatria/index.html",
       "zona": "Confluencia – Océano",
       "altura": 0.64,
-      "tendencia": "BAJANDO",
+      "tendencia": "ESTABLE",
       "fechaHora": null,
       "ok": true
     },
@@ -366,7 +366,7 @@
       "url": "http://hidrografia.agpse.gob.ar:53880/ehmail/Carabelitas2.htm",
       "zona": "Brazo Bravo – Guazú",
       "altura": null,
-      "tendencia": "BAJANDO",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     }
