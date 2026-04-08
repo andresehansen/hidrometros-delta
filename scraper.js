@@ -1,3 +1,6 @@
+// HACK: Ignorar certificados de seguridad vencidos del gobierno
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 const fs = require('fs');
 
 const ESTACIONES = [
@@ -46,7 +49,7 @@ const ESTACIONES = [
 
 async function fetchURL(url) {
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 8000); 
+  const timeoutId = setTimeout(() => controller.abort(), 10000); 
   try {
     const response = await fetch(url, {
       headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0 Safari/537.36" },
@@ -61,7 +64,6 @@ async function fetchURL(url) {
   }
 }
 
-// EL ROBOT ASPIRADORA: Entra a iframes, sigue redirecciones y succiona archivos .dat
 async function explorar(url, visitados = new Set()) {
     if (visitados.has(url) || visitados.size > 12) return { html: "", csvs: [] };
     visitados.add(url);
@@ -71,21 +73,18 @@ async function explorar(url, visitados = new Set()) {
         let html = await fetchURL(url);
         result.html += html + " ";
 
-        // 1. Seguir enlaces de redirección (Meta Refresh)
         let metaMatch = html.match(/<meta[^>]*url=([^"'>\s]+)/i);
         if (metaMatch) {
             let redir = await explorar(new URL(metaMatch[1], url).href, visitados);
             result.html += redir.html; result.csvs.push(...redir.csvs);
         }
 
-        // 2. Entrar a todos los Iframes ocultos
         let iframesUrls = [...html.matchAll(/<iframe[^>]+src=['"]([^'"]+)['"]/gi)].map(m => m[1]);
         for (let src of iframesUrls) {
             let redir = await explorar(new URL(src, url).href, visitados);
             result.html += redir.html; result.csvs.push(...redir.csvs);
         }
 
-        // 3. Succionar cualquier archivo .dat en el código
         let datFiles = [...html.matchAll(/['"]([^'"]+\.dat)['"]/gi)].map(m => m[1]);
         for (let src of datFiles) {
             let datUrl = new URL(src, url).href;
@@ -101,7 +100,6 @@ async function explorar(url, visitados = new Set()) {
     } catch(e) { return result; }
 }
 
-// Analizador estricto anti-datos-falsos
 function procesarCSV(csvText, tipo) {
     let lineas = csvText.trim().split('\n');
     if (lineas.length < 4) return null;
@@ -112,7 +110,6 @@ function procesarCSV(csvText, tipo) {
 
     if (tipo === 'altura') {
         for (let j = 0; j < cabeceras.length; j++) {
-            // EXIGE encontrar la palabra para no confundir con temperatura
             if (cabeceras[j].includes("nivel") || cabeceras[j].includes("altura") || cabeceras[j].includes("marea") || cabeceras[j].includes("cota") || cabeceras[j].includes("rio")) {
                 idxValor = j % numCols; break;
             }
@@ -124,7 +121,7 @@ function procesarCSV(csvText, tipo) {
         }
     }
 
-    if (idxValor === -1) return null; // Si no encuentra la columna exacta, cancela para no dar un dato falso
+    if (idxValor === -1) return null; 
 
     let historial = []; let valorActual = null; let dirActual = null;
 
@@ -199,7 +196,6 @@ async function procesarEstacion(est) {
             let info = await explorar(currentUrl);
 
             if (info.html.length > 100 || info.csvs.length > 0) {
-                // Primero: Intentar con la máxima precisión (Archivos CSV encontrados)
                 for (let csv of info.csvs) {
                     let resAltura = procesarCSV(csv, 'altura');
                     if (resAltura && resAltura.valorActual !== null && estData.altura === null) {
@@ -219,7 +215,6 @@ async function procesarEstacion(est) {
                     }
                 }
 
-                // Segundo: Si no hubo CSV de altura (o la tabla no tenía el rótulo "Nivel"), buscar en el HTML crudo
                 if (estData.altura === null) {
                     let resTexto = parsearHTML(info.html);
                     if (resTexto.altura !== null) {
@@ -233,7 +228,7 @@ async function procesarEstacion(est) {
                     return estData;
                 }
             }
-        } catch(e) { } // Intenta la siguiente URL de respaldo
+        } catch(e) { } 
     }
     return estData;
 }
