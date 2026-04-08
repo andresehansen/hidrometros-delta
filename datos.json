@@ -1,5 +1,5 @@
 {
-  "actualizadoEn": "08/04/2026, 3:20 PM",
+  "actualizadoEn": "08/04/2026, 4:01 PM",
   "estaciones": [
     {
       "nombre": "Zárate",
@@ -41,28 +41,28 @@
       "nombre": "Braga",
       "url": "http://hidrografia.agpse.gob.ar:53880/Braga/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 3.026596,
-      "tendencia": "—",
+      "altura": 2.904571,
+      "tendencia": "BAJANDO",
       "historialAltura": [
         {
-          "hora": "14:50",
-          "valor": 3.044117
+          "hora": "15:40",
+          "valor": 2.930329
         },
         {
-          "hora": "14:40",
-          "valor": 3.070219
+          "hora": "15:30",
+          "valor": 2.931785
         },
         {
-          "hora": "14:30",
-          "valor": 3.094527
+          "hora": "15:20",
+          "valor": 2.981952
         },
         {
-          "hora": "14:20",
-          "valor": 3.119014
+          "hora": "15:10",
+          "valor": 3.003181
         },
         {
-          "hora": "14:10",
-          "valor": 3.140819
+          "hora": "15:00",
+          "valor": 3.026596
         }
       ],
       "vientoActual": null,
@@ -122,9 +122,17 @@
       "nombre": "Desembocadura",
       "url": "http://hidrografia.agpse.gob.ar:53880/Desembocadura/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 2.069187,
+      "altura": 1.985229,
       "tendencia": "BAJANDO",
       "historialAltura": [
+        {
+          "hora": "15:20",
+          "valor": 2.026092
+        },
+        {
+          "hora": "15:00",
+          "valor": 2.069187
+        },
         {
           "hora": "14:40",
           "valor": 2.092865
@@ -136,14 +144,6 @@
         {
           "hora": "14:00",
           "valor": 2.170947
-        },
-        {
-          "hora": "13:40",
-          "valor": 2.18487
-        },
-        {
-          "hora": "13:20",
-          "valor": 2.237265
         }
       ],
       "vientoActual": null,
