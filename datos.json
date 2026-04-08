@@ -1,5 +1,5 @@
 {
-  "actualizadoEn": "08/04/2026, 12:12 PM",
+  "actualizadoEn": "08/04/2026, 3:05 PM",
   "estaciones": [
     {
       "nombre": "Zárate",
@@ -8,30 +8,9 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 1.699,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:20",
-          "valor": 1.69
-        },
-        {
-          "hora": "11:00",
-          "valor": 1.677
-        },
-        {
-          "hora": "10:40",
-          "valor": 1.663
-        },
-        {
-          "hora": "10:20",
-          "valor": 1.651
-        },
-        {
-          "hora": "10:00",
-          "valor": 1.637
-        }
-      ],
+      "historialViento": [],
       "ok": false
     },
     {
@@ -41,30 +20,9 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 1.675,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:30",
-          "valor": 1.677
-        },
-        {
-          "hora": "11:20",
-          "valor": 1.676
-        },
-        {
-          "hora": "11:10",
-          "valor": 1.667
-        },
-        {
-          "hora": "11:00",
-          "valor": 1.669
-        },
-        {
-          "hora": "10:50",
-          "valor": 1.665
-        }
-      ],
+      "historialViento": [],
       "ok": false
     },
     {
@@ -74,84 +32,42 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 2.14,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:20",
-          "valor": 2.167
-        },
-        {
-          "hora": "11:00",
-          "valor": 2.179
-        },
-        {
-          "hora": "10:40",
-          "valor": 2.176
-        },
-        {
-          "hora": "10:20",
-          "valor": 2.167
-        },
-        {
-          "hora": "10:00",
-          "valor": 2.153
-        }
-      ],
+      "historialViento": [],
       "ok": false
     },
     {
       "nombre": "Braga",
       "url": "http://hidrografia.agpse.gob.ar:53880/Braga/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 3.44992,
-      "tendencia": "BAJANDO",
+      "altura": 3.026596,
+      "tendencia": "—",
       "historialAltura": [
         {
-          "hora": "11:40",
-          "valor": 3.483737
+          "hora": "14:50",
+          "valor": 3.044117
         },
         {
-          "hora": "11:30",
-          "valor": 3.523244
+          "hora": "14:40",
+          "valor": 3.070219
         },
         {
-          "hora": "11:20",
-          "valor": 3.567145
+          "hora": "14:30",
+          "valor": 3.094527
         },
         {
-          "hora": "11:10",
-          "valor": 3.613205
+          "hora": "14:20",
+          "valor": 3.119014
         },
         {
-          "hora": "11:00",
-          "valor": 3.64672
+          "hora": "14:10",
+          "valor": 3.140819
         }
       ],
-      "vientoActual": 1.98,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:40",
-          "valor": 2.014
-        },
-        {
-          "hora": "11:30",
-          "valor": 2.053
-        },
-        {
-          "hora": "11:20",
-          "valor": 2.097
-        },
-        {
-          "hora": "11:10",
-          "valor": 2.143
-        },
-        {
-          "hora": "11:00",
-          "valor": 2.177
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
@@ -185,30 +101,9 @@
       "altura": -2.45,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 1.13755,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:20",
-          "valor": 1.125243
-        },
-        {
-          "hora": "11:00",
-          "valor": 1.099235
-        },
-        {
-          "hora": "10:40",
-          "valor": 1.081248
-        },
-        {
-          "hora": "10:20",
-          "valor": 1.068578
-        },
-        {
-          "hora": "10:00",
-          "valor": 1.038255
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
@@ -218,84 +113,42 @@
       "altura": -1.6,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 1.177,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:40",
-          "valor": 1.166
-        },
-        {
-          "hora": "11:20",
-          "valor": 1.151
-        },
-        {
-          "hora": "11:00",
-          "valor": 1.137
-        },
-        {
-          "hora": "10:40",
-          "valor": 1.116
-        },
-        {
-          "hora": "10:20",
-          "valor": 1.094
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
       "nombre": "Desembocadura",
       "url": "http://hidrografia.agpse.gob.ar:53880/Desembocadura/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 2.375784,
-      "tendencia": "—",
+      "altura": 2.092865,
+      "tendencia": "BAJANDO",
       "historialAltura": [
         {
-          "hora": "11:40",
-          "valor": 2.389858
+          "hora": "14:20",
+          "valor": 2.138634
         },
         {
-          "hora": "11:20",
-          "valor": 2.399544
+          "hora": "14:00",
+          "valor": 2.170947
         },
         {
-          "hora": "11:00",
-          "valor": 2.403399
+          "hora": "13:40",
+          "valor": 2.18487
         },
         {
-          "hora": "10:40",
-          "valor": 2.401568
+          "hora": "13:20",
+          "valor": 2.237265
         },
         {
-          "hora": "10:20",
-          "valor": 2.395753
+          "hora": "13:00",
+          "valor": 2.274062
         }
       ],
-      "vientoActual": 1.635784,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:40",
-          "valor": 1.649858
-        },
-        {
-          "hora": "11:20",
-          "valor": 1.659544
-        },
-        {
-          "hora": "11:00",
-          "valor": 1.663399
-        },
-        {
-          "hora": "10:40",
-          "valor": 1.661568
-        },
-        {
-          "hora": "10:20",
-          "valor": 1.655753
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
@@ -314,162 +167,36 @@
       "nombre": "Bs. As. Puerto Sur",
       "url": "http://hidrografia.agpse.gob.ar:53880/buenosaires/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 11,
-      "tendencia": "SUBIENDO",
-      "historialAltura": [
-        {
-          "hora": "15:50",
-          "valor": 10
-        },
-        {
-          "hora": "15:40",
-          "valor": 9
-        },
-        {
-          "hora": "15:30",
-          "valor": 8
-        },
-        {
-          "hora": "15:20",
-          "valor": 7
-        },
-        {
-          "hora": "15:10",
-          "valor": 6
-        }
-      ],
-      "vientoActual": 2.073,
+      "altura": 0.91,
+      "tendencia": "ESTABLE",
+      "historialAltura": [],
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:50",
-          "valor": 2.068
-        },
-        {
-          "hora": "11:40",
-          "valor": 2.083
-        },
-        {
-          "hora": "11:30",
-          "valor": 2.093
-        },
-        {
-          "hora": "11:20",
-          "valor": 2.111
-        },
-        {
-          "hora": "11:10",
-          "valor": 2.147
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
       "nombre": "La Plata",
       "url": "http://hidrografia.agpse.gob.ar:53880/LaPlata/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 11,
-      "tendencia": "SUBIENDO",
-      "historialAltura": [
-        {
-          "hora": "11:50",
-          "valor": 10
-        },
-        {
-          "hora": "11:40",
-          "valor": 9
-        },
-        {
-          "hora": "11:30",
-          "valor": 8
-        },
-        {
-          "hora": "11:20",
-          "valor": 7
-        },
-        {
-          "hora": "11:10",
-          "valor": 6
-        }
-      ],
-      "vientoActual": 2.005,
+      "altura": 0.91,
+      "tendencia": "ESTABLE",
+      "historialAltura": [],
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:40",
-          "valor": 2.044
-        },
-        {
-          "hora": "11:30",
-          "valor": 2.074
-        },
-        {
-          "hora": "11:20",
-          "valor": 2.106
-        },
-        {
-          "hora": "11:10",
-          "valor": 2.145
-        },
-        {
-          "hora": "11:00",
-          "valor": 2.166
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
       "nombre": "Magdalena",
       "url": "http://hidrografia2.agpse.gob.ar/Magdalena2/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 11,
-      "tendencia": "SUBIENDO",
-      "historialAltura": [
-        {
-          "hora": "11:10",
-          "valor": 10
-        },
-        {
-          "hora": "11:00",
-          "valor": 9
-        },
-        {
-          "hora": "10:50",
-          "valor": 8
-        },
-        {
-          "hora": "10:40",
-          "valor": 7
-        },
-        {
-          "hora": "10:30",
-          "valor": 6
-        }
-      ],
-      "vientoActual": 0.675,
+      "altura": 0.91,
+      "tendencia": "ESTABLE",
+      "historialAltura": [],
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "13:20",
-          "valor": 0.663
-        },
-        {
-          "hora": "13:10",
-          "valor": 0.649
-        },
-        {
-          "hora": "13:00",
-          "valor": 0.661
-        },
-        {
-          "hora": "12:50",
-          "valor": 0.672
-        },
-        {
-          "hora": "12:40",
-          "valor": 0.692
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
@@ -488,54 +215,12 @@
       "nombre": "San Clemente",
       "url": "http://hidrografia.agpse.gob.ar:53880/SanClemente/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 11,
-      "tendencia": "SUBIENDO",
-      "historialAltura": [
-        {
-          "hora": "15:20",
-          "valor": 10
-        },
-        {
-          "hora": "15:10",
-          "valor": 9
-        },
-        {
-          "hora": "15:00",
-          "valor": 8
-        },
-        {
-          "hora": "14:50",
-          "valor": 7
-        },
-        {
-          "hora": "14:40",
-          "valor": 6
-        }
-      ],
-      "vientoActual": 1.378,
+      "altura": 0.91,
+      "tendencia": "ESTABLE",
+      "historialAltura": [],
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:40",
-          "valor": 1.359
-        },
-        {
-          "hora": "11:30",
-          "valor": 1.334
-        },
-        {
-          "hora": "11:20",
-          "valor": 1.352
-        },
-        {
-          "hora": "11:10",
-          "valor": 1.319
-        },
-        {
-          "hora": "11:00",
-          "valor": 1.314
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
@@ -545,30 +230,9 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 1.759,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "12:20",
-          "valor": 1.742
-        },
-        {
-          "hora": "12:00",
-          "valor": 1.728
-        },
-        {
-          "hora": "11:40",
-          "valor": 1.707
-        },
-        {
-          "hora": "11:20",
-          "valor": 1.694
-        },
-        {
-          "hora": "11:00",
-          "valor": 1.672
-        }
-      ],
+      "historialViento": [],
       "ok": false
     },
     {
@@ -590,85 +254,22 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 1.087,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:40",
-          "valor": 1.057
-        },
-        {
-          "hora": "11:20",
-          "valor": 1.045
-        },
-        {
-          "hora": "11:00",
-          "valor": 1.028
-        },
-        {
-          "hora": "10:40",
-          "valor": 1.016
-        },
-        {
-          "hora": "10:20",
-          "valor": 1.001
-        }
-      ],
+      "historialViento": [],
       "ok": false
     },
     {
       "nombre": "Ramallo",
       "url": "http://hidrografia2.agpse.gob.ar/Ramallo/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 11,
-      "tendencia": "SUBIENDO",
-      "historialAltura": [
-        {
-          "hora": "15:20",
-          "valor": 10
-        },
-        {
-          "hora": "15:00",
-          "valor": 9
-        },
-        {
-          "hora": "14:40",
-          "valor": 8
-        },
-        {
-          "hora": "14:20",
-          "valor": 7
-        },
-        {
-          "hora": "14:00",
-          "valor": 6
-        }
-      ],
-      "vientoActual": 1.576,
+      "altura": null,
+      "tendencia": "—",
+      "historialAltura": [],
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:20",
-          "valor": 2.048
-        },
-        {
-          "hora": "11:00",
-          "valor": 1.533
-        },
-        {
-          "hora": "10:40",
-          "valor": 1.539
-        },
-        {
-          "hora": "10:20",
-          "valor": 1.524
-        },
-        {
-          "hora": "10:00",
-          "valor": 1.43
-        }
-      ],
-      "ok": true
+      "historialViento": [],
+      "ok": false
     },
     {
       "nombre": "San Nicolás",
@@ -698,55 +299,13 @@
       "nombre": "Arroyo Seco",
       "url": "http://hidrografia.agpse.gob.ar:53880/arroyoseco/index.html",
       "zona": "Confluencia – Océano",
-      "altura": -2.952933,
-      "tendencia": "SUBIENDO",
-      "historialAltura": [
-        {
-          "hora": "10:40",
-          "valor": -2.976933
-        },
-        {
-          "hora": "10:20",
-          "valor": -2.911433
-        },
-        {
-          "hora": "10:00",
-          "valor": -2.873967
-        },
-        {
-          "hora": "09:40",
-          "valor": -2.875217
-        },
-        {
-          "hora": "09:20",
-          "valor": -2.825533
-        }
-      ],
-      "vientoActual": 1.956,
+      "altura": null,
+      "tendencia": "—",
+      "historialAltura": [],
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:40",
-          "valor": 1.958
-        },
-        {
-          "hora": "11:20",
-          "valor": 1.957
-        },
-        {
-          "hora": "11:00",
-          "valor": 1.953
-        },
-        {
-          "hora": "10:40",
-          "valor": 1.95
-        },
-        {
-          "hora": "10:20",
-          "valor": 1.946
-        }
-      ],
-      "ok": true
+      "historialViento": [],
+      "ok": false
     },
     {
       "nombre": "Rosario",
@@ -755,30 +314,9 @@
       "altura": 6.74,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 2.284,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:40",
-          "valor": 2.283
-        },
-        {
-          "hora": "11:20",
-          "valor": 2.279
-        },
-        {
-          "hora": "11:00",
-          "valor": 2.279
-        },
-        {
-          "hora": "10:40",
-          "valor": 2.279
-        },
-        {
-          "hora": "10:20",
-          "valor": 2.278
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
@@ -797,42 +335,42 @@
       "nombre": "Timbúes",
       "url": "http://hidrografia.agpse.gob.ar:53880/Timbues/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 11,
-      "tendencia": "SUBIENDO",
-      "historialAltura": [
-        {
-          "hora": "18:00",
-          "valor": 10
-        },
-        {
-          "hora": "17:40",
-          "valor": 9
-        },
-        {
-          "hora": "17:20",
-          "valor": 8
-        },
-        {
-          "hora": "17:00",
-          "valor": 7
-        },
-        {
-          "hora": "16:40",
-          "valor": 6
-        }
-      ],
+      "altura": null,
+      "tendencia": "—",
+      "historialAltura": [],
       "vientoActual": null,
       "vientoDireccion": null,
       "historialViento": [],
-      "ok": true
+      "ok": false
     },
     {
       "nombre": "Diamante",
       "url": "http://hidrografia.agpse.gob.ar:53880/Diamante/index.html",
       "zona": "Confluencia – Océano",
-      "altura": -1.66,
-      "tendencia": "ESTABLE",
-      "historialAltura": [],
+      "altura": 11,
+      "tendencia": "SUBIENDO",
+      "historialAltura": [
+        {
+          "hora": "15:00",
+          "valor": 10
+        },
+        {
+          "hora": "14:30",
+          "valor": 9
+        },
+        {
+          "hora": "14:00",
+          "valor": 8
+        },
+        {
+          "hora": "13:30",
+          "valor": 7
+        },
+        {
+          "hora": "13:00",
+          "valor": 6
+        }
+      ],
       "vientoActual": null,
       "vientoDireccion": null,
       "historialViento": [],
@@ -842,109 +380,25 @@
       "nombre": "Paraná",
       "url": "http://hidrografia2.agpse.gob.ar/Parana/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 11,
-      "tendencia": "SUBIENDO",
-      "historialAltura": [
-        {
-          "hora": "16:00",
-          "valor": 10
-        },
-        {
-          "hora": "15:30",
-          "valor": 9
-        },
-        {
-          "hora": "15:00",
-          "valor": 8
-        },
-        {
-          "hora": "14:30",
-          "valor": 7
-        },
-        {
-          "hora": "14:00",
-          "valor": 6
-        }
-      ],
-      "vientoActual": 2.129,
+      "altura": -1.86,
+      "tendencia": "ESTABLE",
+      "historialAltura": [],
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:30",
-          "valor": 2.13
-        },
-        {
-          "hora": "11:00",
-          "valor": 2.133
-        },
-        {
-          "hora": "10:30",
-          "valor": 2.133
-        },
-        {
-          "hora": "10:00",
-          "valor": 2.133
-        },
-        {
-          "hora": "09:30",
-          "valor": 2.134
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
       "nombre": "Santa Fe",
       "url": "http://hidrografia.agpse.gob.ar:53880/SantaFe/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 0,
+      "altura": null,
       "tendencia": "—",
-      "historialAltura": [
-        {
-          "hora": "11:00",
-          "valor": 0
-        },
-        {
-          "hora": "10:30",
-          "valor": 0
-        },
-        {
-          "hora": "10:00",
-          "valor": 0
-        },
-        {
-          "hora": "09:30",
-          "valor": 0
-        },
-        {
-          "hora": "09:00",
-          "valor": 0
-        }
-      ],
-      "vientoActual": 2.412,
+      "historialAltura": [],
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:00",
-          "valor": 2.41
-        },
-        {
-          "hora": "10:30",
-          "valor": 2.411
-        },
-        {
-          "hora": "10:00",
-          "valor": 2.412
-        },
-        {
-          "hora": "09:30",
-          "valor": 2.409
-        },
-        {
-          "hora": "09:00",
-          "valor": 2.41
-        }
-      ],
-      "ok": true
+      "historialViento": [],
+      "ok": false
     },
     {
       "nombre": "Hernandarias",
@@ -953,30 +407,9 @@
       "altura": -0.38,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 2.53989,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:00",
-          "valor": 2.544115
-        },
-        {
-          "hora": "10:00",
-          "valor": 2.550685
-        },
-        {
-          "hora": "09:00",
-          "valor": 2.555735
-        },
-        {
-          "hora": "08:00",
-          "valor": 2.558206
-        },
-        {
-          "hora": "07:00",
-          "valor": 2.563882
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
@@ -986,30 +419,9 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 2.993,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "10:00",
-          "valor": 3.003
-        },
-        {
-          "hora": "09:00",
-          "valor": 3.011
-        },
-        {
-          "hora": "08:00",
-          "valor": 3.017
-        },
-        {
-          "hora": "07:00",
-          "valor": 3.022
-        },
-        {
-          "hora": "06:00",
-          "valor": 3.027
-        }
-      ],
+      "historialViento": [],
       "ok": false
     },
     {
@@ -1019,39 +431,30 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 2.902,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:00",
-          "valor": 2.911
-        },
-        {
-          "hora": "10:00",
-          "valor": 2.917
-        },
-        {
-          "hora": "09:00",
-          "valor": 2.925
-        },
-        {
-          "hora": "08:00",
-          "valor": 2.935
-        },
-        {
-          "hora": "07:00",
-          "valor": 2.944
-        }
-      ],
+      "historialViento": [],
       "ok": false
     },
     {
       "nombre": "Esquina",
       "url": "http://hidrografia.agpse.gob.ar:53880/Esquina/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 1.646525,
+      "altura": 1.615355,
       "tendencia": "—",
       "historialAltura": [
+        {
+          "hora": "13:00",
+          "valor": 1.627135
+        },
+        {
+          "hora": "12:00",
+          "valor": 1.636305
+        },
+        {
+          "hora": "11:00",
+          "valor": 1.646525
+        },
         {
           "hora": "10:00",
           "valor": 1.659775
@@ -1059,44 +462,11 @@
         {
           "hora": "09:00",
           "valor": 1.671493
-        },
-        {
-          "hora": "08:00",
-          "valor": 1.681915
-        },
-        {
-          "hora": "07:00",
-          "valor": 1.692138
-        },
-        {
-          "hora": "06:00",
-          "valor": 1.701681
         }
       ],
-      "vientoActual": 2.159524,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "10:00",
-          "valor": 2.172775
-        },
-        {
-          "hora": "09:00",
-          "valor": 2.184493
-        },
-        {
-          "hora": "08:00",
-          "valor": 2.194915
-        },
-        {
-          "hora": "07:00",
-          "valor": 2.205138
-        },
-        {
-          "hora": "06:00",
-          "valor": 2.214681
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
@@ -1106,30 +476,9 @@
       "altura": 0.4,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 2.004,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:00",
-          "valor": 2.009
-        },
-        {
-          "hora": "10:00",
-          "valor": 2.019
-        },
-        {
-          "hora": "09:00",
-          "valor": 2.026
-        },
-        {
-          "hora": "08:00",
-          "valor": 2.031
-        },
-        {
-          "hora": "07:00",
-          "valor": 2.04
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
@@ -1139,30 +488,9 @@
       "altura": 7.56,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 2.189,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:00",
-          "valor": 2.199
-        },
-        {
-          "hora": "10:00",
-          "valor": 2.207
-        },
-        {
-          "hora": "09:00",
-          "valor": 2.219
-        },
-        {
-          "hora": "08:00",
-          "valor": 2.229
-        },
-        {
-          "hora": "07:00",
-          "valor": 2.239
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
@@ -1172,30 +500,9 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 2.034,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:40",
-          "valor": 2.036
-        },
-        {
-          "hora": "11:20",
-          "valor": 2.035
-        },
-        {
-          "hora": "11:00",
-          "valor": 2.038
-        },
-        {
-          "hora": "10:40",
-          "valor": 2.042
-        },
-        {
-          "hora": "10:20",
-          "valor": 2.045
-        }
-      ],
+      "historialViento": [],
       "ok": false
     },
     {
@@ -1205,30 +512,9 @@
       "altura": -0.59,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 1.859,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:00",
-          "valor": 1.858
-        },
-        {
-          "hora": "10:00",
-          "valor": 1.861
-        },
-        {
-          "hora": "09:00",
-          "valor": 1.863
-        },
-        {
-          "hora": "08:00",
-          "valor": 1.868
-        },
-        {
-          "hora": "07:00",
-          "valor": 1.873
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
@@ -1238,30 +524,9 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 1.664,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:00",
-          "valor": 1.655
-        },
-        {
-          "hora": "10:00",
-          "valor": 1.649
-        },
-        {
-          "hora": "09:00",
-          "valor": 1.642
-        },
-        {
-          "hora": "08:00",
-          "valor": 1.639
-        },
-        {
-          "hora": "07:00",
-          "valor": 1.636
-        }
-      ],
+      "historialViento": [],
       "ok": false
     },
     {
@@ -1271,30 +536,9 @@
       "altura": null,
       "tendencia": "—",
       "historialAltura": [],
-      "vientoActual": 1.593,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "10:00",
-          "valor": 1.598
-        },
-        {
-          "hora": "09:00",
-          "valor": 1.607
-        },
-        {
-          "hora": "08:00",
-          "valor": 1.612
-        },
-        {
-          "hora": "07:00",
-          "valor": 1.605
-        },
-        {
-          "hora": "06:00",
-          "valor": 1.593
-        }
-      ],
+      "historialViento": [],
       "ok": false
     },
     {
@@ -1304,30 +548,9 @@
       "altura": -0.14,
       "tendencia": "ESTABLE",
       "historialAltura": [],
-      "vientoActual": 1.858,
+      "vientoActual": null,
       "vientoDireccion": null,
-      "historialViento": [
-        {
-          "hora": "11:00",
-          "valor": 1.843
-        },
-        {
-          "hora": "10:00",
-          "valor": 1.828
-        },
-        {
-          "hora": "09:00",
-          "valor": 1.811
-        },
-        {
-          "hora": "08:00",
-          "valor": 1.796
-        },
-        {
-          "hora": "07:00",
-          "valor": 1.781
-        }
-      ],
+      "historialViento": [],
       "ok": true
     },
     {
