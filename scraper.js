@@ -64,38 +64,30 @@ async function fetchURL(url) {
 function parsearHTML(html) {
     let altura = null; let tendencia = "ESTABLE"; let fechaHora = null;
 
-    // 1. Convertimos todo a texto puro
     const textoPuro = html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
-
-    // 2. Extraemos todos los números con formato X.XX
     const todosLosNumeros = [...textoPuro.matchAll(/([-]?\d{1,2}[.,]\d{2})/g)];
     
     for (let n of todosLosNumeros) {
         let index = n.index;
-        // Revisamos el texto que está justo antes del número (el "contexto")
         let contextoPrevio = textoPuro.substring(Math.max(0, index - 45), index).toLowerCase();
         let contextoPosterior = textoPuro.substring(index, index + 20).toLowerCase();
         
-        // FILTRO QUIRÚRGICO: Ignorar números trampa
         if (contextoPrevio.includes("cero") || 
             contextoPrevio.includes("bater") || 
             contextoPrevio.includes("temp") || 
             contextoPrevio.includes("predic") ||
             contextoPrevio.includes("escala") || 
             contextoPrevio.includes("referencia")) {
-            continue; // Saltar al siguiente número
+            continue; 
         }
         
         let val = parseFloat(n[1].replace(',', '.'));
         
-        // Si el número es realista (-3 a 12 metros) y no fue filtrado, ES LA ALTURA.
         if (val > -3 && val < 12) {
-            // Priorizamos si explícitamente dice "nivel" o "m"
             if (contextoPrevio.includes("nivel") || contextoPrevio.includes("altura") || contextoPosterior.includes("m")) {
                 altura = val;
                 break;
             } else if (altura === null) {
-                // Lo guardamos por las dudas si no encontramos algo mejor
                 altura = val; 
             }
         }
@@ -122,23 +114,31 @@ function obtenerHoraFormateada() {
 }
 
 async function procesarEstacion(est) {
-    // Generar enlaces alternativos por si el gobierno apagó el servidor principal
     let url2 = est.url.replace(':53880', '').replace('http:', 'https:');
-    let url3 = url2.replace('hidrografia.agpse', 'hidrografia2.agpse'); // Muchas se mudaron a hidrografia2
+    let url3 = url2.replace('hidrografia.agpse', 'hidrografia2.agpse'); 
     let urls = [est.url, url2, url3];
 
     for (let currentUrl of urls) {
         try {
             let html = await fetchURL(currentUrl);
+            
+            // --- INICIO MODO DETECTIVE ---
+            if (["Zárate", "Las Rosas", "Brazo Largo", "Bs. As. 1° Espigón"].includes(est.nombre)) {
+                console.log(`\n=== 🕵️‍♂️ HTML CRUDO: ${est.nombre} ===`);
+                console.log(`Respuesta desde: ${currentUrl}`);
+                console.log(html.replace(/\s+/g, ' ').trim());
+                console.log(`===========================================\n`);
+            }
+            // --- FIN MODO DETECTIVE ---
+
             let datos = parsearHTML(html);
             if (datos.altura !== null) {
                 return { ...est, ...datos, ok: true };
             }
         } catch(e) {
-            // Falla silenciosa, intenta la siguiente URL de la lista
+            // Silencioso si falla una URL
         }
     }
-    // Si agotó las 3 direcciones y no encontró nada
     return { ...est, altura: null, tendencia: "—", fechaHora: null, ok: false };
 }
 
