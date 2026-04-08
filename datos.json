@@ -1,5 +1,5 @@
 {
-  "actualizadoEn": "07/04/2026, 9:08 PM",
+  "actualizadoEn": "07/04/2026, 9:29 PM",
   "estaciones": [
     {
       "nombre": "Zárate",
@@ -14,10 +14,10 @@
       "nombre": "Las Rosas",
       "url": "http://hidrografia.agpse.gob.ar:53880/LasRosas/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 34.18,
+      "altura": null,
       "tendencia": "BAJANDO",
       "fechaHora": null,
-      "ok": true
+      "ok": false
     },
     {
       "nombre": "Escobar",
@@ -32,7 +32,7 @@
       "nombre": "Braga",
       "url": "http://hidrografia.agpse.gob.ar:53880/Braga/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 34.33,
+      "altura": -1.14,
       "tendencia": "BAJANDO",
       "fechaHora": null,
       "ok": true
@@ -50,25 +50,25 @@
       "nombre": "Baradero",
       "url": "http://hidrografia.agpse.gob.ar:53880/Baradero/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 33.93,
+      "altura": null,
       "tendencia": "BAJANDO",
       "fechaHora": null,
-      "ok": true
+      "ok": false
     },
     {
       "nombre": "Ibicuy",
       "url": "http://hidrografia2.agpse.gob.ar/Ibicuy/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 33.75,
-      "tendencia": "BAJANDO",
+      "altura": null,
+      "tendencia": "—",
       "fechaHora": null,
-      "ok": true
+      "ok": false
     },
     {
       "nombre": "Brazo Largo",
       "url": "http://hidrografia.agpse.gob.ar:53880/BrazoLargo/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 33.88,
+      "altura": -1.6,
       "tendencia": "BAJANDO",
       "fechaHora": null,
       "ok": true
@@ -114,7 +114,7 @@
       "url": "http://hidrografia2.agpse.gob.ar/Magdalena2/index.html",
       "zona": "Delta / Río de la Plata",
       "altura": null,
-      "tendencia": "ESTABLE",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -149,10 +149,10 @@
       "nombre": "Bifurcación",
       "url": "http://hidrografia.agpse.gob.ar:53880/ehmail/bifurcacion2.htm",
       "zona": "Confluencia – Océano",
-      "altura": 33.72,
+      "altura": null,
       "tendencia": "BAJANDO",
       "fechaHora": null,
-      "ok": true
+      "ok": false
     },
     {
       "nombre": "Vuelta de Obligado",
@@ -168,7 +168,7 @@
       "url": "http://hidrografia2.agpse.gob.ar/Ramallo/index.html",
       "zona": "Confluencia – Océano",
       "altura": null,
-      "tendencia": "ESTABLE",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -176,17 +176,17 @@
       "nombre": "San Nicolás",
       "url": "http://hidrografia2.agpse.gob.ar/SanNicolas/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 33.32,
-      "tendencia": "BAJANDO",
+      "altura": null,
+      "tendencia": "—",
       "fechaHora": null,
-      "ok": true
+      "ok": false
     },
     {
       "nombre": "Villa Constitución",
       "url": "http://hidrografia2.agpse.gob.ar/VillaConstitucion/index.html",
       "zona": "Confluencia – Océano",
       "altura": null,
-      "tendencia": "ESTABLE",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -203,7 +203,7 @@
       "nombre": "Rosario",
       "url": "http://hidrografia2.agpse.gob.ar/Rosario/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 32.97,
+      "altura": 6.74,
       "tendencia": "BAJANDO",
       "fechaHora": null,
       "ok": true
@@ -212,7 +212,7 @@
       "nombre": "San Lorenzo",
       "url": "http://hidrografia2.agpse.gob.ar/SanLorenzo/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 32.71,
+      "altura": -1.95,
       "tendencia": "BAJANDO",
       "fechaHora": null,
       "ok": true
@@ -230,7 +230,7 @@
       "nombre": "Diamante",
       "url": "http://hidrografia.agpse.gob.ar:53880/Diamante/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 32.05,
+      "altura": -1.66,
       "tendencia": "BAJANDO",
       "fechaHora": null,
       "ok": true
@@ -239,7 +239,7 @@
       "nombre": "Paraná",
       "url": "http://hidrografia2.agpse.gob.ar/Parana/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 31.72,
+      "altura": -1.86,
       "tendencia": "BAJANDO",
       "fechaHora": null,
       "ok": true
@@ -257,7 +257,7 @@
       "nombre": "Hernandarias",
       "url": "http://hidrografia2.agpse.gob.ar/Hernandarias/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 31.23,
+      "altura": -0.38,
       "tendencia": "BAJANDO",
       "fechaHora": null,
       "ok": true
@@ -266,17 +266,17 @@
       "nombre": "Santa Elena",
       "url": "http://hidrografia.agpse.gob.ar:53880/SantaElena/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 30.96,
+      "altura": null,
       "tendencia": "BAJANDO",
       "fechaHora": null,
-      "ok": true
+      "ok": false
     },
     {
       "nombre": "La Paz",
       "url": "http://hidrografia2.agpse.gob.ar/LaPaz/index.html",
       "zona": "Confluencia – Océano",
       "altura": null,
-      "tendencia": "ESTABLE",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -284,7 +284,7 @@
       "nombre": "Esquina",
       "url": "http://hidrografia.agpse.gob.ar:53880/Esquina/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 30.01,
+      "altura": -0.65,
       "tendencia": "BAJANDO",
       "fechaHora": null,
       "ok": true
@@ -293,16 +293,16 @@
       "nombre": "Reconquista",
       "url": "http://hidrografia2.agpse.gob.ar/Reconquista/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 29.23,
-      "tendencia": "BAJANDO",
+      "altura": null,
+      "tendencia": "—",
       "fechaHora": null,
-      "ok": true
+      "ok": false
     },
     {
       "nombre": "Goya",
       "url": "http://hidrografia2.agpse.gob.ar/Goya/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 29.14,
+      "altura": 7.56,
       "tendencia": "BAJANDO",
       "fechaHora": null,
       "ok": true
@@ -311,16 +311,16 @@
       "nombre": "Lavalle",
       "url": "http://hidrografia2.agpse.gob.ar/lavalle/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 29.02,
-      "tendencia": "BAJANDO",
+      "altura": null,
+      "tendencia": "—",
       "fechaHora": null,
-      "ok": true
+      "ok": false
     },
     {
       "nombre": "Bella Vista",
       "url": "http://hidrografia2.agpse.gob.ar/BellaVista/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 28.5,
+      "altura": -0.59,
       "tendencia": "BAJANDO",
       "fechaHora": null,
       "ok": true
@@ -329,17 +329,17 @@
       "nombre": "Empedrado",
       "url": "http://hidrografia2.agpse.gob.ar/Empedrado/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 27.95,
-      "tendencia": "BAJANDO",
+      "altura": null,
+      "tendencia": "—",
       "fechaHora": null,
-      "ok": true
+      "ok": false
     },
     {
       "nombre": "Barranqueras",
       "url": "http://hidrografia2.agpse.gob.ar/Barranqueras/index.html",
       "zona": "Confluencia – Océano",
       "altura": null,
-      "tendencia": "ESTABLE",
+      "tendencia": "—",
       "fechaHora": null,
       "ok": false
     },
@@ -347,7 +347,7 @@
       "nombre": "Corrientes",
       "url": "http://hidrografia2.agpse.gob.ar/Corrientes/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 27.45,
+      "altura": -0.14,
       "tendencia": "BAJANDO",
       "fechaHora": null,
       "ok": true
@@ -356,7 +356,7 @@
       "nombre": "Paso de la Patria",
       "url": "http://hidrografia2.agpse.gob.ar/PasodelaPatria/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 27.32,
+      "altura": 0.64,
       "tendencia": "BAJANDO",
       "fechaHora": null,
       "ok": true
@@ -365,10 +365,10 @@
       "nombre": "Carabelitas",
       "url": "http://hidrografia.agpse.gob.ar:53880/ehmail/Carabelitas2.htm",
       "zona": "Brazo Bravo – Guazú",
-      "altura": 33.94,
+      "altura": null,
       "tendencia": "BAJANDO",
       "fechaHora": null,
-      "ok": true
+      "ok": false
     }
   ]
 }
