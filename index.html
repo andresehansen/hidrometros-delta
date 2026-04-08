@@ -16,29 +16,29 @@
     #encabezado { flex: 0 0 auto; background: #0d1f3c; padding: 10px; display: flex; flex-direction: column; gap: 10px; border-bottom: 3px solid #2a5caa; }
     
     .tabs-principales { display: flex; gap: 10px; width: 100%; }
-    .tab-btn { flex: 1; padding: 15px; font-size: clamp(18px, 4vw, 24px); font-weight: bold; border: 2px solid #2a5caa; border-radius: 10px; background: #1a3a6b; color: #a0bce8; cursor: pointer; }
+    .tab-btn { flex: 1; padding: 15px; font-size: clamp(20px, 5vw, 28px); font-weight: bold; border: 2px solid #2a5caa; border-radius: 10px; background: #1a3a6b; color: #a0bce8; cursor: pointer; }
     .tab-btn.activo { background: #4a8fd4; color: #ffffff; border-color: #7eb8f7; }
 
     .tabs-secundarias { display: flex; gap: 10px; width: 100%; }
-    .sub-tab-btn { flex: 1; padding: 12px; font-size: clamp(16px, 3.5vw, 20px); border: 1px solid #2a5caa; border-radius: 8px; background: transparent; color: #7eb8f7; cursor: pointer; }
+    .sub-tab-btn { flex: 1; padding: 12px; font-size: clamp(18px, 4.5vw, 24px); border: 1px solid #2a5caa; border-radius: 8px; background: transparent; color: #7eb8f7; cursor: pointer; }
     .sub-tab-btn.activo { background: rgba(74, 143, 212, 0.3); color: #ffffff; font-weight: bold; }
 
     /* Contenido Central */
     #contenido { flex: 1 1 auto; padding: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    #tarjeta { background: #0d1f3c; border: 3px solid #2a5caa; border-radius: 20px; width: 100%; max-width: 600px; padding: 20px; text-align: center; display: flex; flex-direction: column; gap: 15px; }
+    #tarjeta { background: #0d1f3c; border: 3px solid #2a5caa; border-radius: 20px; width: 100%; max-width: 650px; padding: 20px; text-align: center; display: flex; flex-direction: column; gap: 15px; }
     
-    #nombre-estacion { font-size: clamp(28px, 7vw, 48px); font-weight: 900; color: #ffffff; margin-bottom: 10px; }
+    #nombre-estacion { font-size: clamp(34px, 8vw, 56px); font-weight: 900; color: #ffffff; margin-bottom: 10px; }
     
     /* Vistas Actuales */
     .vista-actual { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-    .valor-gigante { font-size: clamp(60px, 18vw, 110px); font-weight: 900; line-height: 1; margin: 10px 0; }
-    .unidad { font-size: 24px; color: #a0bce8; }
-    .tendencia { font-size: 28px; font-weight: bold; padding: 8px 20px; border-radius: 50px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
+    .valor-gigante { font-size: clamp(80px, 22vw, 130px); font-weight: 900; line-height: 1; margin: 10px 0; }
+    .unidad { font-size: clamp(24px, 6vw, 32px); color: #a0bce8; }
+    .tendencia { font-size: clamp(28px, 6vw, 36px); font-weight: bold; padding: 10px 25px; border-radius: 50px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); margin-top: 10px;}
 
     /* Vistas Históricas */
     .vista-historico { width: 100%; text-align: left; }
     .lista-historial { list-style: none; padding: 0; margin: 0; width: 100%; }
-    .lista-historial li { font-size: clamp(20px, 5vw, 28px); padding: 12px 10px; border-bottom: 1px solid #2a5caa; display: flex; justify-content: space-between; }
+    .lista-historial li { font-size: clamp(24px, 6vw, 34px); padding: 15px 10px; border-bottom: 1px solid #2a5caa; display: flex; justify-content: space-between; }
     .lista-historial li:last-child { border-bottom: none; }
     .hist-hora { color: #a0bce8; }
     .hist-valor { font-weight: bold; color: #ffffff; }
@@ -52,7 +52,7 @@
 
     /* Navegación Inferior */
     #paginador { flex: 0 0 auto; padding: 15px; display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #0d1f3c; border-top: 3px solid #2a5caa; }
-    .btn-nav { flex: 1; padding: 25px 10px; font-size: clamp(22px, 6vw, 34px); font-weight: 900; border: none; border-radius: 15px; cursor: pointer; }
+    .btn-nav { flex: 1; padding: 25px 10px; font-size: clamp(24px, 6.5vw, 38px); font-weight: 900; border: none; border-radius: 15px; cursor: pointer; }
     #btn-anterior { background: #1a3a6b; color: #7eb8f7; border: 3px solid #2a5caa; }
     #btn-siguiente { background: #1a4f8a; color: #ffffff; border: 3px solid #4a8fd4; }
   </style>
@@ -79,11 +79,11 @@
         <div id="altura-actual" class="vista-actual">
           <span class="valor-gigante" id="val-altura">—</span>
           <span class="unidad">metros</span>
-          <span class="tendencia" id="tendencia-altura">Buscando...</span>
+          <span class="tendencia" id="tendencia-altura">Conectando...</span>
         </div>
         <div id="altura-historial" class="vista-historico oculto">
           <ul class="lista-historial" id="lista-altura">
-             <li><span class="hist-hora">Sin datos</span><span class="hist-valor">—</span></li>
+             <li><span class="hist-hora">Aguarde...</span><span class="hist-valor">—</span></li>
           </ul>
         </div>
       </div>
@@ -96,7 +96,7 @@
         </div>
         <div id="viento-historial" class="vista-historico oculto">
           <ul class="lista-historial" id="lista-viento">
-             <li><span class="hist-hora">Sin datos</span><span class="hist-valor">—</span></li>
+             <li><span class="hist-hora">Aguarde...</span><span class="hist-valor">—</span></li>
           </ul>
         </div>
       </div>
@@ -148,71 +148,3 @@
 
   function navegarA(direccion) {
     if (estacionesData.length === 0) return;
-    indiceActual = ((indiceActual + direccion % estacionesData.length) + estacionesData.length) % estacionesData.length;
-    renderizarPantalla();
-  }
-
-  function renderizarPantalla() {
-    if (!estacionesData[indiceActual]) return;
-    const est = estacionesData[indiceActual];
-    document.getElementById('nombre-estacion').textContent = est.nombre;
-
-    // --- RENDER ALTURA ---
-    const valAltura = document.getElementById('val-altura');
-    const tendAltura = document.getElementById('tendencia-altura');
-    
-    if (est.altura !== null && est.altura !== undefined && !isNaN(est.altura)) {
-      valAltura.textContent = est.altura.toFixed(2);
-      valAltura.className = "valor-gigante";
-      if (est.altura >= 4.0) valAltura.classList.add("color-subiendo");
-      else if (est.altura >= 2.0) valAltura.classList.add("color-estable");
-      else valAltura.classList.add("color-bajando");
-    } else {
-      valAltura.textContent = "S/D";
-      valAltura.className = "valor-gigante color-sin-dato";
-    }
-
-    const iconos = { "SUBIENDO": "↑ Subiendo", "BAJANDO": "↓ Bajando", "ESTABLE": "→ Estable", "—": "? Sin dato" };
-    tendAltura.textContent = iconos[est.tendencia] || iconos["—"];
-
-    // RENDER HISTORIAL ALTURA (Preparado para cuando el robot traiga datos)
-    const listaAlt = document.getElementById('lista-altura');
-    listaAlt.innerHTML = "";
-    if (est.historialAltura && est.historialAltura.length > 0) {
-        est.historialAltura.forEach(h => {
-            listaAlt.innerHTML += `<li><span class="hist-hora">${h.hora}</span><span class="hist-valor">${h.valor} m</span></li>`;
-        });
-    } else {
-        listaAlt.innerHTML = `<li><span class="hist-hora">Esperando actualización...</span><span class="hist-valor">—</span></li>`;
-    }
-
-    // --- RENDER VIENTO (Preparado para cuando el robot traiga datos) ---
-    const valViento = document.getElementById('val-viento');
-    const tendViento = document.getElementById('tendencia-viento');
-    
-    if (est.vientoActual) {
-        valViento.textContent = est.vientoActual;
-        valViento.className = "valor-gigante";
-        tendViento.textContent = "Dirección: " + (est.vientoDireccion || "N/A");
-    } else {
-        valViento.textContent = "S/D";
-        valViento.className = "valor-gigante color-sin-dato";
-        tendViento.textContent = "Sin datos de viento";
-    }
-
-    const listaViento = document.getElementById('lista-viento');
-    listaViento.innerHTML = "";
-    if (est.historialViento && est.historialViento.length > 0) {
-        est.historialViento.forEach(h => {
-            listaViento.innerHTML += `<li><span class="hist-hora">${h.hora}</span><span class="hist-valor">${h.valor} km/h</span></li>`;
-        });
-    } else {
-        listaViento.innerHTML = `<li><span class="hist-hora">Esperando actualización...</span><span class="hist-valor">—</span></li>`;
-    }
-  }
-
-  setInterval(cargarDatos, 60000);
-  cargarDatos();
-</script>
-</body>
-</html>
