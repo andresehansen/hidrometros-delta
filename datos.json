@@ -1,19 +1,39 @@
 {
-  "actualizadoEn": "09/04/2026, 9:32 AM",
-  "estaciones": [
+  "puerto": "La Plata",
+  "actualizadoEn": "2026-04-09T15:27:58.108Z",
+  "alturaActual": 1.66,
+  "alturaUnidad": "metros",
+  "horaMedicion": "2026-04-09 12:20:00",
+  "tendencia": "bajando",
+  "viento": {
+    "velocidad": null,
+    "velocidadUnidad": "km/h",
+    "direccion": "N/D"
+  },
+  "historial": [
     {
-      "nombre": "La Plata",
-      "url": "http://hidrografia.agpse.gob.ar:53880/LaPlata/index.html",
-      "zona": "Delta / Río de la Plata",
-      "altura": null,
-      "tendencia": "—",
-      "fechaHora": null,
-      "historialAltura": [],
-      "vientoActual": null,
-      "vientoDireccion": null,
-      "fechaHoraViento": null,
-      "historialViento": [],
-      "ok": false
+      "timestamp": "2026-04-09 11:30:00",
+      "altura": 1.78
+    },
+    {
+      "timestamp": "2026-04-09 11:40:00",
+      "altura": 1.76
+    },
+    {
+      "timestamp": "2026-04-09 11:50:00",
+      "altura": 1.73
+    },
+    {
+      "timestamp": "2026-04-09 12:00:00",
+      "altura": 1.71
+    },
+    {
+      "timestamp": "2026-04-09 12:10:00",
+      "altura": 1.69
+    },
+    {
+      "timestamp": "2026-04-09 12:20:00",
+      "altura": 1.66
     }
   ]
 }
