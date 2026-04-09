@@ -47,9 +47,9 @@ const ESTACIONES = [
   { nombre: "Carabelitas", url: "http://hidrografia.agpse.gob.ar:53880/ehmail/Carabelitas2.htm", zona: "Brazo Bravo – Guazú" }
 ];
 
-async function fetchURL(url) {
+async function fetchURL(url, timeoutMs = 8000) {
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 10000); 
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs); 
   try {
     const response = await fetch(url, {
       headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0 Safari/537.36" },
@@ -64,40 +64,57 @@ async function fetchURL(url) {
   }
 }
 
-async function explorar(url, visitados = new Set()) {
-    if (visitados.has(url) || visitados.size > 12) return { html: "", csvs: [] };
-    visitados.add(url);
-    let result = { html: "", csvs: [] };
-
-    try {
-        let html = await fetchURL(url);
-        result.html += html + " ";
-
-        let metaMatch = html.match(/<meta[^>]*url=([^"'>\s]+)/i);
-        if (metaMatch) {
-            let redir = await explorar(new URL(metaMatch[1], url).href, visitados);
-            result.html += redir.html; result.csvs.push(...redir.csvs);
-        }
-
-        let iframesUrls = [...html.matchAll(/<iframe[^>]+src=['"]([^'"]+)['"]/gi)].map(m => m[1]);
-        for (let src of iframesUrls) {
-            let redir = await explorar(new URL(src, url).href, visitados);
-            result.html += redir.html; result.csvs.push(...redir.csvs);
-        }
-
-        let datFiles = [...html.matchAll(/['"]([^'"]+\.dat)['"]/gi)].map(m => m[1]);
-        for (let src of datFiles) {
-            let datUrl = new URL(src, url).href;
-            if (!visitados.has(datUrl)) {
-                visitados.add(datUrl);
-                try {
-                    let csv = await fetchURL(datUrl);
-                    result.csvs.push(csv);
-                } catch(e){}
+// EL HACKER DEFINITIVO: Prueba 40 combinaciones a la velocidad de la luz para hallar el archivo oculto
+async function cazarDatOculto(estUrl) {
+    let origUrl = new URL(estUrl);
+    let paths = origUrl.pathname.split('/').filter(p => p && !p.includes('.htm'));
+    let folder = paths.length > 0 ? paths[0] : "marea";
+    
+    let names = [...new Set([
+        folder, 
+        folder.toLowerCase(), 
+        folder.toUpperCase(), 
+        folder.charAt(0).toUpperCase() + folder.slice(1).toLowerCase(),
+        "marea", "Marea", "viento", "Viento"
+    ])];
+    
+    let hosts = ["hidrografia.agpse.gob.ar", "hidrografia2.agpse.gob.ar"];
+    let ports = ["", ":53880"];
+    let subfolders = ["/histdat/", `/${folder}/`, "/"];
+    
+    let urlsToTry = [];
+    for (let h of hosts) {
+        for (let p of ports) {
+            let hostFull = p ? `http://${h}${p}` : `https://${h}`;
+            for (let f of subfolders) {
+                for (let nm of names) {
+                    urlsToTry.push(`${hostFull}${f}${nm}.dat`);
+                }
             }
         }
-        return result;
-    } catch(e) { return result; }
+    }
+    
+    // Ordenar para probar primero la carpeta oficial /histdat/
+    urlsToTry = [...new Set(urlsToTry)].sort((a,b) => b.includes('/histdat/') - a.includes('/histdat/')).slice(0, 40);
+
+    let foundCsvs = [];
+    // Probar de a 10 URLs al mismo tiempo para no tardar
+    for (let i = 0; i < urlsToTry.length; i += 10) {
+        let batch = urlsToTry.slice(i, i+10);
+        let promises = batch.map(async (url) => {
+            try {
+                let text = await fetchURL(url, 4000); // 4 segundos de tiempo límite por intento
+                if (text && text.includes(',') && text.split('\n').length > 3) return text;
+            } catch(e) {}
+            return null;
+        });
+        
+        let results = await Promise.all(promises);
+        foundCsvs.push(...results.filter(r => r !== null));
+        
+        if (foundCsvs.length > 0) break; // Si ya lo encontró, deja de hackear
+    }
+    return foundCsvs;
 }
 
 function procesarCSV(csvText, tipo) {
@@ -185,51 +202,49 @@ function obtenerHoraFormateada() {
 }
 
 async function procesarEstacion(est) {
-    let url2 = est.url.replace(':53880', '').replace('http:', 'https:');
-    let url3 = url2.replace('hidrografia.agpse', 'hidrografia2.agpse'); 
-    let urls = [est.url, url2, url3];
-
     let estData = { ...est, altura: null, tendencia: "—", historialAltura: [], vientoActual: null, vientoDireccion: null, historialViento: [], ok: false };
 
-    for (let currentUrl of urls) {
-        try {
-            let info = await explorar(currentUrl);
-
-            if (info.html.length > 100 || info.csvs.length > 0) {
-                for (let csv of info.csvs) {
-                    let resAltura = procesarCSV(csv, 'altura');
-                    if (resAltura && resAltura.valorActual !== null && estData.altura === null) {
-                        estData.altura = resAltura.valorActual;
-                        estData.historialAltura = resAltura.historial;
-                        if (resAltura.historial.length > 0) {
-                            let valPrev = resAltura.historial[0].valor;
-                            if (estData.altura > valPrev + 0.02) estData.tendencia = "SUBIENDO";
-                            else if (estData.altura < valPrev - 0.02) estData.tendencia = "BAJANDO";
-                        }
-                    }
-                    let resViento = procesarCSV(csv, 'viento');
-                    if (resViento && resViento.valorActual !== null && estData.vientoActual === null) {
-                        estData.vientoActual = resViento.valorActual;
-                        estData.vientoDireccion = resViento.dirActual;
-                        estData.historialViento = resViento.historial;
-                    }
-                }
-
-                if (estData.altura === null) {
-                    let resTexto = parsearHTML(info.html);
-                    if (resTexto.altura !== null) {
-                        estData.altura = resTexto.altura;
-                        estData.tendencia = resTexto.tendencia;
-                    }
-                }
-
-                if (estData.altura !== null) {
-                    estData.ok = true;
-                    return estData;
-                }
+    // 1. ATAQUE DE FUERZA BRUTA
+    let csvsEncontrados = await cazarDatOculto(est.url);
+    
+    for (let csv of csvsEncontrados) {
+        let resAltura = procesarCSV(csv, 'altura');
+        if (resAltura && resAltura.valorActual !== null && estData.altura === null) {
+            estData.altura = resAltura.valorActual;
+            estData.historialAltura = resAltura.historial;
+            if (resAltura.historial.length > 0) {
+                let valPrev = resAltura.historial[0].valor;
+                if (estData.altura > valPrev + 0.02) estData.tendencia = "SUBIENDO";
+                else if (estData.altura < valPrev - 0.02) estData.tendencia = "BAJANDO";
             }
-        } catch(e) { } 
+        }
+        let resViento = procesarCSV(csv, 'viento');
+        if (resViento && resViento.valorActual !== null && estData.vientoActual === null) {
+            estData.vientoActual = resViento.valorActual;
+            estData.vientoDireccion = resViento.dirActual;
+            estData.historialViento = resViento.historial;
+        }
     }
+
+    if (estData.altura !== null) {
+        estData.ok = true;
+        return estData;
+    }
+
+    // 2. LECTURA CLÁSICA (Respaldo final)
+    try {
+        let html = await fetchURL(est.url, 6000);
+        let metaMatch = html.match(/<meta[^>]*url=([^"'>\s]+)/i);
+        if (metaMatch) html = await fetchURL(new URL(metaMatch[1], est.url).href, 6000);
+
+        let resTexto = parsearHTML(html);
+        if (resTexto.altura !== null) {
+            estData.altura = resTexto.altura;
+            estData.tendencia = resTexto.tendencia;
+            estData.ok = true;
+        }
+    } catch(e) { }
+
     return estData;
 }
 
