@@ -1,32 +1,32 @@
 {
-  "actualizadoEn": "08/04/2026, 10:18 PM",
+  "actualizadoEn": "08/04/2026, 10:23 PM",
   "estaciones": [
     {
       "nombre": "La Plata",
       "url": "http://hidrografia.agpse.gob.ar:53880/LaPlata/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 13318,
-      "tendencia": "SUBIENDO",
+      "altura": 1.496,
+      "tendencia": "—",
       "historialAltura": [
         {
           "hora": "22:00",
-          "valor": 13317
+          "valor": 1.504
         },
         {
           "hora": "21:50",
-          "valor": 13316
+          "valor": 1.519
         },
         {
           "hora": "21:40",
-          "valor": 13315
+          "valor": 1.546
         },
         {
           "hora": "21:30",
-          "valor": 13314
+          "valor": 1.561
         },
         {
           "hora": "21:20",
-          "valor": 13313
+          "valor": 1.573
         }
       ],
       "vientoActual": null,
