@@ -10,31 +10,28 @@
     html, body { width: 100%; height: 100%; overflow: hidden; touch-action: none; background: #0a1628; color: #f0f4ff; font-family: 'Segoe UI', Arial, sans-serif; }
     #app { display: flex; flex-direction: column; width: 100vw; height: 100vh; }
 
-    /* CONTROLES SUPERIORES MASIVOS */
     #encabezado { flex: 0 0 auto; background: #0d1f3c; padding: 15px; display: flex; flex-direction: column; gap: 15px; border-bottom: 4px solid #2a5caa; }
     .btn-masivo { width: 100%; padding: 20px; font-size: clamp(24px, 6vw, 36px); font-weight: 900; border: 4px solid #4a8fd4; border-radius: 15px; background: #1a4f8a; color: #ffffff; cursor: pointer; transition: transform 0.1s; }
     .btn-masivo:active { transform: scale(0.97); background: #2a5caa; }
 
-    /* Contenido Central */
     #contenido { flex: 1 1 auto; padding: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
     #tarjeta { background: #0d1f3c; border: 4px solid #2a5caa; border-radius: 20px; width: 100%; max-width: 800px; padding: 20px; text-align: center; display: flex; flex-direction: column; gap: 15px; flex-grow: 1; max-height: 100%;}
     #nombre-estacion { font-size: clamp(36px, 8vw, 56px); font-weight: 900; color: #ffffff; margin-bottom: 5px; line-height: 1.1; flex: 0 0 auto; }
     
-    /* Vistas Actuales */
     .vista-actual { display: flex; flex-direction: column; align-items: center; gap: 10px; flex: 1 1 auto; justify-content: center;}
-    .valor-gigante { font-size: clamp(100px, 25vw, 160px); font-weight: 900; line-height: 1; margin: 10px 0; }
+    .valor-gigante { font-size: clamp(100px, 25vw, 160px); font-weight: 900; line-height: 1; margin: 5px 0; }
     .unidad { font-size: clamp(28px, 7vw, 40px); color: #a0bce8; font-weight: bold; }
-    .tendencia { font-size: clamp(30px, 7vw, 42px); font-weight: 900; padding: 15px 30px; border-radius: 50px; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); margin-top: 10px;}
+    
+    /* EL NUEVO CARTEL DE LA HORA */
+    .hora-dato { font-size: clamp(28px, 7vw, 40px); font-weight: bold; color: #ffffff; background: #2a5caa; padding: 8px 25px; border-radius: 15px; margin: 5px 0; }
+    .tendencia { font-size: clamp(30px, 7vw, 42px); font-weight: 900; padding: 15px 30px; border-radius: 50px; background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); margin-top: 5px;}
 
-    /* Contenedor del Gráfico */
     .vista-historico { width: 100%; flex: 1 1 auto; position: relative; min-height: 200px;}
     canvas { width: 100% !important; height: 100% !important; }
 
-    /* Colores */
     .color-subiendo { color: #ff6b6b; } .color-bajando { color: #51cf66; } .color-estable { color: #ffd43b; } .color-sin-dato { color: #868e96; }
     .oculto { display: none !important; }
 
-    /* Navegación Inferior */
     #paginador { flex: 0 0 auto; padding: 15px; display: flex; align-items: center; justify-content: space-between; gap: 15px; background: #0d1f3c; border-top: 4px solid #2a5caa; }
     .btn-nav { flex: 1; padding: 30px 10px; font-size: clamp(28px, 7.5vw, 42px); font-weight: 900; border: none; border-radius: 15px; cursor: pointer; }
     #btn-anterior { background: #1a3a6b; color: #7eb8f7; border: 4px solid #2a5caa; }
@@ -57,6 +54,7 @@
         <div id="altura-actual" class="vista-actual">
           <span class="valor-gigante" id="val-altura">—</span>
           <span class="unidad">metros</span>
+          <span class="hora-dato" id="hora-altura">Hora: —</span>
           <span class="tendencia" id="tendencia-altura">Aguarde...</span>
         </div>
         <div id="altura-historial" class="vista-historico oculto">
@@ -68,6 +66,7 @@
         <div id="viento-actual" class="vista-actual">
           <span class="valor-gigante" id="val-viento">—</span>
           <span class="unidad">km/h</span>
+          <span class="hora-dato" id="hora-viento">Hora: —</span>
           <span class="tendencia" id="tendencia-viento">Aguarde...</span>
         </div>
         <div id="viento-historial" class="vista-historico oculto">
@@ -92,7 +91,6 @@
   let chartAltura = null;
   let chartViento = null;
 
-  // Configuración global para letras gigantes en los gráficos
   Chart.defaults.color = '#a0bce8';
   Chart.defaults.font.size = 24;
   Chart.defaults.font.weight = 'bold';
@@ -135,7 +133,7 @@
         btn.innerHTML = "📈 Vista: Gráfico de Curva";
         document.getElementById('altura-actual').classList.add('oculto'); document.getElementById('altura-historial').classList.remove('oculto');
         document.getElementById('viento-actual').classList.add('oculto'); document.getElementById('viento-historial').classList.remove('oculto');
-        renderizarGraficos(); // Dibuja el gráfico solo cuando se abre la pestaña
+        renderizarGraficos(); 
     }
   }
 
@@ -147,16 +145,12 @@
 
   function dibujarGrafico(canvasId, refChart, label, historial, colorBorde, colorFondo) {
       const ctx = document.getElementById(canvasId).getContext('2d');
-      
-      // Destruye el gráfico viejo antes de dibujar el nuevo
       if (refChart) refChart.destroy();
       
       if (!historial || historial.length === 0) {
-          // Si no hay historial, dibuja un gráfico vacío indicando falta de datos
           return new Chart(ctx, { type: 'line', data: { labels: ['Sin datos'], datasets: [] }, options: { plugins: { title: { display: true, text: 'Historial no disponible', font: {size: 30} } } } });
       }
 
-      // Ordenar historial cronológicamente (de más antiguo a más nuevo)
       const historialOrdenado = [...historial].reverse();
       const labels = historialOrdenado.map(h => h.hora);
       const data = historialOrdenado.map(h => h.valor);
@@ -165,30 +159,13 @@
           type: 'line',
           data: {
               labels: labels,
-              datasets: [{
-                  label: label,
-                  data: data,
-                  borderColor: colorBorde,
-                  backgroundColor: colorFondo,
-                  borderWidth: 8, // Línea ultra gruesa
-                  pointRadius: 10, // Puntos gigantes
-                  pointBackgroundColor: '#ffffff',
-                  tension: 0.3, // Curva suave
-                  fill: true
-              }]
+              datasets: [{ label: label, data: data, borderColor: colorBorde, backgroundColor: colorFondo, borderWidth: 8, pointRadius: 10, pointBackgroundColor: '#ffffff', tension: 0.3, fill: true }]
           },
           options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                  legend: { display: false },
-                  tooltip: { enabled: false } // Desactivamos interacciones precisas
-              },
-              scales: {
-                  x: { ticks: { font: { size: 26 } }, grid: { color: 'rgba(255,255,255,0.1)' } },
-                  y: { ticks: { font: { size: 32 } }, grid: { color: 'rgba(255,255,255,0.2)' } }
-              },
-              animation: { duration: 0 } // Desactiva animación para que cargue instantáneo en tablets viejas
+              responsive: true, maintainAspectRatio: false,
+              plugins: { legend: { display: false }, tooltip: { enabled: false } },
+              scales: { x: { ticks: { font: { size: 26 } }, grid: { color: 'rgba(255,255,255,0.1)' } }, y: { ticks: { font: { size: 32 } }, grid: { color: 'rgba(255,255,255,0.2)' } } },
+              animation: { duration: 0 } 
           }
       });
   }
@@ -196,13 +173,9 @@
   function renderizarGraficos() {
       if (!estacionesData || estacionesData.length === 0) return;
       const est = estacionesData[indiceActual];
-      
       if (!viendoActual) {
-          if (viendoAltura) {
-              chartAltura = dibujarGrafico('graficoAltura', chartAltura, 'Metros', est.historialAltura, '#4a8fd4', 'rgba(74, 143, 212, 0.2)');
-          } else {
-              chartViento = dibujarGrafico('graficoViento', chartViento, 'km/h', est.historialViento, '#51cf66', 'rgba(81, 207, 102, 0.2)');
-          }
+          if (viendoAltura) { chartAltura = dibujarGrafico('graficoAltura', chartAltura, 'Metros', est.historialAltura, '#4a8fd4', 'rgba(74, 143, 212, 0.2)'); } 
+          else { chartViento = dibujarGrafico('graficoViento', chartViento, 'km/h', est.historialViento, '#51cf66', 'rgba(81, 207, 102, 0.2)'); }
       }
   }
 
@@ -212,33 +185,41 @@
         const est = estacionesData[indiceActual];
         document.getElementById('nombre-estacion').textContent = est.nombre;
 
-        // RENDER ALTURA ACTUAL
+        // RENDER ALTURA
         const valAltura = document.getElementById('val-altura');
         const tendAltura = document.getElementById('tendencia-altura');
+        const horaAltura = document.getElementById('hora-altura');
+        
         let numAltura = Number(est.altura);
         if (est.altura !== null && !isNaN(numAltura)) {
           valAltura.textContent = numAltura.toFixed(2); valAltura.className = "valor-gigante";
           if (numAltura >= 4.0) valAltura.classList.add("color-subiendo");
           else if (numAltura >= 2.0) valAltura.classList.add("color-estable");
           else valAltura.classList.add("color-bajando");
+          horaAltura.textContent = est.fechaHora ? "Hora: " + est.fechaHora : "Hora S/D";
         } else {
           valAltura.textContent = "S/D"; valAltura.className = "valor-gigante color-sin-dato";
+          horaAltura.textContent = "—";
         }
-        const iconos = { "SUBIENDO": "↑ Subiendo", "BAJANDO": "↓ Bajando", "ESTABLE": "→ Estable", "—": "? Sin dato" };
+        const iconos = { "SUBIENDO": "↑ Subiendo", "BAJANDO": "↓ Bajando", "ESTABLE": "→ Estable", "—": "? Sin tendencia" };
         tendAltura.textContent = iconos[est.tendencia] || iconos["—"];
 
-        // RENDER VIENTO ACTUAL
+        // RENDER VIENTO
         const valViento = document.getElementById('val-viento');
         const tendViento = document.getElementById('tendencia-viento');
+        const horaViento = document.getElementById('hora-viento');
+
         let numViento = Number(est.vientoActual);
         if (est.vientoActual !== null && !isNaN(numViento)) {
             valViento.textContent = numViento.toFixed(1); valViento.className = "valor-gigante";
             let dir = est.vientoDireccion ? est.vientoDireccion : "Var";
             if (!isNaN(Number(dir))) dir = dir + "°";
             tendViento.textContent = "Dirección: " + dir;
+            horaViento.textContent = est.fechaHoraViento ? "Hora: " + est.fechaHoraViento : "Hora S/D";
         } else {
             valViento.textContent = "S/D"; valViento.className = "valor-gigante color-sin-dato";
             tendViento.textContent = "Estación sin sensor";
+            horaViento.textContent = "—";
         }
 
         renderizarGraficos();
