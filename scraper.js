@@ -12,38 +12,48 @@ async function fetchURL(url) {
     const response = await fetch(url, {
       headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/122.0.0.0 Safari/537.36" }
     });
-    if (!response.ok) {
-        console.log(`   ❌ Error: El servidor respondió con código ${response.status}`);
-        return null;
-    }
+    if (!response.ok) return null;
     const text = await response.text();
-    console.log(`   ✅ Éxito: Se descargaron ${text.length} caracteres.`);
     return text;
-  } catch (error) {
-    console.log(`   ❌ Fallo de conexión: ${error.message}`);
-    return null;
-  }
+  } catch (error) { return null; }
 }
 
 function procesarCSV(csvText, tipo) {
     let lineas = csvText.trim().split('\n');
     if (lineas.length < 4) return null;
     
-    let cabeceras = (lineas[0] + "," + lineas[1]).toLowerCase().replace(/['"]/g, '').split(',').map(s => s.trim());
+    // Imprimimos el "mapa" del archivo para verlo con nuestros propios ojos
+    if (tipo === 'altura') {
+        console.log(`   [Visor de Archivo] Fila 1 (Títulos): ${lineas[1]}`);
+        console.log(`   [Visor de Archivo] Fila 2 (Unidades): ${lineas[2]}`);
+    }
+
+    let cabeceras = lineas[1].toLowerCase().replace(/['"]/g, '').split(',').map(s => s.trim());
+    let unidades = lineas[2].toLowerCase().replace(/['"]/g, '').split(',').map(s => s.trim());
     let idxValor = -1;
-    let numCols = lineas[lineas.length-1].split(',').length;
 
     if (tipo === 'altura') {
+        // Intento 1: Buscar por la palabra clave en el título
         for (let j = 0; j < cabeceras.length; j++) {
             if (cabeceras[j].includes("nivel") || cabeceras[j].includes("altura") || cabeceras[j].includes("marea") || cabeceras[j].includes("cota") || cabeceras[j].includes("rio")) {
-                idxValor = j % numCols; break;
+                idxValor = j; break;
+            }
+        }
+        // Intento 2: Si tienen nombres raros, buscamos la columna que se mida en "metros" (m)
+        if (idxValor === -1) {
+            for (let j = 0; j < unidades.length; j++) {
+                if (unidades[j] === "m" || unidades[j] === "metros") {
+                    idxValor = j; break;
+                }
             }
         }
     }
 
     if (idxValor === -1) {
-        console.log(`   ⚠️ No se encontró la columna de ${tipo} en el archivo.`);
+        console.log(`   ⚠️ No se encontró la columna correcta para ${tipo}.`);
         return null;
+    } else {
+        if (tipo === 'altura') console.log(`   🎯 Columna elegida para ${tipo}: Índice ${idxValor} (${cabeceras[idxValor]})`);
     }
 
     let historial = []; let valorActual = null;
@@ -51,7 +61,8 @@ function procesarCSV(csvText, tipo) {
         let col = lineas[i].split(',');
         if (col.length > idxValor && !col[idxValor].includes("NAN")) {
             let val = parseFloat(col[idxValor]);
-            if (!isNaN(val)) {
+            // FILTRO DE CORDURA: Si el valor es mayor a 12 metros, es imposible que sea el río, lo ignoramos.
+            if (!isNaN(val) && val > -3 && val < 12) {
                 let fechaRaw = col[0].replace(/['"]/g, '');
                 let horaMatch = fechaRaw.match(/(\d{1,2}:\d{2})/);
                 let hora = horaMatch ? horaMatch[1] : fechaRaw;
@@ -74,7 +85,6 @@ async function procesarLaPlata(est) {
     console.log(`\n=== 🔬 INICIANDO ANÁLISIS DE: ${est.nombre} ===`);
     let estData = { ...est, altura: null, tendencia: "—", historialAltura: [], vientoActual: null, vientoDireccion: null, historialViento: [], ok: false };
 
-    // Construimos las posibles rutas secretas exactas para La Plata
     let rutasOcultas = [
         "https://hidrografia.agpse.gob.ar/histdat/LaPlata.dat",
         "https://hidrografia.agpse.gob.ar/histdat/laplata.dat",
@@ -84,7 +94,7 @@ async function procesarLaPlata(est) {
     for (let url of rutasOcultas) {
         let csv = await fetchURL(url);
         if (csv && csv.includes(",")) {
-            console.log(`   📊 Archivo CSV válido encontrado! Extrayendo datos...`);
+            console.log(`   📊 Archivo CSV descargado con éxito. Procesando...`);
             let resAltura = procesarCSV(csv, 'altura');
             
             if (resAltura && resAltura.valorActual !== null) {
@@ -97,14 +107,13 @@ async function procesarLaPlata(est) {
                     if (estData.altura > valPrev + 0.02) estData.tendencia = "SUBIENDO";
                     else if (estData.altura < valPrev - 0.02) estData.tendencia = "BAJANDO";
                 }
-                console.log(`   ✅ Altura actual: ${estData.altura} m`);
-                console.log(`   ✅ Historial capturado: ${estData.historialAltura.length} registros`);
-                return estData; // Salimos apenas tenemos éxito
+                console.log(`   ✅ Altura actual FINAL: ${estData.altura} m`);
+                return estData; 
+            } else {
+                console.log(`   ❌ El archivo se descargó, pero los números no pasaron el filtro de cordura (ej. eran 13000 metros).`);
             }
         }
     }
-    
-    console.log(`   ❌ No se pudo extraer la altura de La Plata.`);
     return estData;
 }
 
