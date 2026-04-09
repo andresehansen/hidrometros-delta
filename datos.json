@@ -1,5 +1,5 @@
 {
-  "actualizadoEn": "08/04/2026, 6:35 PM",
+  "actualizadoEn": "08/04/2026, 9:01 PM",
   "estaciones": [
     {
       "nombre": "Zárate",
@@ -41,28 +41,28 @@
       "nombre": "Braga",
       "url": "http://hidrografia.agpse.gob.ar:53880/Braga/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 2.62785,
+      "altura": 2.467072,
       "tendencia": "—",
       "historialAltura": [
         {
-          "hora": "18:00",
-          "valor": 2.641734
+          "hora": "20:20",
+          "valor": 2.465101
         },
         {
-          "hora": "17:50",
-          "valor": 2.659276
+          "hora": "20:10",
+          "valor": 2.473501
         },
         {
-          "hora": "17:40",
-          "valor": 2.679887
+          "hora": "20:00",
+          "valor": 2.450928
         },
         {
-          "hora": "17:30",
-          "valor": 2.685883
+          "hora": "19:50",
+          "valor": 2.495526
         },
         {
-          "hora": "17:20",
-          "valor": 2.718069
+          "hora": "19:40",
+          "valor": 2.506333
         }
       ],
       "vientoActual": null,
@@ -122,28 +122,28 @@
       "nombre": "Desembocadura",
       "url": "http://hidrografia.agpse.gob.ar:53880/Desembocadura/index.html",
       "zona": "Delta / Río de la Plata",
-      "altura": 1.976466,
-      "tendencia": "—",
+      "altura": 1.887873,
+      "tendencia": "BAJANDO",
       "historialAltura": [
         {
-          "hora": "17:40",
-          "valor": 1.977682
+          "hora": "20:20",
+          "valor": 1.913767
         },
         {
-          "hora": "17:20",
-          "valor": 1.977004
+          "hora": "20:00",
+          "valor": 1.936916
         },
         {
-          "hora": "17:00",
-          "valor": 1.989389
+          "hora": "19:40",
+          "valor": 1.949656
         },
         {
-          "hora": "16:40",
-          "valor": 1.980055
+          "hora": "19:20",
+          "valor": 1.956906
         },
         {
-          "hora": "16:20",
-          "valor": 1.992171
+          "hora": "19:00",
+          "valor": 1.951898
         }
       ],
       "vientoActual": null,
@@ -440,9 +440,17 @@
       "nombre": "Esquina",
       "url": "http://hidrografia.agpse.gob.ar:53880/Esquina/index.html",
       "zona": "Confluencia – Océano",
-      "altura": 1.566224,
+      "altura": 1.544347,
       "tendencia": "—",
       "historialAltura": [
+        {
+          "hora": "19:00",
+          "valor": 1.555423
+        },
+        {
+          "hora": "18:00",
+          "valor": 1.566224
+        },
         {
           "hora": "17:00",
           "valor": 1.578423
@@ -454,14 +462,6 @@
         {
           "hora": "15:00",
           "valor": 1.602713
-        },
-        {
-          "hora": "14:00",
-          "valor": 1.615355
-        },
-        {
-          "hora": "13:00",
-          "valor": 1.627135
         }
       ],
       "vientoActual": null,
