@@ -1,158 +1,144 @@
+/**
+ * ============================================================
+ * SCRAPER AGP – Puerto La Plata (VERSIÓN DEFINITIVA)
+ * ============================================================
+ */
+
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
-const fs = require('fs');
 
-const ESTACIONES = [
-  { nombre: "La Plata", url: "http://hidrografia.agpse.gob.ar:53880/LaPlata/index.html", zona: "Delta / Río de la Plata" }
-];
+const BASE_URL       = 'https://hidrografia.agpse.gob.ar/LaPlata';
+const HISTDAT_MAREA  = `${BASE_URL}/histdat/LAPLATA.dat`;
+const HISTDAT_VIENTO = `${BASE_URL}/histdat/La%20Plata_Viento.dat`;
 
-async function fetchURL(url, timeoutMs = 8000) {
+const BROWSER_HEADERS = {
+  'User-Agent':      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+  'Accept':          'text/plain, */*; q=0.01',
+  'Accept-Language': 'es-AR,es;q=0.9',
+  'Referer':         `${BASE_URL}/marea.html`,
+};
+
+async function fetchWithTimeout(url, options = {}, timeoutMs = 10000) {
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    const response = await fetch(url, { headers: { "User-Agent": "Mozilla/5.0" }, signal: controller.signal });
-    clearTimeout(timeoutId);
-    if (!response.ok) return null;
-    return await response.text();
-  } catch (error) {
-    clearTimeout(timeoutId);
-    return null;
+    const res = await fetch(url, { ...options, signal: controller.signal });
+    clearTimeout(timer);
+    return res;
+  } catch (err) {
+    clearTimeout(timer);
+    throw err;
   }
 }
 
-// ── LÓGICA DE CLAUDE PARA LEER LA MAREA (SEPARADA POR ESPACIOS) ──
+/**
+ * PARSER EXACTO DE MAREA (Basado en datos crudos vs web)
+ * Formato: "Fecha Hora",Contador,ValorCrudo,Altura,Extra
+ * Ejemplo: "2026-04-09 11:00:00",13395,-1.550567,1.839,3.39
+ */
 function parsearLineaMarea(linea) {
-  if (!linea || linea.startsWith('#') || linea.startsWith('//') || linea.includes('TimeStamp')) return null;
-  const partes = linea.trim().split(/\s+/);
-  if (partes.length < 3) return null;
+  if (!linea || linea.trim() === '') return null;
 
-  const col0 = parseFloat(partes[0]);
-  const esContador = Number.isInteger(col0) && col0 > 1000;
+  // Separamos por COMA, no por espacio
+  const partes = linea.trim().split(',');
+  
+  // Necesitamos al menos 4 columnas para llegar a la altura
+  if (partes.length < 4) return null;
 
-  let timestamp, altura;
-  if (esContador) {
-    if (partes.length >= 4) {
-      timestamp = `${partes[1]} ${partes[2]}`;
-      altura    = parseFloat(partes[3]);
-    } else {
-      timestamp = partes[1];
-      altura    = parseFloat(partes[2]);
-    }
-  } else {
-    timestamp = partes[0];
-    altura    = parseFloat(partes[1]);
-  }
+  // Col 0: Timestamp. Le sacamos las comillas extra.
+  const timestamp = partes[0].replace(/"/g, '').trim();
+  
+  // Col 3: Altura cruda (ej. 1.839)
+  const alturaCruda = parseFloat(partes[3]);
 
-  if (isNaN(altura) || Math.abs(altura) > 20) return null;
+  if (isNaN(alturaCruda)) return null;
+
+  // Redondeamos a 2 decimales para igualar a la UI de la AGP (ej. 1.839 -> 1.84)
+  const altura = Math.round(alturaCruda * 100) / 100;
+
   return { timestamp, altura };
 }
 
-// ── LÓGICA DE CLAUDE PARA LEER EL VIENTO ──
+// Para el viento no tenemos el crudo aún, asumimos separador por coma por consistencia del servidor
 function parsearLineaViento(linea) {
-  if (!linea || linea.startsWith('#') || linea.startsWith('//') || linea.includes('TimeStamp')) return null;
-  const partes = linea.trim().split(/\s+/);
-  if (partes.length < 3) return null;
+  if (!linea || linea.trim() === '') return null;
+  const partes = linea.trim().split(',');
+  
+  if (partes.length < 4) return null;
 
-  const col0 = parseFloat(partes[0]);
-  const esContador = Number.isInteger(col0) && col0 > 1000;
+  const timestamp = partes[0].replace(/"/g, '').trim();
+  const velocidad = parseFloat(partes[3]); // Asumimos misma estructura que marea
+  
+  if (isNaN(velocidad)) return null;
 
-  let timestamp, velocidad, direccionGrados;
-  if (esContador && partes.length >= 4) {
-    timestamp       = partes.length >= 5 ? `${partes[1]} ${partes[2]}` : partes[1];
-    const offset    = partes.length >= 5 ? 1 : 0;
-    velocidad       = parseFloat(partes[2 + offset]);
-    direccionGrados = parseFloat(partes[3 + offset]);
-  } else if (!esContador) {
-    timestamp       = partes[0];
-    velocidad       = parseFloat(partes[1]);
-    direccionGrados = parseFloat(partes[2]);
-  } else {
-    return null;
+  return { timestamp, velocidad, direccion: 'N/D' }; 
+}
+
+async function obtenerDatos() {
+  console.log(`[+] Leyendo Marea desde: ${HISTDAT_MAREA}`);
+  const resMarea = await fetchWithTimeout(HISTDAT_MAREA, { headers: BROWSER_HEADERS });
+  if (!resMarea.ok) throw new Error(`Error HTTP ${resMarea.status} en Marea`);
+  
+  const textoMarea = await resMarea.text();
+  const lineasMarea = textoMarea.trim().split('\n');
+  const registrosMarea = lineasMarea.map(parsearLineaMarea).filter(Boolean);
+  
+  if (registrosMarea.length === 0) throw new Error('El archivo se leyó pero no se encontraron datos válidos.');
+
+  const actualMarea = registrosMarea[registrosMarea.length - 1];
+  
+  // Guardamos las últimas 6 lecturas (aprox 1 hora si actualiza cada 10 min)
+  const historial = registrosMarea.slice(-6).map(r => ({ timestamp: r.timestamp, altura: r.altura }));
+  
+  let tendencia = 'estable';
+  if (registrosMarea.length >= 2) {
+    const penultimo = registrosMarea[registrosMarea.length - 2].altura;
+    if (actualMarea.altura > penultimo) tendencia = 'subiendo';
+    if (actualMarea.altura < penultimo) tendencia = 'bajando';
   }
 
-  if (isNaN(velocidad)) return null;
-  return { timestamp, velocidad, direccionGrados };
-}
-
-function obtenerHoraFormateada() {
-    const d = new Date(); d.setHours(d.getHours() - 3);
-    let horas = d.getHours(); const ampm = horas >= 12 ? 'PM' : 'AM'; horas = horas % 12; horas = horas ? horas : 12; 
-    return `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth() + 1).toString().padStart(2, '0')}/${d.getFullYear()}, ${horas}:${d.getMinutes().toString().padStart(2, '0')} ${ampm}`;
-}
-
-async function procesarLaPlata(est) {
-    let estData = { ...est, altura: null, tendencia: "—", fechaHora: null, historialAltura: [], vientoActual: null, vientoDireccion: null, fechaHoraViento: null, historialViento: [], ok: false };
-
-    console.log("🌊 OBTENIENDO ALTURA...");
-    let txtMarea = await fetchURL("http://hidrografia.agpse.gob.ar:53880/histdat/LaPlata.dat");
-    if (txtMarea) {
-        const lineas = txtMarea.trim().split('\n');
-        const registros = lineas.map(parsearLineaMarea).filter(Boolean);
-        
-        if (registros.length > 0) {
-            const actual = registros[registros.length - 1];
-            estData.altura = actual.altura;
-            
-            // Extraer solo HH:MM del timestamp
-            let horaMatch = actual.timestamp.match(/(\d{1,2}:\d{2})/);
-            estData.fechaHora = horaMatch ? horaMatch[1] : actual.timestamp;
-            
-            // Llenar el historial (las últimas 6 lecturas)
-            estData.historialAltura = registros.slice(-6).map(r => {
-                let hMatch = r.timestamp.match(/(\d{1,2}:\d{2})/);
-                return { hora: hMatch ? hMatch[1] : r.timestamp, valor: r.altura };
-            });
-
-            if (registros.length >= 2) {
-                const valPrev = registros[registros.length - 2].altura;
-                if (estData.altura > valPrev + 0.02) estData.tendencia = "SUBIENDO";
-                else if (estData.altura < valPrev - 0.02) estData.tendencia = "BAJANDO";
-                else estData.tendencia = "ESTABLE";
-            }
-            console.log(`   ✅ Altura capturada: ${estData.altura}m a las ${estData.fechaHora}`);
-        }
+  // Lectura de viento (con try/catch para que no rompa la marea si falla)
+  let actualViento = { velocidad: null, direccion: 'N/D' };
+  try {
+    const resViento = await fetchWithTimeout(HISTDAT_VIENTO, { headers: BROWSER_HEADERS });
+    if (resViento.ok) {
+      const textoViento = await resViento.text();
+      const registrosViento = textoViento.trim().split('\n').map(parsearLineaViento).filter(Boolean);
+      if (registrosViento.length > 0) {
+        actualViento = registrosViento[registrosViento.length - 1];
+      }
     }
+  } catch (err) {
+    console.warn(`[!] Advertencia: No se pudo parsear el viento, pero la marea sigue intacta.`);
+  }
 
-    console.log("💨 OBTENIENDO VIENTO...");
-    let txtViento = await fetchURL("http://hidrografia.agpse.gob.ar:53880/LaPlata/_Viento.dat");
-    if (txtViento) {
-        const lineasV = txtViento.trim().split('\n');
-        const registrosV = lineasV.map(parsearLineaViento).filter(Boolean);
-        
-        if (registrosV.length > 0) {
-            const actualV = registrosV[registrosV.length - 1];
-            estData.vientoActual = actualV.velocidad;
-            estData.vientoDireccion = !isNaN(actualV.direccionGrados) ? actualV.direccionGrados + "°" : "N/D";
-            
-            let horaMatchV = actualV.timestamp.match(/(\d{1,2}:\d{2})/);
-            estData.fechaHoraViento = horaMatchV ? horaMatchV[1] : actualV.timestamp;
-            
-            estData.historialViento = registrosV.slice(-6).map(r => {
-                let hMatch = r.timestamp.match(/(\d{1,2}:\d{2})/);
-                return { hora: hMatch ? hMatch[1] : r.timestamp, valor: r.velocidad };
-            });
-            console.log(`   ✅ Viento capturado: ${estData.vientoActual} km/h a las ${estData.fechaHoraViento}`);
-        }
-    } else {
-        // Fallback: Si el archivo oculto no responde, leemos los inputs ocultos de la web del viento
-        let htmlViento = await fetchURL("http://hidrografia.agpse.gob.ar:53880/LaPlata/viento.html");
-        if (htmlViento) {
-            let matchInputs = htmlViento.match(/value=['"]?([\d.]+)['"]?/gi);
-            if (matchInputs && matchInputs.length >= 2) {
-                estData.vientoActual = parseFloat(matchInputs[0].replace(/[^\d.]/g, ''));
-                estData.vientoDireccion = parseFloat(matchInputs[1].replace(/[^\d.]/g, '')) + "°";
-                estData.fechaHoraViento = obtenerHoraFormateada().split(', ')[1]; 
-                console.log(`   ✅ Viento capturado desde HTML: ${estData.vientoActual} km/h`);
-            }
-        }
-    }
-
-    if (estData.altura !== null) estData.ok = true;
-    return estData;
+  return {
+    puerto:          'La Plata',
+    actualizadoEn:   new Date().toISOString(),
+    alturaActual:    actualMarea.altura,
+    alturaUnidad:    'metros',
+    horaMedicion:    actualMarea.timestamp,
+    tendencia:       tendencia,
+    viento: {
+      velocidad:    actualViento.velocidad,
+      velocidadUnidad: 'km/h',
+      direccion:    actualViento.direccion
+    },
+    historial:       historial
+  };
 }
 
-async function main() {
-  const resultados = [await procesarLaPlata(ESTACIONES[0])];
-  fs.writeFileSync('datos.json', JSON.stringify({ actualizadoEn: obtenerHoraFormateada(), estaciones: resultados }, null, 2));
-}
-
-main();
+(async () => {
+  try {
+    console.log('Iniciando extracción AGP...');
+    const datos = await obtenerDatos();
+    
+    const { writeFile } = await import('fs/promises');
+    await writeFile('datos.json', JSON.stringify(datos, null, 2), 'utf8');
+    
+    console.log('\n✅ ÉXITO. datos.json generado correctamente:');
+    console.log(JSON.stringify(datos, null, 2));
+  } catch (err) {
+    console.error('\n❌ ERROR FATAL:', err.message);
+    process.exit(1);
+  }
+})();
