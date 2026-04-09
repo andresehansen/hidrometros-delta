@@ -1,39 +1,40 @@
 {
-  "puerto": "La Plata",
-  "actualizadoEn": "2026-04-09T15:27:58.108Z",
-  "alturaActual": 1.66,
-  "alturaUnidad": "metros",
-  "horaMedicion": "2026-04-09 12:20:00",
-  "tendencia": "bajando",
-  "viento": {
-    "velocidad": null,
-    "velocidadUnidad": "km/h",
-    "direccion": "N/D"
-  },
-  "historial": [
+  "estaciones": [
     {
-      "timestamp": "2026-04-09 11:30:00",
-      "altura": 1.78
-    },
-    {
-      "timestamp": "2026-04-09 11:40:00",
-      "altura": 1.76
-    },
-    {
-      "timestamp": "2026-04-09 11:50:00",
-      "altura": 1.73
-    },
-    {
-      "timestamp": "2026-04-09 12:00:00",
-      "altura": 1.71
-    },
-    {
-      "timestamp": "2026-04-09 12:10:00",
-      "altura": 1.69
-    },
-    {
-      "timestamp": "2026-04-09 12:20:00",
-      "altura": 1.66
+      "nombre": "La Plata",
+      "altura": 1.62,
+      "fechaHora": "12:40",
+      "tendencia": "BAJANDO",
+      "vientoActual": null,
+      "vientoDireccion": "N/D",
+      "fechaHoraViento": "12:40",
+      "historialAltura": [
+        {
+          "hora": "11:50",
+          "valor": 1.73
+        },
+        {
+          "hora": "12:00",
+          "valor": 1.71
+        },
+        {
+          "hora": "12:10",
+          "valor": 1.69
+        },
+        {
+          "hora": "12:20",
+          "valor": 1.66
+        },
+        {
+          "hora": "12:30",
+          "valor": 1.64
+        },
+        {
+          "hora": "12:40",
+          "valor": 1.62
+        }
+      ],
+      "historialViento": []
     }
   ]
 }
