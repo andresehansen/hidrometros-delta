@@ -3,50 +3,50 @@
     {
       "nombre": "La Plata",
       "altura": 1.24,
-      "fechaHora": "07:30",
-      "tendencia": "BAJANDO",
+      "fechaHora": "13:00",
+      "tendencia": "SUBIENDO",
       "vientoActual": null,
       "vientoDireccion": "S/D",
       "fechaHoraViento": "",
       "historialAltura": [
         {
-          "hora": "06:00",
-          "valor": 1.32
+          "hora": "11:30",
+          "valor": 0.9
         },
         {
-          "hora": "06:10",
-          "valor": 1.3
+          "hora": "11:40",
+          "valor": 0.93
         },
         {
-          "hora": "06:20",
-          "valor": 1.29
+          "hora": "11:50",
+          "valor": 0.96
         },
         {
-          "hora": "06:30",
-          "valor": 1.28
+          "hora": "12:00",
+          "valor": 0.99
         },
         {
-          "hora": "06:40",
-          "valor": 1.28
+          "hora": "12:10",
+          "valor": 1.02
         },
         {
-          "hora": "06:50",
-          "valor": 1.28
+          "hora": "12:20",
+          "valor": 1.07
         },
         {
-          "hora": "07:00",
-          "valor": 1.28
+          "hora": "12:30",
+          "valor": 1.11
         },
         {
-          "hora": "07:10",
-          "valor": 1.27
+          "hora": "12:40",
+          "valor": 1.15
         },
         {
-          "hora": "07:20",
-          "valor": 1.26
+          "hora": "12:50",
+          "valor": 1.2
         },
         {
-          "hora": "07:30",
+          "hora": "13:00",
           "valor": 1.24
         }
       ],
