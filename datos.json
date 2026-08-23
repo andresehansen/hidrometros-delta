@@ -2,29 +2,13 @@
   "estaciones": [
     {
       "nombre": "La Plata",
-      "altura": 1.79,
-      "fechaHora": "09:30",
-      "tendencia": "SUBIENDO",
+      "altura": 1.87,
+      "fechaHora": "10:10",
+      "tendencia": "ESTABLE",
       "vientoActual": null,
       "vientoDireccion": "S/D",
       "fechaHoraViento": "",
       "historialAltura": [
-        {
-          "hora": "08:00",
-          "valor": 1.63
-        },
-        {
-          "hora": "08:10",
-          "valor": 1.77
-        },
-        {
-          "hora": "08:20",
-          "valor": 1.67
-        },
-        {
-          "hora": "08:30",
-          "valor": 1.69
-        },
         {
           "hora": "08:40",
           "valor": 1.7
@@ -48,6 +32,22 @@
         {
           "hora": "09:30",
           "valor": 1.79
+        },
+        {
+          "hora": "09:40",
+          "valor": 1.81
+        },
+        {
+          "hora": "09:50",
+          "valor": 1.94
+        },
+        {
+          "hora": "10:00",
+          "valor": 1.86
+        },
+        {
+          "hora": "10:10",
+          "valor": 1.87
         }
       ],
       "historialViento": []
